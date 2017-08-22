@@ -1,35 +1,30 @@
-function sortJsonByValue(jsObj){
-    // https://stackoverflow.com/questions/19032954/why-is-jsonobject-length-undefined
-    var sortedArray = [], 
-        sortedjsObj = [];
+function sort_json_by_value(json){
+    // ref. https://stackoverflow.com/questions/19032954/why-is-jsonobject-length-undefined
+    var sorted_array = [], 
+        sorted_json = [];
 
     // Push each JSON Object entry in array by [key, value]
-    for(var i in jsObj)
+    for(var i in json)
     {
-        sortedArray.push([i, jsObj[i]]);
+        sorted_array.push([i, json[i]]);
     }
 
     // Run native sort function and returns sorted array.
-    sortedArray	= sortedArray.sort(function(a, b) {return a[1] - b[1]});
-    for (var i in sortedArray) {
-        sortedjsObj.push([sortedArray[i][0], sortedArray[i][1]]);
+    sorted_array = sorted_array.sort(function(a, b) {return a[1] - b[1]});
+    for (var i in sorted_array) {
+        sorted_json.push([sorted_array[i][0], sorted_array[i][1]]);
     }
-    return sortedjsObj;
+    return sorted_json;
 }
 
 function generate_exon_pattern(
     parents,
     parent_frame_par,
     parent_width,
-    exon_RPKM_data,
+    exon_count_data,
     tx_start,
     tx_end
 ) {
-    //var parents = left_col_charts,
-    //    parent_frame_par = left_col_frame,
-    //    parent_width = left_col_width,
-    //    exon_RPKM_data = exon_RPKM_data;
-
     var y1, y2,
         parent_i = parents[parents.length - 1];
     var tx_pattern, tx_pattern_par, exon_par, tx_scale_y;
@@ -63,7 +58,7 @@ function generate_exon_pattern(
 
     // Add exon rect
     tx_pattern.selectAll('rect')
-        .data(exon_RPKM_data.exon)
+        .data(exon_count_data.exon)
         .enter()
         .append("rect")
         .attr('class', function(d, i) { return 'RNASeq_exon_' + i })
@@ -129,8 +124,6 @@ function calculate_NI(areaValue, area_data) {
     // areaValue: a json object with key of sample id and value of expression
     var exon_NI = {};
     for (var i in areaValue) {
-        // TODO normalize by the gene expression caculated by mean of exon RPKM value or juc counts
-        // TODO calculated the mean of exon RPKM or juc counts in R and import into database
 //        exon_NI[i] = Math.log2(areaValue[i] + 1) / Math.log2(gene_expression[i] + 1);
 //        exon_NI[i] = (areaValue[i] + 1) / (gene_expression[i] + 1);
         exon_NI[i] = areaValue[i] / area_data.value_mean[i];
@@ -138,7 +131,7 @@ function calculate_NI(areaValue, area_data) {
     return exon_NI;
 }
 
-function get_areaValue_sample_array(data) {
+function get_sample_array_from_areaValue(data) {
     var sample_array = [];
     for (var i in data) {
         for (var j in data[i]) {
@@ -159,7 +152,6 @@ function filter_clinical_by_sample(clinical, sample_array) {
         break;
     }
 
-
     for (var i in sample_array) {
         var sampleID = sample_array[i];
         var sampleID_truncated = sampleID.substr(0, string_length);
@@ -179,10 +171,11 @@ function rearrange_clinical(clinical, gene_expression_data) {
     var new_expression_to_sort = {};
     for (i in gene_expression_data.gene_expression) {
         if (clinical.value[i]) {
+            // * 10000000 used to sort clinical value first then by expression value
             new_expression_to_sort[i] = (+clinical.value[i]) * 10000000 + (+gene_expression_data.gene_expression[i]);
         }
     }
-    sortJsonByValue(new_expression_to_sort).map(function(d) {
+    sort_json_by_value(new_expression_to_sort).map(function(d) {
         new_clinical_value.push([d[0], clinical.value[d[0]]]);
     });
     clinical['value'] = new_clinical_value;
@@ -331,8 +324,6 @@ function gene_expression_graph (
                 rearranged_clinical = rearranged_clinical,
                 overall_survival    = overall_survival
             )
-
-
         });
 }
 
@@ -362,13 +353,13 @@ function generate_area_graph(
     var y_scales = [], x_scale;
 
     if (data_type == 'exon') {
-        var NI, exon_RPKM_data = data;
-        NI = exon_RPKM_data.value.map(function(d) { 
-            return calculate_NI(d, exon_RPKM_data) 
+        var NI, exon_count_data = data;
+        NI = exon_count_data.value.map(function(d) { 
+            return calculate_NI(d, exon_count_data) 
         });
 
         // TODO remove inconsistant sample in server?
-        sample_array = get_areaValue_sample_array(NI);  
+        sample_array = get_sample_array_from_areaValue(NI);  
         clinical = filter_clinical_by_sample(clinical, sample_array);
         rearranged_clinical = rearrange_clinical(clinical, gene_expression_data);
 
@@ -399,7 +390,7 @@ function generate_area_graph(
             return calculate_NI(d, juc_count_data) 
         });
 
-        sample_array = get_areaValue_sample_array(juc);
+        sample_array = get_sample_array_from_areaValue(juc);
         clinical = filter_clinical_by_sample(clinical, sample_array);
         rearranged_clinical = rearrange_clinical(clinical, gene_expression_data);
 
