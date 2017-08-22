@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<head>
+    <link rel="SHORTCUT ICON" href="/sv/logo2.ico"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>TSVdb</title>
+    <meta name="author" content="Alvaro Trigo Lopez" />
+    <meta name="description" content="fullPage very simple demo." />
+    <meta name="keywords"  content="fullpage,jquery,demo,simple" />
+    <meta name="Resource-type" content="Document" />
+
+
+    <link rel="stylesheet" type="text/css" href="/sv/css/jquery.fullPage.css" />
+    <link rel="stylesheet" type="text/css" href="/sv/css/examples.css" />
+
+
+    <script src="/sv/js/jquery-3.2.1.min.js"></script>
+    <script src="/sv/js/jquery-ui.min.js"></script>
+
+    <script type="text/javascript" src="/sv/js/scrolloverflow.min.js"></script>
+
+    <script type="text/javascript" src="/sv/js/jquery.fullPage.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#fullpage').fullpage({
+                sectionsColor: ['#f2f2f2', '#4BBFC3', '#fff']
+            });
+        });
+    </script>
+
+</head>
+<body>
+
+    <div id="fullpage">
+
+        <div class="section active" id="section0">
+            <h1>TSVdb</h1>
+            <h2>TCGA Splicing Variation DB</h2>
+            <div class="intro"><p>TSVdb: a tool which designed to ease the visulization of TCGA Splicing Variation, transcirptional isoform expression and clinical data.</p></div>
+            <div class="selection" id="selection_start"><a href="/sv/plot.html">Start</a></div>
+            <div class="selection" id="selection_tutorial">Tutorial</div>
+            <img src = "/sv/image/strategy.png" alt="strategy" style="height: 300px;">
+        </div>
+
+        <div class="section" id="section_tutorial">
+            <div class="slide" id="selecting_data">
+                <h1>Tutorial</h1>
+                <h2>1. Selecting Data</h2>
+                <img src="/sv/image/select_data.png" alt="select_data" style="height: 400px">
+                <p>When open the data visualizing page, the user have to select the tumor type, gene, data type and clinical information one by one.</p>
+                <p>Before completint the selection, no operation can be performed.</p>
+                <p>Do not afraid you make a mistake, the option can be edited afterward.</p>
+                <p>The first popupmenu (fig A) is about cancer type, please choose the cancer type you are interested and push selection buttom.</p>
+                <p>In the second popupmenu (fig B), please enter a Official Gene Symbol or Entrez ID. If the query term is not exist in the database, the alarm would be apear to inform you. Please check your input, or the gene is too new so that the analysing did not take count of it.</p>
+                <p>Then choose the Exon or Junction normalized expression (fig C), which to be display. More about the normalization method please refer to the next section or paper</p>
+                <p>At last choose the phenotype to display (fig D).</p>
+            </div>
+
+            <div class="slide" id="exon_junc">
+                <h1>Tutorial</h1>
+                <h2>2. About graph</h2>
+                <img src="/sv/image/about_graph.png" alt="about_graph" style="height: 500px">
+                <p>Data selection can adjust by clicking the corresponding item in the header bar.</p>
+                <p>The samples were sorted by clinical type and in each clinical type sorted by the gene expression. When the mouse hover the clinical row, the group name and a guide line will apear.</p>
+                <p>Each normalized exon expression value or junction expression value was plot by row and each samples was by column. A transient highlight of exon or junction pattern can be produced by mouse hover a typical exon or junction row. A stable highlight can be achieve by single click. What more, the double click of exon or junction graph will open a UCSC Genome Browsers in a new tab or windows with typical exon or junction area hightlight.</p>
+                <p>The Exon or Junction pattern is the exons and junctions that TCGA used to count the mapping reads. What's represented the only information that can be draw from the Level 3 data of the mRNA Sequencing datasets from TCGA.</p>
+            </div>
+
+            <div class="slide" id="isoform">
+                <h1>Tutorial</h1>
+                <h2>3. Isoform expression</h2>
+                <img src="/sv/image/about_isoform.png" alt="about_isoform" style="height: 500px">
+                <p>By clicking the transcriptional isoform, the boxplot of isoform expression between each group will show. At the top of the popup box, there are bottoms used to swhich the display of boxplot or km plot. At the top right side, you can see the ucsc id of the isoform, Click on the text will open a new tab or window display the UCSC Genome Browsers with the isoform hightlighted.</p>
+                <p>The km graph include four parts, the bottom right parts is the part used to adjust the cutpoint for grouping, the knob can be pull to change the cutpoint. The default value is the median. The top right part is display the grouping information include the cutpoint value and sample size of each group. The top left part display the survival line of each person that be included by defineing the surivival start time.</p>
+            </div>
+        </div>
+
+        <div class="section" id="flowchart">
+            <h1>Flowchart and algorithms</h1>
+            <img src="/sv/image/flowchart.png" alt="flowchart" height="600">
+            <p>The TCGA level 3 gene and isoform RSEM expression, exon and junction quantification value  (UNC illuminaHiSeq_RNASeqV2), clinical data (Merged_clinical_level_1) were downloaded from TCGA ftp site -- Firehouse.</p>
+            <p>The R was used to generate transcriptional pattern and TCGA data clearup. The formated json data were import into mongodb.</p>
+            <p>The normalized exon and junction quantification value was used to visualization. The normalization like Normalized Index (NI) used in exon microarray analysis which accomplished by dividing sample's exon or junction quantificaiton value to the mean of exons or junctions quantification value of that gene. So that the gene expression variation can be wipe out and the normalized exon or junction expression level represented its usage.</p>
+            <hr>
+            <a class="a1" href="www.zju.edu.cn">Department of Pathology and Pathophysiology</a>
+            </br>
+            <a class="a2" href="www.zju.edu.cn">Zhejiang University</a>
+            </br>
+            <a class="a3" href="sunwenjie@zju.edu.cn">Contact</a>
+            <a style="margin: 3px 10px;" rel="license" href="http://creativecommons.org/licenses/by/3.0/deed.en_US">
+            </a>
+        </div>
+    </div>
+    <p>abce</p>
+
+</body>
+</html>
