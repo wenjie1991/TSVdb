@@ -1,0 +1,499 @@
+h4 {
+    font-size: 19px;
+    font-weight: normal;
+    text-align: left;
+    margin: 15px 0;
+}
+
+p {
+    word-break:break-all;
+}
+
+a {
+    text-decoration: none;
+    color: #4d6cc3;
+}
+
+input {
+    text-rendering: auto;
+    color: initial;
+    letter-spacing: normal;
+    word-spacing: normal;
+    text-transform: none;
+    text-indent: 0px;
+    text-shadow: none;
+    display: inline-block;
+    text-align: start;
+    margin: 20px 0;
+    font: 1em Arial;
+    border: 1px solid #aaa;
+    border-radius: 4px;
+    padding: 2px;
+}
+select {
+    text-rendering: auto;
+    color: initial;
+    letter-spacing: normal;
+    word-spacing: normal;
+    text-transform: none;
+    text-indent: 0px;
+    text-shadow: none;
+    display: inline-block;
+    text-align: start;
+    margin: 20px 0;
+    font: 1em Arial;
+    border: 1px solid #ggg;
+    border-radius: 4px;
+    padding: 2px;
+}
+
+button {
+    display: inline-block;
+    padding: 6px 12px;
+    margin-bottom: 0;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.42857143;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    -ms-touch-action: manipulation;
+    touch-action: manipulation;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    background-image: none;
+    border: 1px solid transparent;
+    border-radius: 4px;
+}
+
+img {
+    height: inherit;
+    width: inherit;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.mask {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1;
+}
+
+.frame {
+    fill:none;
+/*    stroke: red;*/
+    pointer-events: all;
+}
+
+.area {
+    cursor: pointer;
+}
+
+.area path {
+    stroke: #4d93c3;
+    stroke-width: 1pt;
+    fill: #99c1dd;
+}
+
+.km_linker {
+    fill: #c34d58;
+}
+
+.expression_area path {
+    stroke: #c37d4d;
+    stroke-width: 1pt;
+    fill: #93c34d;
+}
+
+.frame line {
+    stroke: #4d93c3;
+    stroke-width: 1pt;
+}
+
+.tx_pattern rect {
+    stroke: #1e4159;
+    fill: #1e4159;
+}
+
+.tx_pattern_frame {
+    cursor: pointer;
+}
+
+
+.tx_tooltip {
+    display: none;
+    position: absolute;
+    width: 120px;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    z-index: 1;
+    top: 150%;
+    left: 50%;
+/*    margin-left: -60px;*/
+}
+
+.tx_cd_choose {
+    width: 100px;
+    heigt: 100px;
+    margin-left: 211px;
+    margin-bottom: 20px;
+    box-shadow: 0 5px 15px rgba(0,0,0,.5);
+}
+
+.scale_line line {
+    stroke: #c34d58;
+    stroke-width: 2pt;
+}
+
+.RNASeq_exon rect {
+    fill: #1e4159;
+    stroke : none;
+    fill-opacity: 0.2;
+}
+
+.middle_line_hover_choosen line {
+    stroke: #c34d58;
+}
+
+rect.RNASeq_exon_hover_choosen {
+    stroke: #c34d58;
+    fill: #c34d58;
+    fill-opacity: 0.7;
+}
+
+.right_row_chart {
+    cursor: pointer;
+}
+
+.right_row_hover_choosen path {
+    stroke-width: 2px;
+}
+
+.middle_line_click_choosen line {
+    stroke: #c34d58;
+    stroke-width: 2px;
+}
+
+rect.RNASeq_exon_click_choosen {
+    stroke: #c34d58;
+    fill: #c34d58;
+    fill-opacity: 0.7;
+}
+
+.right_row_click_choosen path {
+    stroke-width: 2px;
+}
+
+.clinical_tip {
+    position: absolute;
+    line-height: 1;
+    font-weight: bold;
+    padding: 5px 12px 5px 12px;
+    background: rgba(0, 0, 0, 0.8);
+    color: #fff;
+    border-radius: 2px;
+    cursor: default;
+}
+
+line.guide_line {
+    stroke: #c34d58;
+}
+
+.chart_frame {
+    min-height: 610px;
+    min-width: 800px;;
+    margin: 0 auto;
+/*    border: 1px solid rgba(255,0,0,.9);*/
+    text-align: center;
+}
+
+.tx_expression {
+    display: none;
+    position: absolute;
+    top: 75px;
+    margin: 0 auto;
+    right: 0;
+    left: 0;
+    width: 900px;
+    height: inherit;
+    border-radius: 6px;
+    box-shadow: 0 5px 15px rgba(0,0,0,.5);
+    background-color: #fff;
+    border: 1px solid rgba(0,0,0,.5);
+    vertical-align: top;
+}
+
+.ucsc_link_container {
+    margin: 0 20px;
+}
+
+#tx_echart {
+    height: 450px;
+    width: 650px;
+    margin: 0 132px;
+}
+#tx_km {
+    margin: 0 132px;
+    display: none;
+}
+
+.nav_menue {
+    max-width: 1000px;
+    margin:0 auto;
+/*    border: 1px solid rgba(255,0,0,.9);*/
+    text-align:center;
+}
+
+.nav_module {
+    position: relative;
+    height: 50px;
+    min-width: 50px;
+    display:inline-flex;
+    margin: 10px 15px;
+    border-radius: 6px;
+    box-shadow: 0 5px 15px rgba(0,0,0,.5);
+    background-color: #fff;
+    border: 1px solid rgba(0,0,0,.5);
+    vertical-align: top;
+}
+
+.nav_module_region_option {
+    position: relative;
+    height: 120px;
+    width: 120px;
+    display:inline-flex;
+    margin: 35px 35px;
+    border-radius: 6px;
+    box-shadow: 0 5px 15px rgba(0,0,0,.5);
+    background-color: #fff;
+    border: 1px solid rgba(0,0,0,.5);
+    vertical-align: top;
+}
+
+.module_footer {
+    margin: 20px;
+}
+
+.nav_choosen {
+    position: absolute;
+    display: flow;
+    height: inherit;
+    width: 500px;
+    right: 0;
+    left: 0;
+    margin: 0 auto;
+    top: 200px;
+}
+
+.nav_module_display_when_choosen {
+    display: none;
+    width: 500px;
+}
+
+.nav_module_display_when_unchoosen p {
+    position: relative;
+    margin: 0 7px;
+    font-size: 17px;
+    font-weight: bold;
+    top:50%;
+    transform:translateY(-50%);
+    cursor: pointer;
+    color: #4d6cc3;
+}
+
+.nav_module_display_when_unchoosen {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+
+.module_header {
+    margin: 10px 20px;
+    border-bottom: 1px solid #e5e5e5;
+}
+
+button.nav_module_close {
+    -webkit-appearance: none;
+    padding: 0;
+    cursor: pointer;
+    background: 0 0;
+    border: 0;
+}
+
+.nav_module_close {
+    float: right;
+    font-size: 21px;
+    font-weight: 700;
+    line-height: 1;
+    color: #000;
+    text-shadow: 0 1px 0 #fff;
+    filter: alpha(opacity=20);
+    opacity: .2;
+}
+
+button.tx_expression_close {
+    -webkit-appearance: none;
+    padding: 0;
+    cursor: pointer;
+    background: 0 0;
+    border: 0;
+}
+
+.tx_expression_close {
+    float: right;
+    font-size: 21px;
+    font-weight: 700;
+    line-height: 1;
+    color: #000;
+    text-shadow: 0 1px 0 #fff;
+    filter: alpha(opacity=20);
+    opacity: .2;
+}
+
+
+
+.module_body {
+    min-height: 80px;
+    text-align: left;
+}
+
+#nav_tumor .tooltiptext {
+    display: none;
+    width: 120px;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    position: absolute;
+    z-index: 1;
+    top: 150%;
+    left: 50%;
+    margin-left: -60px;
+}
+
+#nav_tumor .tooltiptext::after {
+    content: "";
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: transparent transparent black transparent;
+}
+
+#nav_tumor:hover .tooltiptext {
+    display: block;
+}
+
+.invalide_gene {
+    display: none;
+}
+
+#nav_gene .tooltiptext {
+    display: none;
+    width: 120px;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    position: absolute;
+    z-index: 1;
+    top: 150%;
+    left: 50%;
+    margin-left: -60px;
+}
+
+#nav_gene .tooltiptext::after {
+    content: "";
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: transparent transparent black transparent;
+}
+
+#nav_gene :hover .tooltiptext {
+    display: block;
+}
+
+#nav_region .tooltiptext {
+    display: none;
+    width: 120px;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    position: absolute;
+    z-index: 1;
+    top: 150%;
+    left: 50%;
+    margin-left: -60px;
+}
+
+#nav_region .tooltiptext::after {
+    content: "";
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: transparent transparent black transparent;
+}
+
+#nav_region:hover .tooltiptext {
+    display: block;
+}
+
+#nav_clinical .tooltiptext {
+    display: none;
+    width: 120px;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    position: absolute;
+    z-index: 1;
+    top: 150%;
+    left: 50%;
+    margin-left: -60px;
+}
+
+#nav_clinical .tooltiptext::after {
+    content: "";
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: transparent transparent black transparent;
+}
+
+#nav_clinical:hover .tooltiptext {
+    display: block;
+}
+
+
+.footer {
+    text-align: center;
+}
