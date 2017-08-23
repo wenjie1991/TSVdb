@@ -1,4 +1,4 @@
-function objLength(obj){
+function obj_length(obj){
     var i=0;
     for (var x in obj){
         if(obj.hasOwnProperty(x)){
@@ -17,20 +17,21 @@ function prepare_canvas() {
 function plot(data, data_type) {
     prepare_canvas();
 
-    var tx_pattern_data = data.tx_pattern,
-        exon_RPKM_data = data.exon_RPKM,
-        juc_count_data = data.juc_count,
-        clinical_data = data.clinical,
+    var tx_pattern_data       = data.tx_pattern,
+        exon_count_data       = data.exon_count,
+        juc_count_data        = data.juc_count,
+        clinical_data         = data.clinical,
         overall_survival_data = data.os,
-        gene_expression_data = data.gene_expression,
-        tx_expression_data = data.tx_expression;
-    var areaValue_data;
+        gene_expression_data  = data.gene_expression, // normalized RSEM
+        tx_expression_data    = data.tx_expression;   // normalized RSEM
+    var areaValue_data;  // the exon or junction count data used to draw the area graph
 
 
+    // The smallest value of start and biggest value of end.
     var tx_start = Infinity, tx_end = 0, strand;
 
     if (data_type == 'exon') {
-        areaValue_data = exon_RPKM_data;
+        areaValue_data = exon_count_data;
     } else if (data_type == 'junction') {
         areaValue_data = juc_count_data;
     }
@@ -53,15 +54,13 @@ function plot(data, data_type) {
     // Data size and element units size
     var n_right_row = areaValue_data.exon.length,
         right_row_height = 30,
-        n_left_col = objLength(tx_pattern_data.tx) + 1,
+        n_left_col = obj_length(tx_pattern_data.tx) + 1,
         left_col_width = 25;
 
     // Canvas size
     var height = (d3.max([n_right_row, 15]) + 3) *  right_row_height,
-        width = 1000,
-        margin = {'top':50, 'bottom':50, 'left':50, 'right':50},
-        svg_height = height + margin.top + margin.bottom,
-        svg_width = width + margin.left + margin.right;
+        margin = {'top':50, 'bottom':50, 'left':50, 'right':50};
+
 
     // Left, middle and right size
     var left_frame = 
@@ -77,10 +76,16 @@ function plot(data, data_type) {
         },
         right_frame = 
         {
-            'width': width - left_frame.width - middle_frame.width,
+            'width': d3.min([d3.max([obj_length(gene_expression_data.gene_expression) * 2, 700]), 1400]),
             'height':height,
             'left':middle_frame.left + middle_frame.width
         };
+
+    // Canvas size 
+    var width = left_frame.width + middle_frame.width + right_frame.width,
+        svg_height = height + margin.top + margin.bottom,
+        svg_width = width + margin.left + margin.right;
+
 
     // Element size
     var right_row_frame = 
@@ -110,7 +115,11 @@ function plot(data, data_type) {
     var svg, chart, frame;  // charts
     var left, left_col_charts = [], left_row_charts = [], left_row_line_y = [];  // left
     var middle, middle_row_charts = [];  // middle 
-    var right, right_row_charts = [], right_row_charts_top1, right_row_charts_top2, right_row_y = []; // right
+    var right, right_row_charts = [], 
+        right_row_charts_top1,  // clinical data
+        right_row_charts_top2,  // gene expression
+        right_row_y = []; // right
+    
 
     // Charts
     svg = d3.select('.chart_frame').append('svg')
@@ -144,7 +153,7 @@ function plot(data, data_type) {
 
 
     // left module
-    left = generate_element(left_frame, 'frame left_frame', true);
+    left = generate_element(left_frame, 'frame left_frame', debug = true);
     for (var i=0; i<n_left_col; i++) {
         left_col_charts[i] = left.append('g').attr('class', 'frame')
             .attr('transform', 'translate(' + (left_col_frame.left + i * left_col_frame.width) + ',' + left_col_frame.top + ')');
@@ -161,14 +170,15 @@ function plot(data, data_type) {
         parent_frame_par = left_col_frame,
         parent_width     = left_col_width,
         tx_pattern_data  = tx_pattern_data,
-        tx_start         = tx_start, tx_end = tx_end
+        tx_start         = tx_start,
+        tx_end           = tx_end
     );
     // left RNA seq exon value pattern
     left_row_line_y      = generate_exon_pattern(
         parents          = left_col_charts,
         parent_frame_par = left_col_frame,
         parent_width     = left_col_width,
-        exon_RPKM_data   = areaValue_data,
+        exon_count_data  = areaValue_data,
         tx_start         = tx_start,
         tx_end           = tx_end
     );
@@ -178,8 +188,8 @@ function plot(data, data_type) {
         var y = left_row_line_y[i];
         left_row_charts[i] = left.append('g').attr('class', 'middle_line_' + i)
             .append('line')
+        // give 25px space for displaying TCGA exon or junction pattern
             .attr('x1', left_line.width - 25).attr('x2', left_line.width)
-//            .attr('x1', 0).attr('x2', left_line.width)
             .attr('y1', y).attr('y2', y);
     }
 
@@ -197,7 +207,8 @@ function plot(data, data_type) {
         right_row_y[i] = y;
         right_row_charts[i] = right.append('g').attr('class', "right_row_chart_" + i)
             .attr('transform', 'translate(' + right_row_frame.left + ',' + y +')')
-            .on('mouseover', function() {
+        // mouseover hight light the area, middle line and exon/junction 
+            .on('mouseover', function() {  
                 var obj_class, obj_class_index,
                     middle_line_class, left_col_exon_class;
 
@@ -214,6 +225,7 @@ function plot(data, data_type) {
                 $(left_col_exon_class).addClass('RNASeq_exon_hover_choosen');
 
             })
+        // click fix the hightlight
             .on('click', function() {
                 var obj_class, obj_class_index,
                     middle_line_class, left_col_exon_class;
@@ -245,10 +257,12 @@ function plot(data, data_type) {
                 left_col_exon_class = ".RNASeq_exon_" + obj_class_index;
                 $(left_col_exon_class).removeClass('RNASeq_exon_hover_choosen');
             })
+        // double click link to UCSC Genome Browser
             .on('dblclick', function() {
                 var obj_class, obj_class_index, exon_location,
                     url;
 
+                // the exon/junction index storages in the class name
                 obj_class = $(this).attr('class');
                 obj_class_index = obj_class.substr(16);
 
@@ -283,8 +297,6 @@ function plot(data, data_type) {
         .attr('width', right_row_frame.width)
         .attr('height', right_row_frame.height);
 
-
-
     generate_area_graph(
         right_frame           = right_frame,
         right_row_charts      = right_row_charts,
@@ -306,7 +318,6 @@ function plot(data, data_type) {
     for (var i=0; i<n_right_row; i++) {
         middle_row_charts[i] = middle.append('g').attr('class', 'middle_line_' + i);
         middle_row_charts[i].append('line')
-//            .attr('x1', 0).attr('x2', middle_line.width)
             .attr('x1', 0).attr('x2', middle_line.width)
             .attr('y1', left_row_line_y[i]).attr('y2', right_row_y[i] + right_row_frame.height / 2);
     }
