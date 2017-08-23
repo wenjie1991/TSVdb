@@ -9,7 +9,7 @@
         <script src="/sv/js/echarts.min.js"></script>
         <script src="/sv/js/dataTool.min.js"></script>
         <script src="/sv/js/km.js"></script>
-        <link rel='stylesheet' type='text/css' href='/sv/css/index.css'/>
+        <link rel='stylesheet' type='text/css' href='/sv/css/plot.css'/>
     </head>
     <body>
         <div class="mask"></div>
@@ -35,17 +35,17 @@
 
         <div class="nav_menue">
             <div class="nav_module" id="tutorial">
-                <div class="module_display_when_unchoosen">
+                <div class="nav_module_display_when_unchoosen">
                     <p>Tutorial</p>
                 </div>
             </div>
             
             <div class="nav_module nav_module_option" id="nav_tumor">
-                <div class="module_display_when_unchoosen">
+                <div class="nav_module_display_when_unchoosen">
                     <span class="tooltiptext">Tumor type</span>
-                    <p id="nav_module_display_tumor" style="font-size: 20px">Tumor</p>
+                    <p id="nav_module_display_tumor">Tumor</p>
                 </div>
-                <div class="module_display_when_choosen">
+                <div class="nav_module_display_when_choosen">
                     <div class="module_content module_header">
                         <button type="button" class="nav_module_close">
                             <span>x</span>
@@ -59,7 +59,7 @@
                         </div>
                         <select class="nav_module_tumor_option">
                             <option value="COAD">COAD Colon adenocarcinoma</option>
-                            <option value="READ">READ</option>
+                            <option value="READ">READ Rectal adenocarcinoma</option>
                         </select>
                     </div>
 
@@ -73,11 +73,11 @@
             </div>
 
             <div class="nav_module nav_module_option" id="nav_gene">
-                <div class="module_display_when_unchoosen">
+                <div class="nav_module_display_when_unchoosen">
                     <span class="tooltiptext">Gene</span>
                     <p id="nav_module_display_gene">Gene</p>
                 </div>
-                <div class="module_display_when_choosen">
+                <div class="nav_module_display_when_choosen">
                     <div class="module_content module_header">
                         <button type="button" class="nav_module_close">
                             <span>x</span>
@@ -104,11 +104,11 @@
             </div>
 
             <div class="nav_module nav_module_option" id="nav_region">
-                <div class="module_display_when_unchoosen">
+                <div class="nav_module_display_when_unchoosen">
                     <span class="tooltiptext">Gene Region</span>
-                    <p id="nav_module_display_region" style="font-size: 20px">Region</p>
+                    <p id="nav_module_display_region">Region</p>
                 </div>
-                <div class="module_display_when_choosen">
+                <div class="nav_module_display_when_choosen">
                     <div class="module_content module_header">
                         <button type="button" class="nav_module_close">
                             <span>x</span>
@@ -135,11 +135,11 @@
 
 
             <div class="nav_module nav_module_option" id="nav_clinical">
-                <div class="module_display_when_unchoosen">
+                <div class="nav_module_display_when_unchoosen">
                     <span class="tooltiptext">Phenotype</span>
-                    <p id="nav_module_display_clinical" style="font-size: 20px">Phenotype</p>
+                    <p id="nav_module_display_clinical">Phenotype</p>
                 </div>
-                <div class="module_display_when_choosen">
+                <div class="nav_module_display_when_choosen">
                     <div class="module_content module_header">
                         <button type="button" class="nav_module_close">
                             <span>x</span>
@@ -168,7 +168,7 @@
             </div>
 
             <div class="nav_module" id="nav_new">
-                <div class="module_display_when_unchoosen">
+                <div class="nav_module_display_when_unchoosen">
                     <p>Renew</p>
                 </div>
             </div>
@@ -178,7 +178,7 @@
         <div class="chart_frame">
             <script src="/sv/js/sv/tx_expression.js"></script>
             <script src="/sv/js/sv/transcript_pattern.js"></script>
-            <script src="/sv/js/sv/exon_RPKM.js"></script>
+            <script src="/sv/js/sv/right_chart.js"></script>
             <script src="/sv/js/sv/chart.js"></script>
             <script src="/sv/js/sv/main.js"></script>
         </div>
@@ -194,7 +194,6 @@
             </a>
         </div>
 
-
 <!--        <form action="javascript:draw()">-->
 <!--            <span>gene </span><input id='query_gene' type='text' value="TJP1"> </br>-->
 <!--            <span>data type </span><input id='query_data_type' type='text' value="exon"> </br>-->
@@ -202,7 +201,6 @@
 <!--            <span>clinical type </span><input id='query_clinical_type' type='text' value="sampletype"> </br>-->
 <!--            <input type="submit" value="Submit">-->
 <!--        </form>-->
-        <script src="/sv/js/sv/header.js"></script>
     </body>
 </html>
 
