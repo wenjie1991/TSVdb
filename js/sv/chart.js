@@ -35,8 +35,7 @@ function plot(data, data_type) {
     prepare_canvas();
 
     var tx_pattern_data       = data.tx_pattern,
-        exon_count_data       = data.exon_count,
-        juc_count_data        = data.juc_count,
+        areaValue_data        = data.areaData,
         clinical_data         = data.clinical,
         overall_survival_data = data.os,
         gene_expression_data  = data.gene_expression, // normalized RSEM
@@ -47,11 +46,6 @@ function plot(data, data_type) {
     // The smallest value of start and biggest value of end.
     var tx_start = Infinity, tx_end = 0, strand;
 
-    if (data_type == 'exon') {
-        areaValue_data = exon_count_data;
-    } else if (data_type == 'junction') {
-        areaValue_data = juc_count_data;
-    }
 
     for (var i in areaValue_data.exon) {
         strand = areaValue_data.exon[i].strand;

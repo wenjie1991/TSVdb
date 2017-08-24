@@ -24,7 +24,7 @@ function draw() {
 //    clinical_type = $("#query_clinical_type").val();
 
 //    url = "/sv_db?gene=" + gene + "&tumor=" + tumor_type + "&cd=" + clinical_type;
-    url = "/example_data/" + tumor_type + "_" + gene + "_" + clinical_type + ".json";
+    url = "/example_data/" + tumor_type + "_" + gene + "_" + clinical_type + "_" + data_type + ".json";
     d3.json(url, function(error, data) {
         console.log(data);
         plot(data, data_type);

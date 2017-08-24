@@ -14,6 +14,7 @@ http.createServer(function(req, res) {
         var gene = urlParsed['query']["gene"];
         var tumor = urlParsed['query']["tumor"];
         var cd = urlParsed['query']["cd"];
+        var area = urlParsed['query']["area"];
 
 
         var db = yield MongoClient.connect('mongodb://localhost:27017/sv');
@@ -39,31 +40,33 @@ http.createServer(function(req, res) {
         }
         //        console.log(tx_pattern_result);
 
-        // exon_RPKM: expression of each exon
-        try{
-            var collection = db.collection('exon_RPKM_' + tumor);
-            if (gene_field == "symbol") {
-                var exon_RPKM_result = yield collection.findOne({symbol: gene});
-            } else {
-                var exon_RPKM_result = yield collection.findOne({entrezid: gene});
+        if (area == "exon") {
+            // exon_count: expression of each exon
+            try{
+                var collection = db.collection('exon_RPKM_' + tumor);
+                if (gene_field == "symbol") {
+                    var areaData = yield collection.findOne({symbol: gene});
+                } else {
+                    var areaData = yield collection.findOne({entrezid: gene});
+                }
+//                delete areaData["_id"];
+            } catch(err){
+                console.log(err)
             }
-            delete exon_RPKM_result["_id"];
-        } catch(err){
-            console.log(err)
-        }
-        //        console.log(exon_RPKM_result);
-
-        // juc_count: junction count
-        try {
-            var collection = db.collection('juc_count_' + tumor);
-            if (gene_field == "symbol") {
-                var juc_count_result = yield collection.findOne({symbol: gene});
-            } else {
-                var juc_count_result = yield collection.findOne({entrezid: gene});
+            //        console.log(areaData);
+        } else {
+            // juc_count: junction count
+            try {
+                var collection = db.collection('juc_count_' + tumor);
+                if (gene_field == "symbol") {
+                    var areaData = yield collection.findOne({symbol: gene});
+                } else {
+                    var areaData = yield collection.findOne({entrezid: gene});
+                }
+//                delete areaData["_id"];
+            } catch(err){
+                console.log(err)
             }
-            delete juc_count_result["_id"];
-        } catch(err){
-            console.log(err)
         }
 
         // gene_expression: expression information of genes
@@ -109,8 +112,7 @@ http.createServer(function(req, res) {
 
         // output json object
         var outputJson = {
-            juc_count: juc_count_result,
-            exon_count: exon_RPKM_result,
+            areaData: areaData,
             gene_expression: gene_expression_result,
             tx_pattern: tx_pattern_result,
             tx_expression: tx_expression_result,
