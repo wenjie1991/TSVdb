@@ -1,3 +1,20 @@
+// Download button
+//https://stackoverflow.com/questions/2483919/how-to-save-svg-canvas-to-local-filesystem
+function encode_as_img_and_link(){
+    // Add some critical information
+    $("svg").attr({ version: '1.1' , xmlns:"http://www.w3.org/2000/svg"});
+
+    var svg = $(".chart_frame").html();
+//    var b64 = Base64.encode(svg); // or use btoa if supported
+    var b64 = btoa(svg); // or use btoa if supported
+
+    // Works in recent Webkit(Chrome)
+//    $("body").append($("<img src='data:image/svg+xml;base64,\n"+b64+"' alt='file.svg'/>"));
+
+    // Works in Firefox 3.6 and Webit and possibly any browser which supports the data-uri
+    $("body").append($("<a href-lang='image/svg+xml' href='data:image/svg+xml;base64,\n"+b64+"' title='file.svg'>Download</a>"));
+}
+
 function obj_length(obj){
     var i=0;
     for (var x in obj){
@@ -322,3 +339,4 @@ function plot(data, data_type) {
             .attr('y1', left_row_line_y[i]).attr('y2', right_row_y[i] + right_row_frame.height / 2);
     }
 }
+

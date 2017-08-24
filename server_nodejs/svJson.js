@@ -124,7 +124,7 @@ http.createServer(function(req, res) {
         var buf = new Buffer(JSON.stringify(outputJson), "utf-8");
         zlib.gzip(buf, function (_, result) {  // The callback will give you the 
             res.writeHead(200, {
-                'Content-Type': 'application/gzip', 
+                'Content-Type': 'application/json', 
                 'Access-Control-Allow-Origin':'*',
                 'Content-Encoding': 'gzip'
             });

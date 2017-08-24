@@ -1,3 +1,7 @@
+function round(num, digits) {
+    return +(Math.round(num + "e+" + digits) + "e-" + digits);
+}
+
 function boxplot(
     txid, 
     rearranged_clinical,
@@ -77,11 +81,11 @@ function boxplot(
                     formatter: function (param) {
                         return [
                             '' + param.name + ': ',
-                            'upper: ' + param.data[4],
-                            'Q3: ' + param.data[3],
-                            'median: ' + param.data[2],
-                            'Q1: ' + param.data[1],
-                            'lower: ' + param.data[0]
+                            'upper: '  + round(param.data[5], 2),
+                            'Q3: '     + round(param.data[4], 2),
+                            'median: ' + round(param.data[3], 2),
+                            'Q1: '     + round(param.data[2], 2),
+                            'lower: '  + round(param.data[1], 2)
                         ].join('<br/>')
                     }
                 }

@@ -10,8 +10,9 @@ TSVdb is an easy-to-use web tool for the integration and visualization of mRNA s
 git clone git@github.com:wenjie1991/TSVdb.git
 cd TSVdb
 http-server -p 8080
+chrome http://localhost:8080/index_demo.html
 chrome http://localhost:8080/plot_demo.html
 ```
 
 ## Test
-    COAD -> 1 -> Exon -> SampleType
+    In plot_demo.html: COAD -> 1 -> Exon -> SampleType
