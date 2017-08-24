@@ -4,6 +4,7 @@ var url = require('url');
 var fs = require('fs');
 var MongoClient = require('mongodb').MongoClient,
     co = require('co');
+var zlib = require('zlib');
 
 var re = /^\d+$/;
 
@@ -24,7 +25,7 @@ http.createServer(function(req, res) {
             gene_field = "symbol";
         }
 
-        
+
         // tx_pattern: transcripts information
         try{
             var collection = db.collection('tx_pattern');
@@ -36,7 +37,7 @@ http.createServer(function(req, res) {
         } catch(err){
             console.log(err)
         }
-//        console.log(tx_pattern_result);
+        //        console.log(tx_pattern_result);
 
         // exon_RPKM: expression of each exon
         try{
@@ -50,7 +51,7 @@ http.createServer(function(req, res) {
         } catch(err){
             console.log(err)
         }
-//        console.log(exon_RPKM_result);
+        //        console.log(exon_RPKM_result);
 
         // juc_count: junction count
         try {
@@ -77,7 +78,7 @@ http.createServer(function(req, res) {
         } catch(err){
             console.log(err)
         }
-//        console.log(gene_expression_result);
+        //        console.log(gene_expression_result);
 
         // tx_expression: expression information of transcriptional isoform
         try {
@@ -91,7 +92,7 @@ http.createServer(function(req, res) {
         } catch(err){
             console.log(err)
         }
-//        console.log(tx_expression_result);
+        //        console.log(tx_expression_result);
 
 
         // clinical
@@ -103,7 +104,7 @@ http.createServer(function(req, res) {
         } catch(err){
             console.log(err)
         }
-//        console.log(clinical_result);
+        //        console.log(clinical_result);
 
 
         // output json object
@@ -116,18 +117,28 @@ http.createServer(function(req, res) {
             clinical: clinical_result,
             os: overall_survival_result,
         } 
-//        console.log(JSON.stringify(outputJson));
-//        res.json(outputJson);
-        res.writeHead(200, {'Content-Type': 'application/json', 'Access-Control-Allow-Origin':'*'});
-        res.write(JSON.stringify(outputJson));
-        res.end();
+        //        console.log(JSON.stringify(outputJson));
+        //        res.json(outputJson);
+
+        // Ref. https://stackoverflow.com/questions/14778239/nodejs-send-data-in-gzip-using-zlib
+        var buf = new Buffer(JSON.stringify(outputJson), "utf-8");
+        zlib.gzip(buf, function (_, result) {  // The callback will give you the 
+            res.writeHead(200, {
+                'Content-Type': 'application/gzip', 
+                'Access-Control-Allow-Origin':'*',
+                'Content-Encoding': 'gzip'
+            });
+            res.end(result);                     // result, so just send it.
+        });
+
+        //        res.writeHead(200, {'Content-Type': 'application/json', 'Access-Control-Allow-Origin':'*'});
+        //        res.write(JSON.stringify(outputJson));
+        //        res.end();
 
         // Db close
         db.close();
     };
-
     co(fn());
-
 }).listen(8081, 'localhost');
 console.log('Server running at http://localhost:8081/');
 
