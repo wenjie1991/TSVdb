@@ -43,7 +43,7 @@ http.createServer(function(req, res) {
         if (area == "exon") {
             // exon_count: expression of each exon
             try{
-                var collection = db.collection('exon_RPKM_' + tumor);
+                var collection = db.collection('exon_count_' + tumor);
                 if (gene_field == "symbol") {
                     var areaData = yield collection.findOne({symbol: gene});
                 } else {
