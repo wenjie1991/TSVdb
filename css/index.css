@@ -30,6 +30,21 @@ body {
 .index-area .content h2 {
 	font-size: 20px;
 }
+.index-area .content div {
+
+}
+.index-area .content div span {
+	display: inline-block;
+	padding: 10px;
+	margin: 10px 20px;
+	border: 1px solid #000;
+	cursor: pointer;
+}
+.index-area .content div span:hover {
+	color: #fff;
+	background-color: #000;
+}
+
 
 #section_intro h1 {
     position: relative;
