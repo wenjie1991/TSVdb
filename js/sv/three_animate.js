@@ -8,7 +8,7 @@ var camera, scene, renderer;
 var particles, particle, count = 0;
 
 var mouseX = 85,
-    mouseY = -342;
+    mouseY = -250;
 
 var windowHalfX = window.innerWidth / 2;
 var windowHalfY = window.innerHeight / 2;
@@ -19,7 +19,7 @@ animate();
 function init() {
 
     container = document.createElement('div');
-    document.body.appendChild(container);
+    document.getElementById("index-node").appendChild(container);
 
     camera = new THREE.PerspectiveCamera(120, window.innerWidth / window.innerHeight, 1, 10000);
     camera.position.z = 1000;
@@ -31,7 +31,7 @@ function init() {
     var PI2 = Math.PI * 2;
     var material = new THREE.ParticleCanvasMaterial({
 
-        color: 0xe1e1e1,
+        color: 0x000,
         program: function(context) {
 
             context.beginPath();
@@ -88,8 +88,7 @@ function onWindowResize() {
 function onDocumentMouseMove(event) {
 
     mouseX = event.clientX - windowHalfX;
-    mouseY = event.clientY - windowHalfY;
-
+    // mouseY = event.clientY - windowHalfY;
 }
 
 function onDocumentTouchStart(event) {
