@@ -16,16 +16,16 @@
  */
 
 body {
-	font-family: Helvetica Neue,Helvetica,PingFang SC,Hiragino Sans GB,Microsoft YaHei,\\5FAE\8F6F\96C5\9ED1,Arial,sans-serif;
-	font-size: 14px;
-	width: 100%;
-	height: 100%;
-	margin: 0;
-	padding: 0;
+    font-family: Helvetica Neue, Helvetica, PingFang SC, Hiragino Sans GB, Microsoft YaHei, \\5FAE\8F6F\96C5\9ED1, Arial, sans-serif;
+    font-size: 14px;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
 }
 
 .index-area {
-	width: 100%;
+    width: 100%;
     position: absolute;
     top: 0;
     bottom: 0;
@@ -37,63 +37,73 @@ body {
     background: -moz-linear-gradient(left, #01579b, #039be5, #29b6f6, #039be5, #01579b);
     background: linear-gradient(left, #01579b, #039be5, #29b6f6, #039be5, #01579b);
 }
-.index-area .content {
-	width: 100%;
-	position: absolute;
-	top: 100px;
-	color: #fff;
-}
-.index-area .content i {
-	font-size: 120px;
-  text-shadow: 5px 5px 5px #424242;
-}
-.index-area .content h1 {
-	font-size: 70px;
-  text-shadow: 2px 2px 5px #424242;
-  letter-spacing: 2px;
-}
-.index-area .content h2 {
-	font-size: 20px;
-  font-weight: normal;
-  text-shadow: 1px 1px 1px #424242;
-  letter-spacing: 10px;
-}
-.index-area .content div {
 
+.index-area .content {
+    width: 100%;
+    position: absolute;
+    top: 100px;
+    color: #fff;
 }
+
+.index-area .content i {
+    font-size: 120px;
+    text-shadow: 5px 5px 5px #424242;
+}
+
+.index-area .content h1 {
+    font-size: 70px;
+    text-shadow: 2px 2px 5px #424242;
+    letter-spacing: 2px;
+}
+
+.index-area .content h2 {
+    font-size: 20px;
+    font-weight: normal;
+    text-shadow: 1px 1px 1px #424242;
+    letter-spacing: 10px;
+}
+
+.index-area .content div {}
+
 .index-area .content div a {
-  position: relative;
-	display: inline-block;
-	padding: 10px;
-	margin: 20px 20px;
-  font-weight: bold;
-  font-size: 20px;
-  text-shadow: 2px 2px 2px #424242;
-  color: #fff;
-  text-decoration: none;
+    position: relative;
+    display: inline-block;
+    padding: 10px;
+    margin: 20px 20px;
+    font-weight: bold;
+    font-size: 20px;
+    text-shadow: 2px 2px 2px #424242;
+    color: #fff;
+    text-decoration: none;
 }
-.index-area .content div a:hover{
-  transform: scale(1.1);
+
+.index-area .content div a:hover {
+    transform: scale(1.1);
 }
-.index-area .content div a:before,.index-area .content div a:after{
-  content: '';
-  position: absolute;
-  top: 0;
-  right: 0;
-  height:  2px;
-  width: 0;
-  background: #01579b;
-  transition: 400ms ease all;
+
+.index-area .content div a:before,
+.index-area .content div a:after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 2px;
+    width: 0;
+    background: #01579b;
+    transition: 400ms ease all;
 }
-.index-area .content div a:after{
-  right: inherit;
-  top: inherit;
-  left: 0;
-  bottom: 0;
+
+.index-area .content div a:after {
+    right: inherit;
+    top: inherit;
+    left: 0;
+    bottom: 0;
 }
-.index-area .content div a:hover:before, .index-area .content div a:hover:after{
-  width: 100%;
-  transition: 800ms ease all;
+
+.index-area .content div a:hover:before,
+.index-area .content div a:hover:after {
+    width: 100%;
+    transition: 800ms ease all;
 }
 
 
