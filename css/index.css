@@ -44,11 +44,11 @@ body {
 	color: #fff;
 }
 .index-area .content i {
-	font-size: 100px;
+	font-size: 120px;
   text-shadow: 5px 5px 5px #424242;
 }
 .index-area .content h1 {
-	font-size: 65px;
+	font-size: 70px;
   text-shadow: 2px 2px 5px #424242;
   letter-spacing: 2px;
 }
@@ -61,20 +61,21 @@ body {
 .index-area .content div {
 
 }
-.index-area .content div span {
+.index-area .content div a {
   position: relative;
 	display: inline-block;
 	padding: 10px;
 	margin: 20px 20px;
-	cursor: pointer;
   font-weight: bold;
   font-size: 20px;
   text-shadow: 2px 2px 2px #424242;
+  color: #fff;
+  text-decoration: none;
 }
-.index-area .content div span:hover{
+.index-area .content div a:hover{
   transform: scale(1.1);
 }
-.index-area .content div span:before,.index-area .content div span:after{
+.index-area .content div a:before,.index-area .content div a:after{
   content: '';
   position: absolute;
   top: 0;
@@ -84,13 +85,13 @@ body {
   background: #01579b;
   transition: 400ms ease all;
 }
-.index-area .content div span:after{
+.index-area .content div a:after{
   right: inherit;
   top: inherit;
   left: 0;
   bottom: 0;
 }
-.index-area .content div span:hover:before, .index-area .content div span:hover:after{
+.index-area .content div a:hover:before, .index-area .content div a:hover:after{
   width: 100%;
   transition: 800ms ease all;
 }
