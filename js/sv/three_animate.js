@@ -21,7 +21,7 @@ function init() {
     container = document.createElement('div');
     document.getElementById("index-node").appendChild(container);
 
-    camera = new THREE.PerspectiveCamera(120, window.innerWidth / window.innerHeight, 1, 10000);
+    camera = new THREE.PerspectiveCamera(100, window.innerWidth / window.innerHeight, 1, 10000);
     camera.position.z = 1000;
 
     scene = new THREE.Scene();
@@ -31,11 +31,11 @@ function init() {
     var PI2 = Math.PI * 2;
     var material = new THREE.ParticleCanvasMaterial({
 
-        color: 0x000,
+        color: 0x4fc3f7,
         program: function(context) {
 
             context.beginPath();
-            context.arc(0, 0, .6, 0, PI2, true);
+            context.arc(0, 0, .9, 0, PI2, true);
             context.fill();
 
         }
