@@ -145,7 +145,20 @@ body {
 @keyframes rotate{from{transform: rotate(0deg)}
     to{transform: rotateY(359deg)}
 }
-
+.toPlot a {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    z-index: 999;
+    text-decoration: none;
+    color: #000;
+    font-size: 15px;
+    font-weight: bold;
+    text-shadow: 2px 2px 2px #4fc3f7;
+}
+.toPlot a:hover {
+    text-shadow: 1px 1px 1px #fff;
+}
 .section {
     text-align: center;
 }
