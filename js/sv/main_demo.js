@@ -26,8 +26,9 @@ function draw() {
 //    url = "/sv_db?gene=" + gene + "&tumor=" + tumor_type + "&cd=" + clinical_type;
     url = "/example_data/" + tumor_type + "_" + gene + "_" + clinical_type + "_" + data_type + ".json";
     d3.json(url, function(error, data) {
-        console.log(data);
+        $("#myloading").css("display", 'flex');
         plot(data, data_type);
+        $("#myloading").css("display", 'none');
     });
 }
 

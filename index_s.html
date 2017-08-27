@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <head>
-    <link rel="SHORTCUT ICON" href="./logo2.ico"/>
+    <link rel="SHORTCUT ICON" href="/sv/logo2.ico"/>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>TSVdb</title>
     <meta name="author" content="Sun Wenjie" />
     <meta name="description" content="TCGA splicing variation database." />
     <meta name="keywords"  content="TCGA,tumor,splicing variation,visualization" />
     <meta name="Resource-type" content="Document" />
-    <link rel="stylesheet" type="text/css" href="./css/jquery.fullPage.css" />
-    <link rel="stylesheet" type="text/css" href="./css/index.css" />
-    <script src="./js/jquery-3.2.1.min.js"></script>
-    <script src="./js/jquery-ui.min.js"></script>
-    <script type="text/javascript" src="./js/scrolloverflow.min.js"></script>
-    <script type="text/javascript" src="./js/jquery.fullPage.js"></script>
+    <link rel="stylesheet" type="text/css" href="/sv/css/jquery.fullPage.css" />
+    <link rel="stylesheet" type="text/css" href="/sv/css/index.css" />
+    <script src="/sv/js/jquery-3.2.1.min.js"></script>
+    <script src="/sv/js/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="/sv/js/scrolloverflow.min.js"></script>
+    <script type="text/javascript" src="/sv/js/jquery.fullPage.js"></script>
     <script type="text/javascript">
         $(document).ready(function() {
             $('#fullpage').fullpage({
@@ -29,16 +29,16 @@
             <h1>TSVdb</h1>
             <h2>TCGA Splicing Variation DB</h2>
             <div class="intro"><p>TSVdb is an easy-to-use web tool for the integration and visualization of mRNA splicing variation, transcirptional isoform expression and clinical information from The Cancer Genome Atlas project (TCGA) RNASeq data.</p></div>
-            <div class="selection" id="selection_start"><a href="./plot_demo.html">Start</a></div>
+            <div class="selection" id="selection_start"><a href="/sv/plot.html">Start</a></div>
             <div class="selection" id="selection_tutorial">Tutorial</div>
-            <img src = "./image/strategy.png" alt="strategy" style="height: 300px;">
+            <img src = "/sv/image/strategy.png" alt="strategy" style="height: 300px;">
         </div>
 
         <div class="section" id="section_tutorial">
             <div class="slide" id="selecting_data">
                 <h1>Tutorial</h1>
                 <h2>1. Selecting Data</h2>
-                <img src="./image/select_data.png" alt="select_data" style="height: 400px">
+                <img src="/sv/image/select_data.png" alt="select_data" style="height: 400px">
                 <p>
                 When open the data visualizing page, the user must sequentially select the tumor type, gene, data type and clinical information.
                 </br>
@@ -59,7 +59,7 @@
             <div class="slide" id="exon_junc">
                 <h1>Tutorial</h1>
                 <h2>2. About graph</h2>
-                <img src="./image/about_graph.png" alt="about_graph" style="height: 500px">
+                <img src="/sv/image/about_graph.png" alt="about_graph" style="height: 500px">
                 <p>
                 Data selection can adjust by clicking the corresponding buttons in the header.
                 </br>
@@ -74,7 +74,7 @@
             <div class="slide" id="isoform">
                 <h1>Tutorial</h1>
                 <h2>3. Isoform expression</h2>
-                <img src="./image/about_isoform.png" alt="about_isoform" style="height: 500px">
+                <img src="/sv/image/about_isoform.png" alt="about_isoform" style="height: 500px">
                 <p>
                 By clicking the transcriptional isoform, the box plot of isoform expression value (normalized RSEM) by each group appear. At the top of the pop-up box, there are buttons used to switch the display of box plot or KM plot. At the top right side, you can see the UCSC id of the isoform, Click on the text will open a new tab or window display the UCSC Genome Browsers with the isoform highlighted.
                 </br>
@@ -85,7 +85,7 @@
 
         <div class="section" id="flowchart">
             <h1>Flowchart and algorithms</h1>
-            <img src="./image/flowchart.png" alt="flowchart" height="600">
+            <img src="/sv/image/flowchart.png" alt="flowchart" height="600">
             <p>
             The TCGA level 3 gene and isoform RSEM expression, exon and junction quantification value (UNC illuminaHiSeq_RNASeqV2), clinical data (Merged_clinical_level_1) were downloaded from TCGA ftp site -- Firehouse.
             </br>

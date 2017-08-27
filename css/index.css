@@ -1,6 +1,220 @@
-#section_intro h1 {
+/**
+ * lightblue50: #e1f5fe  
+   lightblue100: #b3e5fc  
+   lightblue200: #81d4fa  
+   lightblue300: #4fc3f7  
+   lightblue400: #29b6f6  
+   lightblue500: #03a9f4  
+   lightblue600: #039be5  
+   lightblue700: #0288d1  
+   lightblue800: #0277bd  
+   lightblue900: #01579b  
+   lightbluea100: #80d8ff  
+   lightbluea200: #40c4ff  
+   lightbluea400: #00b0ff  
+   lightbluea700: #0091ea
+ */
+
+body {
+    font-family: Helvetica Neue, Helvetica, PingFang SC, Hiragino Sans GB, Microsoft YaHei, \\5FAE\8F6F\96C5\9ED1, Arial, sans-serif;
+    font-size: 14px;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.index-area {
+    width: 100%;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    text-align: center;
+    overflow: hidden;
+    background: -webkit-linear-gradient(left, #01579b, #039be5, #29b6f6, #039be5, #01579b);
+    background: -o-linear-gradient(left, #01579b, #039be5, #29b6f6, #039be5, #01579b);
+    background: -moz-linear-gradient(left, #01579b, #039be5, #29b6f6, #039be5, #01579b);
+    background: linear-gradient(left, #01579b, #039be5, #29b6f6, #039be5, #01579b);
+}
+
+.index-area .content {
+    width: 100%;
+    position: absolute;
+    top: 100px;
+    color: #fff;
+}
+
+.index-area .content i {
+    font-size: 120px;
+    text-shadow: 5px 5px 5px #424242;
+}
+
+.index-area .content h1 {
+    font-size: 70px;
+    text-shadow: 2px 2px 5px #424242;
+    letter-spacing: 2px;
+}
+
+.index-area .content h2 {
+    font-size: 20px;
+    font-weight: normal;
+    text-shadow: 1px 1px 1px #424242;
+    letter-spacing: 10px;
+}
+
+.index-area .content div {}
+
+.index-area .content div a {
     position: relative;
+    display: inline-block;
+    padding: 10px;
+    margin: 20px 20px;
+    font-weight: bold;
+    font-size: 20px;
+    text-shadow: 2px 2px 2px #424242;
+    color: #fff;
+    text-decoration: none;
+}
+
+.index-area .content div a:hover {
+    transform: scale(1.1);
+}
+
+.index-area .content div a:before,
+.index-area .content div a:after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 2px;
+    width: 0;
+    background: #01579b;
+    transition: 400ms ease all;
+}
+
+.index-area .content div a:after {
+    right: inherit;
+    top: inherit;
+    left: 0;
+    bottom: 0;
+}
+
+.index-area .content div a:hover:before,
+.index-area .content div a:hover:after {
+    width: 100%;
+    transition: 800ms ease all;
+}
+
+
+.toHome a {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 999;
+    text-decoration: none;
+    color: #0288d1;
+    font-size: 30px;
+    font-weight: bold;
+    text-shadow: 2px 2px 5px #4fc3f7;
+}
+
+.toHome a:hover {
+    text-shadow: 2px 2px 2px #424242;
+}
+
+.toHome a i {
+    display: inline-block;
+    color: #01579b;
+    font-weight: normal;
+    font-size: 50px;
+    margin: 10px;
+    text-shadow: 2px 2px 5px #fff;
+    -webkit-transition-property: -webkit-transform;
+    -webkit-transition-duration: 1s;
+    -moz-transition-property: -moz-transform;
+    -moz-transition-duration: 1s;
+    -webkit-animation: rotate 3s linear infinite;
+    -moz-animation: rotate 3s linear infinite;
+    animation: rotate 3s linear infinite;
+}
+
+@-webkit-keyframes rotate {
+    from {
+        -webkit-transform: rotate(0deg)
+    }
+    to {
+        -webkit-transform: rotateY(360deg)
+    }
+}
+
+@-moz-keyframes rotate {
+    from {
+        -moz-transform: rotate(0deg)
+    }
+    to {
+        -moz-transform: rotateY(359deg)
+    }
+}
+
+@keyframes rotate {
+    from {
+        transform: rotate(0deg)
+    }
+    to {
+        transform: rotateY(359deg)
+    }
+}
+
+.toPlot a {
+    position: absolute;
     top: 20px;
-    left: 100px;
-    color: red;
+    right: 20px;
+    z-index: 999;
+    text-decoration: none;
+    color: #000;
+    font-size: 15px;
+    font-weight: bold;
+    text-shadow: 2px 2px 2px #4fc3f7;
+}
+
+.toPlot a:hover {
+    text-shadow: 1px 1px 1px #fff;
+}
+
+.section {
+    text-align: center;
+}
+
+.intr_h1 {
+    font-size: 90px;
+    text-shadow: 2px 2px 5px #4fc3f7;
+    letter-spacing: 2px;
+    color: #01579b;
+    margin-bottom: 10px;
+}
+
+.intr_h2 {
+    font-size: 30px;
+    text-shadow: 1px 1px 2px #424242;
+    font-weight: normal;
+    letter-spacing: 2px;
+}
+
+.intro {
+    margin: 0 200px;
+    line-height: 30px;
+}
+
+.myImg {
+    margin: 20px auto;
+    box-shadow: 0 0 10px 2px #424242;
+}
+
+.spe_h1 {
+    text-shadow: 1px 1px 2px #fff;
+}
+
+.sep_h2 {
+    font-weight: normal;
 }
