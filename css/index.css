@@ -107,9 +107,75 @@ body {
 }
 
 
-#section_intro h1 {
+.toHome a {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 999;
+    text-decoration: none;
+    color: #0288d1;
+    font-size: 30px;
+    font-weight: bold;
+    text-shadow: 2px 2px 5px #4fc3f7;
+}
+.toHome a:hover {
+    text-shadow: 2px 2px 2px #424242;
+}
+.toHome a i {
+    display: inline-block;
+    color: #01579b;
+    font-weight: normal;
+    font-size: 50px;
+    margin: 10px;
+    text-shadow: 2px 2px 5px #fff;
+    -webkit-transition-property: -webkit-transform;
+    -webkit-transition-duration: 1s;
+    -moz-transition-property: -moz-transform;
+    -moz-transition-duration: 1s;
+    -webkit-animation: rotate 3s linear infinite;
+    -moz-animation: rotate 3s linear infinite;
+    animation: rotate 3s linear infinite;
+}
+@-webkit-keyframes rotate{from{-webkit-transform: rotate(0deg)}
+    to{-webkit-transform: rotateY(360deg)}
+}
+@-moz-keyframes rotate{from{-moz-transform: rotate(0deg)}
+    to{-moz-transform: rotateY(359deg)}
+}
+@keyframes rotate{from{transform: rotate(0deg)}
+    to{transform: rotateY(359deg)}
+}
+
+.section {
+    text-align: center;
+}
+.intr_h1 {
+    font-size: 90px;
+    text-shadow: 2px 2px 5px #4fc3f7;
+    letter-spacing: 2px;
+    color: #01579b;
+    margin-bottom: 10px;
+}
+.intr_h2 {
+    font-size: 30px;
+    text-shadow: 1px 1px 2px #424242;
+    font-weight: normal;
+    letter-spacing: 2px;
+}
+.intro {
+    margin: 0 200px;
+    line-height: 30px;
+}
+.myImg {
+    margin: 20px auto;
+    box-shadow: 0 0 10px 2px #424242;
+}
+.spe_h1 {
+    text-shadow: 1px 1px 2px #fff;
+}
+/* #section_intro h1 {
     position: relative;
     top: 20px;
     left: 100px;
     color: red;
-}
+} */
