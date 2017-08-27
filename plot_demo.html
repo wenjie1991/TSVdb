@@ -10,8 +10,25 @@
         <script src="./js/dataTool.min.js"></script>
         <script src="./js/km.js"></script>
         <link rel='stylesheet' type='text/css' href='./css/plot.css'/>
+        <link rel="stylesheet" type="text/css" href="./fonts/iconfont.css">
     </head>
     <body>
+        <div class="myHeader">
+            <span>
+                <a href="./index.html"><i class="iconfont icon-gene"></i>TSVdb</a>
+            </span>
+        </div>
+        <!-- loading -->
+        <div class="myloading" id="myloading">
+            <div class="spinner">
+                <div class="rect1"></div>
+                <div class="rect2"></div>
+                <div class="rect3"></div>
+                <div class="rect4"></div>
+                <div class="rect5"></div>
+            </div>
+        </div>
+
         <div class="mask"></div>
 
         <div class="tx_expression">
@@ -181,15 +198,23 @@
         <script src="./js/sv/main_demo.js"></script>
         <div class="chart_frame"></div>
         <div class="footer">
-            <hr>
-            <a class="a1" href="www.zju.edu.cn">Department of Pathology and Pathophysiology</a>
-            </br>
-            <a class="a2" href="www.zju.edu.cn">Zhejiang University</a>
-            </br>
-            <a class="a3" href="sunwenjie@zju.edu.cn">Contact</a>
-            <a style="margin: 3px 10px;" rel="license" href="http://creativecommons.org/licenses/by/3.0/deed.en_US">
-                <!--                <img alt="Creative Commons License" style="border-width:0; margin: -2px" src="http://i.creativecommons.org/l/by/3.0/80x15.png">-->
-            </a>
+            <div class="links">
+                <a href="www.zju.edu.cn">Department of Pathology and Pathophysiology</a>
+                <a href="www.zju.edu.cn">Zhejiang University</a>
+                <a href="sunwenjie@zju.edu.cn">Contact</a>
+            </div>
+            <!-- <div class="License">
+                <a style="margin: 3px 10px;" rel="license" href="http://creativecommons.org/licenses/by/3.0/deed.en_US">
+                    <img alt="Creative Commons License" style="border-width:0; margin: -2px" src="http://i.creativecommons.org/l/by/3.0/80x15.png">
+                </a>
+            </div> -->
+            <div class="footer-data">
+                <span><i class="iconfont icon-gene"></i> TSVdb</span>
+                <span>2017</span>
+                <a style="margin: 3px 10px;" rel="license" href="http://creativecommons.org/licenses/by/3.0/deed.en_US">
+                    <img alt="Creative Commons License" style="border-width:0; margin: -2px" src="http://i.creativecommons.org/l/by/3.0/80x15.png">
+                </a>
+            </div>
         </div>
 
 <!--        <form action="javascript:draw()">-->
