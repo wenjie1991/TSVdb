@@ -23,7 +23,7 @@ function draw() {
 //    tumor_type    = $("#query_tumor_type").val();
 //    clinical_type = $("#query_clinical_type").val();
 
-//    url = "/sv_db?gene=" + gene + "&tumor=" + tumor_type + "&cd=" + clinical_type;
+//    url = "/sv_db?gene=" + gene + "&tumor=" + tumor_type + "&cd=" + clinical_type + "&area=" + data_type;
     url = "/example_data/" + tumor_type + "_" + gene + "_" + clinical_type + "_" + data_type + ".json";
     d3.json(url, function(error, data) {
         $("#myloading").css("display", 'flex');
