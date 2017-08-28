@@ -23,10 +23,12 @@ function draw() {
 //    tumor_type    = $("#query_tumor_type").val();
 //    clinical_type = $("#query_clinical_type").val();
 
-    url = "/sv_db?gene=" + gene + "&tumor=" + tumor_type + "&cd=" + clinical_type + "&area=" + data_type;
+//    url = "/sv_db?gene=" + gene + "&tumor=" + tumor_type + "&cd=" + clinical_type;
+    url = "/example_data/" + tumor_type + "_" + gene + "_" + clinical_type + "_" + data_type + ".json";
     d3.json(url, function(error, data) {
-        console.log(data);
+        $("#myloading").css("display", 'flex');
         plot(data, data_type);
+        $("#myloading").css("display", 'none');
     });
 }
 
@@ -116,7 +118,8 @@ function nav_module_gene_select() {
     var input_value = $("#gene_symbol").val();
     var nav_choosen = $("#nav_gene.nav_choosen");
 
-    url = "/sv_checkname?gene=" + input_value + "&tumor=" + tumor_type;
+//    url = "/sv_checkname?gene=" + input_value + "&tumor=" + tumor_type;
+    url = "./example_data/" + input_value + "_" + tumor_type + ".json";
     d3.json(url, function(error, data) {
         if (data.gene) {
             $(".invalide_gene").hide();

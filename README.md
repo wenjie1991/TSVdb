@@ -6,13 +6,13 @@ TSVdb is an easy-to-use web tool for the integration and visualization of mRNA s
 
 # API
 ## Check gene input
-http://localhost:8082?gene=`gene name or entrezid`&tumor=`tumor type`
+http://localhost:8082?gene=[gene name or entrezid]&tumor=[tumor type]
 
 ## Query Json for plot
-http://localhost:8081?gene=`gene name or entrezid`&tumor=`tumor type`&cd=`clinical information type`&area=`exon or junction`
+http://localhost:8081?gene=[gene name or entrezid]&tumor=[tumor type]&cd=[clinical information type]&area=[exon or junction]
 
 ## Download data table
-http://localhost:8083?gene=`gene name or entrezid`&tumor=`tumor type`&cd=`clinical information type`&area=`exon or junction`
+http://localhost:8083?gene=[gene name or entrezid]&tumor=[tumor type]&cd=[clinical information type]&area=[exon or junction]
 
 # Demo
 ## Setup
@@ -20,9 +20,11 @@ http://localhost:8083?gene=`gene name or entrezid`&tumor=`tumor type`&cd=`clinic
 git clone git@github.com:wenjie1991/TSVdb.git
 cd TSVdb
 http-server -p 8080
-chrome http://localhost:8080/index_demo.html
-chrome http://localhost:8080/plot_demo.html
+chrome http://localhost:8080/index.html
+chrome http://localhost:8080/instruction.html
+chrome http://localhost:8080/plot.html
 ```
 
 ## Test (for plot_demo.html)
     In plot_demo.html: COAD -> 1 -> Exon -> SampleType
+    In plot_demo.html: COAD -> 1 -> Junction -> SampleType
