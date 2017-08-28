@@ -13,6 +13,17 @@
         <link rel="stylesheet" type="text/css" href="./fonts/iconfont.css">
     </head>
     <body>
+        <script type="text/javascript">
+            function check_browser() {
+                var navigatorName = "Microsoft Internet Explorer"; 
+                var isIE = false; 
+                if( navigator.appName == navigatorName ){ 
+                    isIE = true; 
+                    alert("please use Firefox, Chrome, Chromium or Safari!");
+                }
+            }
+            window.onload = check_browser();
+        </script>
         <div class="myHeader">
             <span>
                 <a href="./index.html"><i class="iconfont icon-gene"></i>TSVdb</a>

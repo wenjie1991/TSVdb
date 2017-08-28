@@ -12,17 +12,21 @@
     <link rel="stylesheet" type="text/css" href="./css/index.css">
     <link rel="stylesheet" type="text/css" href="./fonts/iconfont.css">
     <script type="text/javascript" src="./js/three.min.js"></script>
-    <script type="text/javascript">
-    var navigatorName = "Microsoft Internet Explorer"; 
-    var isIE = false; 
-    if( navigator.appName == navigatorName ){ 
-        isIE = true; 
-        alert("please use chrome or other browser!");
-    }
-    </script>
+
 </head>
 
 <body>
+    <script type="text/javascript">
+        function check_browser() {
+            var navigatorName = "Microsoft Internet Explorer"; 
+            var isIE = false; 
+            if( navigator.appName == navigatorName ){ 
+                isIE = true; 
+                alert("please use Firefox, Chrome, Chromium or Safari!");
+            }
+        }
+        window.onload = check_browser();
+    </script>
     <div id="index-node" class="index-area">
         <div class="content">
             <i class="iconfont icon-gene"></i>
@@ -30,11 +34,10 @@
             <h2>TCGA Splicing Variation DB</h2>
             <div>
                 <a href="instruction.html">INSTRUCTION</a>
-                <a href="plot_demo.html">START</a>
+                <a href="plot.html">START</a>
             </div>
         </div>
         <script type="text/javascript" src="./js/sv/three_animate.js"></script>
     </div>
 </body>
-
 </html>
