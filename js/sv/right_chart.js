@@ -304,7 +304,8 @@ function gene_expression_graph (
 
     right_row_charts_top.append("g").attr("class", 'expression_area')
         .append('path')
-        .attr('d', area(rearranged_sampleID))
+        .attr('d', area(rearranged_sampleID));
+    d3.select(".gene_expression_row")
         .on("click", function() {
             var url, tx;
             for (i in tx_pattern_data.tx) {

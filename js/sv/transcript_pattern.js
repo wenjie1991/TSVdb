@@ -40,9 +40,15 @@ function generate_transcript_pattern(parents, parent_frame_par, parent_width, tx
             .attr("txid", i)
             .on("mouseover", function() {
                 var tooltip = $(".tx_tooltip");
+                var my_event;
+                if (typeof event == 'undefined') {
+                    my_event = window.event;
+                } else {
+                    my_event = event;
+                }
                 tooltip.html($(this).attr("txid"));
-                tooltip.css("left", event.clientX + 20);
-                tooltip.css("top", event.clientY);
+                tooltip.css("left", my_event.clientX + 20);
+                tooltip.css("top", my_event.clientY);
                 tooltip.show();
             })
             .on("mouseout", function() {
