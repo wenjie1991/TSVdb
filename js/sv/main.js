@@ -85,7 +85,7 @@ function nav_module_select() {
 
 // nav_module: Tutorial 
 $("#tutorial").click(function() {
-    window.open("/sv/index.html", "_self")
+    window.open("./instruction.html", "_self")
 });
 
 // nave_module: Renew 
