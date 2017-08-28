@@ -20,8 +20,9 @@ http://localhost:8083?gene=`gene name or entrezid`&tumor=`tumor type`&cd=`clinic
 git clone git@github.com:wenjie1991/TSVdb.git
 cd TSVdb
 http-server -p 8080
-chrome http://localhost:8080/index_demo.html
-chrome http://localhost:8080/plot_demo.html
+chrome http://localhost:8080/index.html
+chrome http://localhost:8080/instruction.html
+chrome http://localhost:8080/plot.html
 ```
 
 ## Test (for plot_demo.html)
