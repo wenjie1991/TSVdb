@@ -124,6 +124,7 @@ img {
     opacity: 0.7;
     font-weight: bold;
     cursor: pointer;
+    text-decoration: underline;
 }
 
 .tx_pattern rect {
