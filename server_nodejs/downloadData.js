@@ -46,7 +46,7 @@ function get_line(sampleID_i, clinical_json, os, gene_expression, tx_expression,
         line.push(os_i.event);
     }
 
-    
+
     line = push_valide(line, gene_expression.gene_expression[sampleID_i]);
 
     for (i in tx_expression.tx_expression) {
@@ -81,7 +81,7 @@ function prepare_table(
 
     var csv = [];
     csv.push(get_header(cd, gene, tx_expression, areaData));
-    
+
     for (i in sampleID) {
         csv.push(get_line(sampleID[i], clinical_json, os, gene_expression, tx_expression, areaData));
     }
@@ -124,13 +124,13 @@ http.createServer(function(req, res) {
         if (area == "exon") {
             // exon_count: expression of each exon
             try{
-                var collection = db.collection('exon_RPKM_' + tumor);
+                var collection = db.collection('exon_count_' + tumor);
                 if (gene_field == "symbol") {
                     var areaData = yield collection.findOne({symbol: gene});
                 } else {
                     var areaData = yield collection.findOne({entrezid: gene});
                 }
-//                delete areaData["_id"];
+                //                delete areaData["_id"];
             } catch(err){
                 console.log(err)
             }
@@ -144,7 +144,7 @@ http.createServer(function(req, res) {
                 } else {
                     var areaData = yield collection.findOne({entrezid: gene});
                 }
-//                delete areaData["_id"];
+                //                delete areaData["_id"];
             } catch(err){
                 console.log(err)
             }
@@ -158,7 +158,7 @@ http.createServer(function(req, res) {
             } else {
                 var gene_expression_result = yield collection.findOne({entrezid: gene});
             }
-//            delete gene_expression_result["_id"];
+            //            delete gene_expression_result["_id"];
         } catch(err){
             console.log(err)
         }
@@ -172,7 +172,7 @@ http.createServer(function(req, res) {
             } else {
                 var tx_expression_result = yield collection.findOne({entrezid: gene});
             }
-//            delete tx_expression_result["_id"];
+            //            delete tx_expression_result["_id"];
         } catch(err){
             console.log(err)
         }
@@ -184,21 +184,25 @@ http.createServer(function(req, res) {
             var collection = db.collection("clinical_" + tumor);
             var clinical_result = yield collection.findOne({"cd": cd});
             var overall_survival_result = yield collection.findOne({"cd": "overall_survival"});
-//            delete clinical_result['_id'];
+            //            delete clinical_result['_id'];
         } catch(err){
             console.log(err)
         }
         //        console.log(clinical_result);
 
-        var csv = prepare_table(
-            cd              = cd,
-            gene            = gene,
-            clinical        = clinical_result,
-            os              = overall_survival_result,
-            tx_expression   = tx_expression_result,
-            gene_expression = gene_expression_result,
-            areaData        = areaData
-        ) 
+        try {
+            var csv = prepare_table(
+                cd              = cd,
+                gene            = gene,
+                clinical        = clinical_result,
+                os              = overall_survival_result,
+                tx_expression   = tx_expression_result,
+                gene_expression = gene_expression_result,
+                areaData        = areaData
+            ) 
+        } catch(err) {
+            console.log(err)
+        }
 
         // Ref. https://stackoverflow.com/questions/14778239/nodejs-send-data-in-gzip-using-zlib
         var buf = new Buffer(csv, "utf-8");
