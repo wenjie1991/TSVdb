@@ -38,17 +38,18 @@ function generate_transcript_pattern(parents, parent_frame_par, parent_width, tx
         parent_i
             .attr("class", "tx_pattern_frame")
             .attr("txid", i)
-            .on("mouseover", function() {
+            .on("mouseover", function(e) {
+
+                console.log(window.event);
+                console.log(e);  
+
+                //check if we have "e" or "window.event" and use them as "evt"
+                var event = e || window.event    
+
                 var tooltip = $(".tx_tooltip");
-                var my_event;
-                if (typeof event == 'undefined') {
-                    my_event = window.event;
-                } else {
-                    my_event = event;
-                }
                 tooltip.html($(this).attr("txid"));
-                tooltip.css("left", my_event.clientX + 20);
-                tooltip.css("top", my_event.clientY);
+                tooltip.css("left", event.clientX + 20);
+                tooltip.css("top", event.clientY);
                 tooltip.show();
             })
             .on("mouseout", function() {

@@ -1,17 +1,35 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <link rel="SHORTCUT ICON" href="/sv/logo.ico"/>
+        <link rel="SHORTCUT ICON" href="./logo.ico"/>
         <title>TSVdb</title>
         <meta charset="utf-8">
-        <script src="/sv/js/d3.v3.js"></script>
-        <script src="/sv/js/jquery-3.2.1.min.js"></script>
-        <script src="/sv/js/echarts.min.js"></script>
-        <script src="/sv/js/dataTool.min.js"></script>
-        <script src="/sv/js/km.js"></script>
-        <link rel='stylesheet' type='text/css' href='/sv/css/plot.css'/>
+        <script type="text/javascript" src="./js/sv/check_browser.js"></script>
+        <script src="./js/d3.v3.js"></script>
+        <script src="./js/jquery-3.2.1.min.js"></script>
+        <script src="./js/echarts.min.js"></script>
+        <script src="./js/dataTool.min.js"></script>
+        <script src="./js/km.js"></script>
+        <link rel='stylesheet' type='text/css' href='./css/plot.css'/>
+        <link rel="stylesheet" type="text/css" href="./fonts/iconfont.css">
     </head>
     <body>
+        <div class="myHeader">
+            <span>
+                <a href="./index.html"><i class="iconfont icon-gene"></i>TSVdb</a>
+            </span>
+        </div>
+        <!-- loading -->
+        <div class="myloading" id="myloading">
+            <div class="spinner">
+                <div class="rect1"></div>
+                <div class="rect2"></div>
+                <div class="rect3"></div>
+                <div class="rect4"></div>
+                <div class="rect5"></div>
+            </div>
+        </div>
+
         <div class="mask"></div>
 
         <div class="tx_expression">
@@ -19,8 +37,8 @@
                 <button type="button" class="tx_expression_close">
                     <span>x</span>
                 </button>
-                <img class="tx_cd_choose" id="tx_cd_boxplot" src="/sv/image/box_plot.png" alt="boxplot">
-                <img class="tx_cd_choose" id="tx_cd_km" src="/sv/image/km_plot.png" alt="KM">
+                <img class="tx_cd_choose" id="tx_cd_boxplot" src="./image/box_plot.png" alt="boxplot">
+                <img class="tx_cd_choose" id="tx_cd_km" src="./image/km_plot.png" alt="KM">
             </div>
             <div class="ucsc_link_container"><a target="_blank" class="tx_ucsc_link" href="#"></a></div>
 
@@ -58,7 +76,6 @@
                             <label>Choose one tumor type: </label>
                         </div>
                         <select class="nav_module_tumor_option">
-                            <option value="ACC">ACC</option>
                             <option value="COAD">COAD Colon adenocarcinoma</option>
                             <option value="READ">READ Rectal adenocarcinoma</option>
                         </select>
@@ -119,10 +136,10 @@
 
                     <div class="module_body" style="text-align: center">
                         <div class="nav_module_region_option" id="nav_exon_option">
-                            <img src="/sv/image/exon.png" alt="Exon">
+                            <img src="./image/exon.png" alt="Exon">
                         </div>
                         <div class="nav_module_region_option" id="nav_junction_option">
-                            <img src="/sv/image/junction.png" alt="Junction">
+                            <img src="./image/junction.png" alt="Junction">
                         </div>
                     </div>
 
@@ -175,23 +192,30 @@
             </div>
         </div>
 
-        <script src="/sv/js/sv/tx_expression.js"></script>
-        <script src="/sv/js/sv/transcript_pattern.js"></script>
-        <script src="/sv/js/sv/right_chart.js"></script>
-        <script src="/sv/js/sv/chart.js"></script>
-        <script src="/sv/js/sv/main.js"></script>
+        <script src="./js/sv/tx_expression.js"></script>
+        <script src="./js/sv/transcript_pattern.js"></script>
+        <script src="./js/sv/right_chart.js"></script>
+        <script src="./js/sv/chart.js"></script>
+        <script src="./js/sv/main.js"></script>
         <div class="chart_frame"></div>
-
         <div class="footer">
-            <hr>
-            <a class="a1" href="www.zju.edu.cn">Department of Pathology and Pathophysiology</a>
-            </br>
-            <a class="a2" href="www.zju.edu.cn">Zhejiang University</a>
-            </br>
-            <a class="a3" href="sunwenjie@zju.edu.cn">Contact</a>
-            <a style="margin: 3px 10px;" rel="license" href="http://creativecommons.org/licenses/by/3.0/deed.en_US">
-                <!--                <img alt="Creative Commons License" style="border-width:0; margin: -2px" src="http://i.creativecommons.org/l/by/3.0/80x15.png">-->
-            </a>
+            <div class="links">
+                <a href="www.zju.edu.cn">Department of Pathology and Pathophysiology</a>
+                <a href="www.zju.edu.cn">Zhejiang University</a>
+                <a href="https://github.com/wenjie1991/TSVdb">GitHub</a>
+            </div>
+            <!-- <div class="License">
+                <a style="margin: 3px 10px;" rel="license" href="http://creativecommons.org/licenses/by/3.0/deed.en_US">
+                    <img alt="Creative Commons License" style="border-width:0; margin: -2px" src="http://i.creativecommons.org/l/by/3.0/80x15.png">
+                </a>
+            </div> -->
+            <div class="footer-data">
+                <span><i class="iconfont icon-gene"></i> TSVdb</span>
+                <span>2017</span>
+                <a style="margin: 3px 10px;" rel="license" href="http://creativecommons.org/licenses/by/3.0/deed.en_US">
+                    <img alt="Creative Commons License" style="border-width:0; margin: -2px" src="http://i.creativecommons.org/l/by/3.0/80x15.png">
+                </a>
+            </div>
         </div>
 
 <!--        <form action="javascript:draw()">-->
