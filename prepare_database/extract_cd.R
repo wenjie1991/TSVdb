@@ -9,6 +9,7 @@ library(data.table)
 library(magrittr)
 library(plyr)
 
+tumor_type = args[1]
 
 ## input
 gene_expression_file = str_c("../../original_data/", tumor_type, "/gdac.broadinstitute.org_", tumor_type, ".Merge_rnaseqv2__illuminahiseq_rnaseqv2__unc_edu__Level_3__RSEM_genes_normalized__data.Level_3.2016012800.0.0/", tumor_type, ".rnaseqv2__illuminahiseq_rnaseqv2__unc_edu__Level_3__RSEM_genes_normalized__data.data.txt")
