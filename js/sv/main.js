@@ -24,13 +24,19 @@ function draw() {
 //    clinical_type = $("#query_clinical_type").val();
 
 //    url = "/sv_db?gene=" + gene + "&tumor=" + tumor_type + "&cd=" + clinical_type + "&area=" + data_type;
-    url = "/example_data/" + tumor_type + "_" + gene + "_" + clinical_type + "_" + data_type + ".json";
+    var url = "/example_data/" + tumor_type + "_" + gene + "_" + clinical_type + "_" + data_type + ".json";
+
+    // donwload data table link
+    var url_download = "/sv_datatable?gene=" + gene + "&tumor=" + tumor_type + "&cd=" + clinical_type + "&area=" + data_type;
+
     $("#myloading").css("display", 'flex');
     d3.json(url, function(error, data) {
-        plot(data, data_type);
+        plot(data, data_type, url_download);
         $("#myloading").css("display", 'none');
     });
 }
+
+// download data link
 
 // start configure wizard
 function nav_start(obj) {
@@ -197,5 +203,5 @@ function nav_module_clinical_select() {
     return false;
 }
 $(".nav_module_clinical_select").click(nav_module_clinical_select);
-
 //draw();
+

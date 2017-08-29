@@ -119,6 +119,13 @@ img {
     stroke-width: 1pt;
 }
 
+.download_link {
+    fill: #1e4159;
+    opacity: 0.7;
+    font-weight: bold;
+    cursor: pointer;
+}
+
 .tx_pattern rect {
     stroke: #1e4159;
     fill: #1e4159;
@@ -179,6 +186,13 @@ rect.RNASeq_exon_hover_choosen {
 
 .right_row_hover_choosen path {
     stroke-width: 2px;
+}
+
+.right_row_name {
+    fill: #1e4159;
+    opacity: 0.7;
+    font-weight: bold;
+    text-anchor: end;
 }
 
 .middle_line_click_choosen line {
