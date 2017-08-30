@@ -153,10 +153,10 @@ img {
 }
 
 .tx_cd_choose {
-    width: 100px;
-    heigt: 100px;
-    margin-left: 211px;
-    margin-bottom: 20px;
+    width: 75px;
+    heigt: 75px;
+    margin-left: 188px;
+    margin-bottom: 10px;
     box-shadow: 0 5px 15px rgba(0, 0, 0, .5);
 }
 
@@ -238,11 +238,11 @@ line.guide_line {
 .tx_expression {
     display: none;
     position: absolute;
-    top: 75px;
-    margin: 0 auto;
+    top: 30px;
+    margin: auto auto;
     right: 0;
     left: 0;
-    width: 900px;
+    width: 750px;
     height: inherit;
     border-radius: 6px;
     box-shadow: 0 5px 15px rgba(0, 0, 0, .5);
@@ -256,9 +256,9 @@ line.guide_line {
 }
 
 #tx_echart {
-    height: 450px;
+    height: 400px;
     width: 650px;
-    margin: 0 132px;
+    margin: 0 57px;
 }
 
 #tx_km {

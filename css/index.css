@@ -173,7 +173,7 @@ body {
     z-index: 999;
     text-decoration: none;
     color: #000;
-    font-size: 15px;
+    font-size: 20px;
     font-weight: bold;
     text-shadow: 2px 2px 2px #4fc3f7;
 }
@@ -202,14 +202,33 @@ body {
 }
 
 .intro {
-    margin: 0 200px;
+    margin: 0 auto;
     line-height: 30px;
+    max-width: 800px;
+    font-size: 16px;
 }
 
 .myImg {
     margin: 20px auto;
     box-shadow: 0 0 10px 2px #424242;
 }
+
+.slide_content {
+    margin: 0 120px;
+}
+
+.slide_content img {
+    float: right;
+    margin: 0 0 0 30px;
+
+}
+
+.slide_content p {
+    text-align: left;
+/*    margin: 30px 30px;*/
+    font: 15px/1.5 arial, helvetica, sans-serif;
+}
+
 
 .spe_h1 {
     text-shadow: 1px 1px 2px #fff;
