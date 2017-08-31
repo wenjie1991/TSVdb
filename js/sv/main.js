@@ -27,7 +27,7 @@ function draw() {
     var url = "/example_data/" + tumor_type + "_" + gene + "_" + clinical_type + "_" + data_type + ".json";
 
     // donwload data table link
-    var url_download = "/sv_datatable?gene=" + gene + "&tumor=" + tumor_type + "&cd=" + clinical_type + "&area=" + data_type;
+    var url_download = "/sv_datatable?gene=" + gene + "&tumor=" + tumor_type + "&cd=" + clinical_type + "&area=" + data_type + "&gene_sort=" + gene_sort;
 
     $("#myloading").css("display", 'flex');
     d3.json(url, function(error, data) {

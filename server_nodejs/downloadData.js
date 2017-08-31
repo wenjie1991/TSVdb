@@ -11,9 +11,9 @@ var re = /^\d+$/;
 // API:
 // ?tumor=COAD&gene=GAPDH&cd=sampletype&area=exon
 
-function get_header(cd, gene, tx_expression, areaData) {
+function get_header(cd, gene_sort, tx_expression, areaData) {
     // sampleID, clinical, os_time, os_event, gene_expression, isoform_expression, exion/junction_expression
-    var header = ["sampleID", cd, "os_time", "os_event", gene];
+    var header = ["sampleID", cd, "os_time", "os_event", gene_sort];
     for (i in tx_expression.tx_expression) {
         header.push(i);
     }
@@ -62,7 +62,7 @@ function get_line(sampleID_i, clinical_json, os, gene_expression, tx_expression,
 
 function prepare_table(
     cd,
-    gene, 
+    gene_sort, 
     clinical,
     os,
     tx_expression,
@@ -80,7 +80,7 @@ function prepare_table(
     }
 
     var csv = [];
-    csv.push(get_header(cd, gene, tx_expression, areaData));
+    csv.push(get_header(cd, gene_sort, tx_expression, areaData));
 
     for (i in sampleID) {
         csv.push(get_line(sampleID[i], clinical_json, os, gene_expression, tx_expression, areaData));
@@ -97,6 +97,7 @@ http.createServer(function(req, res) {
         var tumor = urlParsed['query']["tumor"];
         var cd = urlParsed['query']["cd"];
         var area = urlParsed['query']["area"];
+        var gene_sort = urlParsed['query']['gene_sort'];
 
         var db = yield MongoClient.connect('mongodb://localhost:27017/sv');
 
@@ -106,6 +107,14 @@ http.createServer(function(req, res) {
         } else {
             gene_field = "symbol";
         }
+
+        var gene_sort_field;
+        if (re.test(gene_sort)) {
+            gene_sort_field = "entrezid";
+        } else {
+            gene_sort_field = "symbol";
+        }
+
 
 
         // tx_pattern: transcripts information
@@ -153,10 +162,10 @@ http.createServer(function(req, res) {
         // gene_expression: expression information of genes
         try {
             var collection = db.collection('gene_expression_' + tumor);
-            if (gene_field == "symbol") {
-                var gene_expression_result = yield collection.findOne({symbol: gene});
+            if (gene_sort_field == "symbol") {
+                var gene_expression_result = yield collection.findOne({symbol: gene_sort});
             } else {
-                var gene_expression_result = yield collection.findOne({entrezid: gene});
+                var gene_expression_result = yield collection.findOne({entrezid: gene_sort});
             }
             //            delete gene_expression_result["_id"];
         } catch(err){
@@ -193,7 +202,7 @@ http.createServer(function(req, res) {
         try {
             var csv = prepare_table(
                 cd              = cd,
-                gene            = gene,
+                gene_sort       = gene_sort,
                 clinical        = clinical_result,
                 os              = overall_survival_result,
                 tx_expression   = tx_expression_result,
