@@ -318,7 +318,7 @@ function plot(data, data_type, url_download) {
 
     right_row_charts_top2.append('text')
         .attr('transform', 'translate(' + '-10,' +  (right_row_frame.height / 2 + 10) + ')')
-        .text("gene Exp")
+        .text(gene_expression_data.symbol)
         .attr('class', 'right_row_name' + " ");
 
     right_row_charts_top2.append('rect')

@@ -15,6 +15,7 @@ http.createServer(function(req, res) {
         var tumor = urlParsed['query']["tumor"];
         var cd = urlParsed['query']["cd"];
         var area = urlParsed['query']["area"];
+        var gene_sort = urlParsed['query']["gene_sort"];
 
 
         var db = yield MongoClient.connect('mongodb://localhost:27017/sv');
@@ -25,6 +26,14 @@ http.createServer(function(req, res) {
         } else {
             gene_field = "symbol";
         }
+
+        var gene_sort_field;
+        if (re.test(gene_sort)) {
+            gene_sort_field = "entrezid";
+        } else {
+            gene_sort_field = "symbol";
+        }
+
 
 
         // tx_pattern: transcripts information
@@ -72,10 +81,10 @@ http.createServer(function(req, res) {
         // gene_expression: expression information of genes
         try {
             var collection = db.collection('gene_expression_' + tumor);
-            if (gene_field == "symbol") {
-                var gene_expression_result = yield collection.findOne({symbol: gene});
+            if (gene_sort_field == "symbol") {
+                var gene_expression_result = yield collection.findOne({symbol: gene_sort});
             } else {
-                var gene_expression_result = yield collection.findOne({entrezid: gene});
+                var gene_expression_result = yield collection.findOne({entrezid: gene_sort});
             }
             delete gene_expression_result["_id"];
         } catch(err){

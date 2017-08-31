@@ -203,13 +203,18 @@
 
                     <div class="module_body">
                         <div style="float: left; width: auto; margin: 20px 20px;">
-                            <label>Choose one tumor type: </label>
+                            <label>Choose clinical data: </label>
                         </div>
                         <select class="nav_module_clinical_option">
                             <option value="SampleType">SampleType</option>
                             <option value="Gender">Gender</option>
                             <option value="Stage">Stage</option>
                         </select>
+                        <div style="float: left; width: auto; margin: 20px 20px;">
+                            <label>Input Official Symbol Or EntrezID for Sample Sorting: </label>
+                            <input type="text" id="gene_symbol_sort">
+                            <p class="invalide_gene" style="margin: 10px 20px; color: #c34d58">Please Input a valide gene Symbol Or gene EntrezID.</p>
+                        </div>
                     </div>
 
                     <div class="module_footer">

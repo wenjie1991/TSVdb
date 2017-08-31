@@ -54,7 +54,7 @@ http.createServer(function(req, res) {
         if (tx_pattern_result == null | gene_expression_result == null) {
             outputJson = {gene: false};
         } else {
-            outputJson = {gene: true};
+            outputJson = {gene: true, symbol: gene_expression_result.symbol, entrezid: gene_expression_result.entrezid};
         }
 
         res.writeHead(200, {'Content-Type': 'application/json', 'Access-Control-Allow-Origin':'*'});
