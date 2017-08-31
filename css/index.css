@@ -214,7 +214,9 @@ body {
 }
 
 .slide_content {
-    margin: 0 120px;
+    margin: 0 auto;
+    max-width: 950px;
+    padding: 0 120px;
 }
 
 .slide_content img {
