@@ -32,6 +32,8 @@ input {
 }
 
 select {
+    width: 350px;
+    text-overflow: ellipsis;
     text-rendering: auto;
     color: initial;
     letter-spacing: normal;
@@ -41,7 +43,7 @@ select {
     text-shadow: none;
     display: inline-block;
     text-align: start;
-    margin: 20px 0;
+    margin: 20px 25px;
     font: 1em Arial;
     border: 1px solid #ggg;
     border-radius: 4px;
@@ -237,7 +239,7 @@ line.guide_line {
 
 .tx_expression {
     display: none;
-    position: absolute;
+    position: fixed;
     top: 30px;
     margin: auto auto;
     right: 0;

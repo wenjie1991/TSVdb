@@ -1,5 +1,10 @@
 function plot_km (container_name, raw_data) {
 
+    // Adaptered from: http://bl.ocks.org/nstrayer/4e613a109707f0487da87300097ca502;
+    // 2017-09-01
+    // The original code is under: https://opensource.org/licenses/GPL-3.0
+
+
     // raw_data:
     //   [{os_time:Num, os_event:Num(0=false, 1=true), group:Num, sampleID:Str}..]
 

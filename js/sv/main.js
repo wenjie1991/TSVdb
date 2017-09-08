@@ -23,11 +23,11 @@ function draw() {
 //    tumor_type    = $("#query_tumor_type").val();
 //    clinical_type = $("#query_clinical_type").val();
 
-//    url = "/sv_db?gene=" + gene + "&tumor=" + tumor_type + "&cd=" + clinical_type + "&area=" + data_type + "&gene_sort=" + gene_sort;
-    var url = "/example_data/" + tumor_type + "_" + gene + "_" + clinical_type + "_" + data_type + ".json";
+    var url = "http://116.62.201.120/sv_db?gene=" + gene + "&tumor=" + tumor_type + "&cd=" + clinical_type + "&area=" + data_type + "&gene_sort=" + gene_sort;
+//    var url = "/example_data/" + tumor_type + "_" + gene + "_" + clinical_type + "_" + data_type + ".json";
 
     // donwload data table link
-    var url_download = "/sv_datatable?gene=" + gene + "&tumor=" + tumor_type + "&cd=" + clinical_type + "&area=" + data_type + "&gene_sort=" + gene_sort;
+    var url_download = "http://116.62.201.120/sv_datatable?gene=" + gene + "&tumor=" + tumor_type + "&cd=" + clinical_type + "&area=" + data_type + "&gene_sort=" + gene_sort;
 
     $("#myloading").css("display", 'flex');
     d3.json(url, function(error, data) {
@@ -124,8 +124,8 @@ function nav_module_gene_select() {
     var input_value = $("#gene_symbol").val();
     var nav_choosen = $("#nav_gene.nav_choosen");
 
-//    url = "/sv_checkname?gene=" + input_value + "&tumor=" + tumor_type;
-    url = "./example_data/" + input_value + "_" + tumor_type + ".json";
+    var url = "http://116.62.201.120/sv_checkname?gene=" + input_value + "&tumor=" + tumor_type;
+//    url = "./example_data/" + input_value + "_" + tumor_type + ".json";
     d3.json(url, function(error, data) {
         if (data.gene) {
             $(".invalide_gene").hide();
@@ -186,8 +186,8 @@ function nav_module_clinical_select() {
     var input_value_gene = $("#gene_symbol_sort").val();
     var input_value_clinical = $(".nav_module_clinical_option").val();
 
-//    url = "/sv_checkname?gene=" + input_value_gene + "&tumor=" + tumor_type;
-    url = "./example_data/" + input_value_gene + "_" + tumor_type + ".json";
+    var url = "http://116.62.201.120/sv_checkname?gene=" + input_value_gene + "&tumor=" + tumor_type;
+//    url = "./example_data/" + input_value_gene + "_" + tumor_type + ".json";
     d3.json(url, function(error, data) {
         if (data.gene) {
             var nav_choosen = $("#nav_clinical.nav_choosen");
