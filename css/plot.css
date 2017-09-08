@@ -116,6 +116,10 @@ img {
     fill: #c34d58;
 }
 
+.gene_expression_row {
+    cursor: pointer;
+}
+
 .expression_area path {
     stroke: #c37d4d;
     stroke-width: 1pt;
@@ -221,6 +225,8 @@ rect.RNASeq_exon_click_choosen {
 
 .clinical_tip {
     position: absolute;
+    left: 0;
+    top: 0;
     line-height: 1;
     font-weight: bold;
     padding: 5px 12px 5px 12px;
