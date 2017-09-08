@@ -1,3 +1,9 @@
+html, body {
+    margin:0;
+    padding:0;
+    height:100%;
+}
+
 h4 {
     font-size: 19px;
     font-weight: normal;
@@ -229,9 +235,8 @@ line.guide_line {
 }
 
 .chart_frame {
-    min-height: 610px;
+    min-height: calc(100% - 220px);
     min-width: 800px;
-    ;
     margin: 0 auto;
     /*    border: 1px solid rgba(255,0,0,.9);*/
     text-align: center;
