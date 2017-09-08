@@ -48,7 +48,7 @@ function boxplot(
         grid: {
             left: '10%',
             right: '10%',
-            bottom: '15%'
+            bottom: '20%'
         },
         xAxis: {
             type: 'category',
@@ -172,11 +172,15 @@ function display_gene (
 
 // isoform expression
 function close_tx_expression_module() {
-    $(".tx_expression").hide();
-    $(".mask").hide();
-    $(".tx_km_svg").remove();
+    if ( $(".tx_expression").css('display') != 'none' ){
+        $(".tx_expression").hide();
+        $(".mask").hide();
+        $(".mask").click()
+        $(".tx_km_svg").remove();
+    }
 };
 $(".tx_expression_close").click(close_tx_expression_module);
+$(".mask").click(close_tx_expression_module);
 
 function choose_boxplot() {
     $("#tx_km").hide();
