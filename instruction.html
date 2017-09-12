@@ -41,7 +41,7 @@
         <div class="section active" id="section_intro">
             <h1 class="intr_h1">TSVdb</h1>
             <h2 class="intr_h2">TCGA Splicing Variation DB</h2>
-            <div class="intro"><p>TSVdb is an easy-to-use web tool for the integration and visualization of mRNA splicing variation, transcirptional isoform expression and clinical information from The Cancer Genome Atlas project (TCGA) RNASeq data.</p></div>
+            <div class="intro"><p>TSVdb is an easy-to-use web tool for the integration and visualization of mRNA splicing variation, transcriptional isoform expression and clinical information from The Cancer Genome Atlas project (TCGA) RNASeq data.</p></div>
             <!-- <div class="selection" id="selection_start"><a href="./plot_demo.html">Start</a></div> -->
             <!-- <div class="selection" id="selection_tutorial">Tutorial</div> -->
             <img src = "./image/strategy.svg" alt="strategy" style="height: 250px;" class="myImg">
@@ -95,8 +95,9 @@
                     By clicking the transcriptional isoform, the box plot of isoform expression value (normalized RSEM) by each group appear. At the top of the pop-up box, there are buttons used to switch the display of box plot or KM plot. At the top right side, you can see the UCSC id of the isoform, Click on the text will open a new tab or window display the UCSC Genome Browsers with the isoform highlighted.
                     </p>
                     <p>
-                    The KM graph includes four parts, the bottom right part is the part used to adjust the cutpoint for grouping, the knob can be pulled to change the cutpoint. The default value is the median. The top right part displays the grouping information includes the cutpoint value and sample size of each group. The top left part displays the survival line of each person that be included after filtering by the survival start time.
+                    The KM graph includes four parts: the bottom right part is the part used to adjust the cutpoint for grouping; the knob can be pulled to change the cutpoint. The default value is the median. The top right part displays the grouping information includes the cutpoint value and sample size of each group. The top left part shows the survival line of each person that entered after filtering by the survival start time.
                     </p>
+                </div>
                 </div>
             </div>
         </div>
@@ -110,10 +111,10 @@
                 The TCGA level 3 gene and isoform RSEM expression, exon and junction quantification value (UNC illuminaHiSeq_RNASeqV2), clinical data (Merged_clinical_level_1) were downloaded from TCGA ftp site -- Firehouse.
                 </p>
                 <p>
-                The R was used to generate transcriptional pattern and TCGA data cleanup. The formatted json data were import into MongoDB.
+                The R was used to generate transcriptional pattern and TCGA data cleanup. The formatted JSON data were import into MongoDB.
                 </p>
                 <p>
-                The scaled exon and junction quantification value were used to visualization. The scaling methods similar to Normalized Index (NI) used in exon microarray analysis which was accomplished by dividing sample's exon or junction quantification value to the mean of exons or junctions quantification value of that gene. So that the gene expression variation can be corrected and the scaled exon or junction expression level represented its usage.
+                The scaled exon and junction quantification value were used to visualization. The scaling methods are similar to Normalized Index (NI) used in exon microarray analysis which was accomplished by dividing sample's exon or junction quantification value to the mean of exons or junctions quantification value of that gene. So that the gene expression variation can be corrected and the scaled exon or junction expression level represented its usage.
                 </p>
             </div>
             <!-- <hr> -->
