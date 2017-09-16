@@ -20,7 +20,15 @@ function boxplot(
         box_data[d[1]].push(expression[d[0]]);
     });
 
-    var data = echarts.dataTool.prepareBoxplotData(box_data);
+    var new_box_data = [], 
+        new_x_label = [];
+    for (var i in box_data) {
+        if (box_data[i].length > 0) {
+            new_box_data.push(box_data[i]);
+            new_x_label.push(x_label[i]);
+        }
+    }
+    var data = echarts.dataTool.prepareBoxplotData(new_box_data);
 
     var option = {
         title: [
@@ -52,7 +60,7 @@ function boxplot(
         },
         xAxis: {
             type: 'category',
-            data: x_label,
+            data: new_x_label,
             boundaryGap: true,
             nameGap: 30,
             splitArea: {
