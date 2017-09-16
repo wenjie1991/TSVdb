@@ -1,6 +1,6 @@
 
 // global variation, used to query database.
-var gene, data_type, tumor_type, clinical_type, gene_sort;
+let gene, data_type, tumor_type, clinical_type, gene_sort;
 var start = true;  // If start a new plot, set it true.
 
 // initiate a new graph
@@ -115,17 +115,19 @@ function nav_module_tumor_select() {
     d3.json(url, function(error, data) {
         var cd_list = data.cd_list;
         var options = "";
-        if (!$.isArray(clinical_type, cd_list)) clinical_type = "sampletype";
+        if (!$.isArray(clinical_type, cd_list)) {
+            clinical_type = "sampletype";
+            $("#nav_module_display_clinical").text(clinical_type);
+        };
         for (var i in cd_list) {
             if (cd_list[i] == "overall_survival") continue;
             options = options + '<option value="' + cd_list[i] + '">' + cd_list[i] + '</option>';
         }
         $(".nav_module_clinical_option").html(options);
+        if (!start) {
+            draw();
+        }
     });
-
-    if (!start) {
-        draw();
-    }
 
     return false;
 }
