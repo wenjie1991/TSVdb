@@ -106,7 +106,7 @@ http.createServer(function(req, res) {
         }
         //        console.log(tx_expression_result);
 
-
+        
         // clinical
         try {
             var collection = db.collection("clinical_" + tumor);
