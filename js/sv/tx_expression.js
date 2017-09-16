@@ -43,8 +43,8 @@ function boxplot(
                 textStyle: {
                     fontSize: 14
                 },
-                left: '10%',
-                top: '90%'
+                left: '70%',
+                top: '0%'
             }
         ],
         tooltip: {
@@ -56,7 +56,7 @@ function boxplot(
         grid: {
             left: '10%',
             right: '10%',
-            bottom: '20%'
+            bottom: '30%'
         },
         xAxis: {
             type: 'category',
@@ -67,6 +67,8 @@ function boxplot(
                 show: false
             },
             axisLabel: {
+                interval: 0,
+                rotate: 25, 
                 formatter: '{value}'
             },
             splitLine: {
