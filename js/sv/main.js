@@ -74,8 +74,9 @@ function close_nav_module() {
     $(".nav_choosen").css("z-index", 0);
     $(".nav_choosen").children(".nav_module_display_when_choosen").hide();
     $(".nav_choosen").children(".nav_module_display_when_unchoosen").show();
-    $(".nav_choosen").find("input").val("");
+//    $(".nav_choosen").find("input").val("");
     $(".nav_choosen").removeClass("nav_choosen");
+    $(".invalide_gene").hide();
     return false;
 }
 $(".nav_module_close").click(close_nav_module);
@@ -110,6 +111,17 @@ function nav_module_tumor_select() {
     tumor_type = input_value;  // change the global variable
 
     $("#nav_gene.nav_choosen").show()  // make next dialog box apearing
+    var url = "http://116.62.201.120/get_cd_list?tumor=" + tumor_type;
+    d3.json(url, function(error, data) {
+        var cd_list = data.cd_list;
+        var options = "";
+        if (!$.isArray(clinical_type, cd_list)) clinical_type = "sampletype";
+        for (var i in cd_list) {
+            if (cd_list[i] == "overall_survival") continue;
+            options = options + '<option value="' + cd_list[i] + '">' + cd_list[i] + '</option>';
+        }
+        $(".nav_module_clinical_option").html(options);
+    });
 
     if (!start) {
         draw();
