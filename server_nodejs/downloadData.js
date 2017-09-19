@@ -71,10 +71,11 @@ function prepare_table(
 ) {
     var sampleID = [], clinical_json = {};
     for (i in clinical.value) {
-        clinical_json[i] = clinical.cdCode[clinical.value[i][0]];
+        clinical_json[i.substr(0, 15)] = clinical.cdCode[clinical.value[i][0]];
     }
+    console.log(clinical_json);
     for (var i in gene_expression.gene_expression) {
-        console.log(i.substr(0, 15));
+//        console.log(i.substr(0, 15));
         if (clinical_json[i.substr(0, 15)]) {
             sampleID.push(i);
         }
