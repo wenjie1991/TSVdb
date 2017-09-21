@@ -177,7 +177,7 @@ function plot(data, data_type, url_download) {
 
     // add download link
     left.append("text")
-        .attr('transform', 'translate(' + '0,' +  right_row_frame.height + ')')
+        .attr('transform', 'translate(' + '0,0' + ')')
         .attr("class", "download_link")
         .text("Download Data")
         .on("click", function() {
