@@ -13,12 +13,12 @@ var re = /^\d+$/;
 
 function get_header(cd, gene_sort, tx_expression, areaData) {
     // sampleID, clinical, os_time, os_event, gene_expression, isoform_expression, exion/junction_expression
-    var header = ["sampleID", cd, "os_time", "os_event", gene_sort];
+    var header = ["sampleID", "clinical_" + cd, "os_time", "os_event", "gene_" + gene_sort];
     for (i in tx_expression.tx_expression) {
-        header.push(i);
+        header.push("isoform_" + i);
     }
     for (i in areaData.exon) {
-        header.push(areaData.exon[i].chr + ":" + areaData.exon[i].start + "-" + areaData.exon[i].end);
+        header.push("exon_" + areaData.exon[i].chr + ":" + areaData.exon[i].start + "-" + areaData.exon[i].end);
     }
     return header.join("\t");
 }

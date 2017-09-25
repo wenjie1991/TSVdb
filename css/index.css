@@ -24,6 +24,12 @@ body {
     padding: 0;
 }
 
+.table * {
+    border-width: 1px;    
+    border-style: solid;
+    border-color: white;
+}
+
 .index-area {
     width: 100%;
     position: absolute;

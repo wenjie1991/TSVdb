@@ -10,12 +10,21 @@
     <link rel="stylesheet" type="text/css" href="./css/jquery.fullPage.css" />
     <link rel="stylesheet" type="text/css" href="./css/index.css"/>
     <link rel="stylesheet" type="text/css" href="./fonts/iconfont.css">
+    <!-- Global Site Tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-106948170-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments)};
+        gtag('js', new Date());
+
+        gtag('config', 'UA-106948170-1');
+    </script>
     <script type="text/javascript" src="./js/sv/check_browser.js"></script>
     <script src="./js/jquery-3.2.1.min.js"></script>
     <script src="./js/jquery-ui.min.js"></script>
     <script type="text/javascript" src="./js/scrolloverflow.min.js"></script>
     <script type="text/javascript" src="./js/jquery.fullPage.min.js"></script>
-<!--    <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=AM_HTMLorMML"></script>-->
+    <!--    <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=AM_HTMLorMML"></script>-->
     <script type="text/javascript">
         $(document).ready(function() {
             $('#fullpage').fullpage({
@@ -45,7 +54,8 @@
             <div class="intro"><p>TSVdb is an easy-to-use web tool for the integration and visualization of mRNA splicing variants, transcriptional isoform expression and clinical information from The Cancer Genome Atlas project (TCGA) RNASeq data.</p></div>
             <!-- <div class="selection" id="selection_start"><a href="./plot_demo.html">Start</a></div> -->
             <!-- <div class="selection" id="selection_tutorial">Tutorial</div> -->
-            <img src = "./image/strategy.svg" alt="strategy" style="height: 250px;" class="myImg">
+            <!--            <img src = "./image/strategy.svg" alt="strategy" style="height: 250px;" class="myImg">-->
+            <img src = "./image/amination.gif" alt="strategy" style="height: 300px;" class="gif">
         </div>
 
         <div class="section" id="section_tutorial">
@@ -100,6 +110,60 @@
                     <p>
                     The KM survival curve includes four parts: the bottom right part is the part used to adjust the cut-point for grouping; the knob can be pulled to change the cutpoint. The default value is the middle of the range. The top right part displays the grouping information includes the cut-point value and sample size of each group. The top left part shows the survival line of each person that entered after filtering by the survival start time point.
                     </p>
+                </div>
+            </div>
+
+            <div class="slide" id="data_table">
+                <h1 class="spe_h1">Tutorial</h1>
+                <h2 class="sep_h2">4. Download data table</h2>
+                <div class="slide_content">
+                    <table class="table", style="border-style: solid">
+                        <thead>
+                            <tr>
+                                <th style="text-align: left">Attribute</th>
+                                <th>Example</th>
+                                <th>Description</th>
+                            </tr>
+                        </thead>
+                        <tbody style="text-align: left; border-style: solid">
+                            <tr>
+                                <td style="text-align: left">sampleID</td>
+                                <td>TCGA-3L-AA1B-01A</td>
+                                <td>TCGA sample id.</td>
+                            </tr>
+                            <tr>
+                                <td style="text-align: left">clinical_[clinical type]</td>
+                                <td>Primary Solid Tumor</td>
+                                <td>Estimate for the absolute depth of read coverage across the whole transcript</td>
+                            </tr>
+                            <tr>
+                                <td style="text-align: left">os_time</td>
+                                <td>348</td>
+                                <td>Overall survival time (day).</td>
+                            </tr>
+                            <tr>
+                                <td style="text-align: left">os_event</td>
+                                <td>0</td>
+                                <td>Overall survival event (0=live, 1=death).</td>
+                            </tr>
+                            <tr>
+                                <td style="text-align: left">gene_[gene name]</td>
+                                <td>100</td>
+                                <td>Gene expression RSEM value.</td>
+                            </tr>
+                            <tr>
+                                <td style="text-align: left">isoform_[isoform id]</td>
+                                <td>100</td>
+                                <td>Isoform expression RSEM value.</td>
+                            </tr>
+                            <tr>
+                                <td style="text-align: left">exon_[location]</td>
+                                <td>0.1102</td>
+                                <td>Exon/junction usage value. Exon/junction usage is calculated by dividing exon/junction quantification value</br>
+                                    to mean exon/junction quantification value of that person for a specific gene</td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
