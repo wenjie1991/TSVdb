@@ -1,6 +1,6 @@
 
 // global variation, used to query database.
-var gene, data_type, tumor_type, clinical_type;
+let gene, data_type, tumor_type, clinical_type, gene_sort;
 var start = true;  // If start a new plot, set it true.
 
 // initiate a new graph
@@ -23,14 +23,20 @@ function draw() {
 //    tumor_type    = $("#query_tumor_type").val();
 //    clinical_type = $("#query_clinical_type").val();
 
-//    url = "/sv_db?gene=" + gene + "&tumor=" + tumor_type + "&cd=" + clinical_type + "&area=" + data_type;
-    url = "/example_data/" + tumor_type + "_" + gene + "_" + clinical_type + "_" + data_type + ".json";
+    var url = "http://116.62.201.120/sv_db?gene=" + gene + "&tumor=" + tumor_type + "&cd=" + clinical_type + "&area=" + data_type + "&gene_sort=" + gene_sort;
+//    var url = "/example_data/" + tumor_type + "_" + gene + "_" + clinical_type + "_" + data_type + ".json";
+
+    // donwload data table link
+    var url_download = "http://116.62.201.120/sv_datatable?gene=" + gene + "&tumor=" + tumor_type + "&cd=" + clinical_type + "&area=" + data_type + "&gene_sort=" + gene_sort;
+
     $("#myloading").css("display", 'flex');
     d3.json(url, function(error, data) {
-        plot(data, data_type);
+        plot(data, data_type, url_download);
         $("#myloading").css("display", 'none');
     });
 }
+
+// download data link
 
 // start configure wizard
 function nav_start(obj) {
@@ -68,8 +74,9 @@ function close_nav_module() {
     $(".nav_choosen").css("z-index", 0);
     $(".nav_choosen").children(".nav_module_display_when_choosen").hide();
     $(".nav_choosen").children(".nav_module_display_when_unchoosen").show();
-    $(".nav_choosen").find("input").val("");
+//    $(".nav_choosen").find("input").val("");
     $(".nav_choosen").removeClass("nav_choosen");
+    $(".invalide_gene").hide();
     return false;
 }
 $(".nav_module_close").click(close_nav_module);
@@ -104,10 +111,23 @@ function nav_module_tumor_select() {
     tumor_type = input_value;  // change the global variable
 
     $("#nav_gene.nav_choosen").show()  // make next dialog box apearing
-
-    if (!start) {
-        draw();
-    }
+    var url = "http://116.62.201.120/get_cd_list?tumor=" + tumor_type;
+    d3.json(url, function(error, data) {
+        var cd_list = data.cd_list;
+        var options = "";
+        if ($.isArray(clinical_type, cd_list) < 0) {
+            clinical_type = "sampletype";
+            $("#nav_module_display_clinical").text(clinical_type);
+        };
+        for (var i in cd_list) {
+            if (cd_list[i] == "overall_survival") continue;
+            options = options + '<option value="' + cd_list[i] + '">' + cd_list[i] + '</option>';
+        }
+        $(".nav_module_clinical_option").html(options);
+        if (!start) {
+            draw();
+        }
+    });
 
     return false;
 }
@@ -118,8 +138,8 @@ function nav_module_gene_select() {
     var input_value = $("#gene_symbol").val();
     var nav_choosen = $("#nav_gene.nav_choosen");
 
-//    url = "/sv_checkname?gene=" + input_value + "&tumor=" + tumor_type;
-    url = "./example_data/" + input_value + "_" + tumor_type + ".json";
+    var url = "http://116.62.201.120/sv_checkname?gene=" + input_value + "&tumor=" + tumor_type;
+//    url = "./example_data/" + input_value + "_" + tumor_type + ".json";
     d3.json(url, function(error, data) {
         if (data.gene) {
             $(".invalide_gene").hide();
@@ -128,19 +148,20 @@ function nav_module_gene_select() {
             nav_choosen.removeClass("nav_choosen");
             nav_choosen.children(".nav_module_display_when_choosen").hide();
             nav_choosen.children(".nav_module_display_when_unchoosen").show();
-            $("#gene_symbol").val("");
+//            $("#gene_symbol").val("");
 
+            $("#nav_module_display_gene").text(data.symbol);
             // if the input is a symbol or entrezid
-            var re = /^\d+$/;
-            if (re.test(input_value)) {
-                $("#nav_module_display_gene").text("Entrezid: " + input_value);
-            } else {
-                $("#nav_module_display_gene").text(input_value);
-            }
+//            var re = /^\d+$/;
+//            if (re.test(input_value)) {
+//                $("#nav_module_display_gene").text("Entrezid: " + input_value);
+//            } else {
+//                $("#nav_module_display_gene").text(input_value);
+//            }
 
             gene = input_value;
+            $("#gene_symbol_sort").val(input_value);
             $("#nav_region.nav_choosen").show()
-
 
             if (!start) {
                 draw();
@@ -176,26 +197,38 @@ $(".nav_module_region_option").click(nav_module_region_select);
 
 
 function nav_module_clinical_select() {
-    var input_value = $(".nav_module_clinical_option").val();
-    var nav_choosen = $("#nav_clinical.nav_choosen");
+    var input_value_gene = $("#gene_symbol_sort").val();
+    var input_value_clinical = $(".nav_module_clinical_option").val();
 
-    // end initation;
-    start = false;  
-    $(".cancel").show();
-    $(".nav_module_close").show();
+    var url = "http://116.62.201.120/sv_checkname?gene=" + input_value_gene + "&tumor=" + tumor_type;
+//    url = "./example_data/" + input_value_gene + "_" + tumor_type + ".json";
+    d3.json(url, function(error, data) {
+        if (data.gene) {
+            var nav_choosen = $("#nav_clinical.nav_choosen");
+            gene_sort = data.symbol;
+            $("#nav_region.nav_choosen").show()
 
-    nav_module_select();
-    nav_choosen.css("z-index", 0);
-    nav_choosen.removeClass("nav_choosen");
-    nav_choosen.children(".nav_module_display_when_choosen").hide();
-    nav_choosen.children(".nav_module_display_when_unchoosen").show();
-    $("#nav_module_display_clinical").text(input_value);
-    clinical_type = input_value.toLowerCase();  // change global variable
+            // end initation;
+            start = false;  
+            $(".cancel").show();
+            $(".nav_module_close").show();
 
-    draw(); 
+            nav_module_select();
+            nav_choosen.css("z-index", 0);
+            nav_choosen.removeClass("nav_choosen");
+            nav_choosen.children(".nav_module_display_when_choosen").hide();
+            nav_choosen.children(".nav_module_display_when_unchoosen").show();
+            $("#nav_module_display_clinical").text(input_value_clinical);
+            clinical_type = input_value_clinical.toLowerCase();  // change global variable
 
+            draw(); 
+        } else {
+            $(".invalide_gene").show();
+        }
+    })
     return false;
 }
-$(".nav_module_clinical_select").click(nav_module_clinical_select);
 
+$(".nav_module_clinical_select").click(nav_module_clinical_select);
 //draw();
+

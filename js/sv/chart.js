@@ -31,7 +31,7 @@ function prepare_canvas() {
     }
 }
 
-function plot(data, data_type) {
+function plot(data, data_type, url_download) {
     prepare_canvas();
 
     var tx_pattern_data       = data.tx_pattern,
@@ -175,6 +175,15 @@ function plot(data, data_type) {
             .attr('height', left_col_frame.height);
     }
 
+    // add download link
+    left.append("text")
+        .attr('transform', 'translate(' + '0,0' + ')')
+        .attr("class", "download_link")
+        .text("Download Data")
+        .on("click", function() {
+            window.open(url_download);
+        });
+
     // left transcript pattern
     generate_transcript_pattern(
         parents          = left_col_charts,
@@ -293,6 +302,11 @@ function plot(data, data_type) {
 
     right_row_charts_top1 = right.append('g').attr('class', 'clinical_row')
         .attr('transform', 'translate(' + right_row_frame.left + ',' + (right_row_frame.height * 0) + ')');
+    right_row_charts_top1.append('text')
+        .attr('transform', 'translate(' + '-10,' +  (right_row_frame.height / 2 + 7) + ')')
+        .text(clinical_data.cd)
+        .attr('class', 'right_row_name' + " ");
+
     right_row_charts_top1.append('rect')
         .attr('x', 0)
         .attr('y', 0)
@@ -301,6 +315,12 @@ function plot(data, data_type) {
 
     right_row_charts_top2 = right.append('g').attr('class', 'gene_expression_row')
         .attr('transform', 'translate(' + right_row_frame.left + ',' + (right_row_frame.height * 1) + ')');
+
+    right_row_charts_top2.append('text')
+        .attr('transform', 'translate(' + '-10,' +  (right_row_frame.height / 2 + 10) + ')')
+        .text(gene_expression_data.symbol)
+        .attr('class', 'right_row_name' + " ");
+
     right_row_charts_top2.append('rect')
         .attr('class', 'frame')
         .attr('x', 0)

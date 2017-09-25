@@ -20,7 +20,15 @@ function boxplot(
         box_data[d[1]].push(expression[d[0]]);
     });
 
-    var data = echarts.dataTool.prepareBoxplotData(box_data);
+    var new_box_data = [], 
+        new_x_label = [];
+    for (var i in box_data) {
+        if (box_data[i].length > 0) {
+            new_box_data.push(box_data[i]);
+            new_x_label.push(x_label[i]);
+        }
+    }
+    var data = echarts.dataTool.prepareBoxplotData(new_box_data);
 
     var option = {
         title: [
@@ -35,8 +43,8 @@ function boxplot(
                 textStyle: {
                     fontSize: 14
                 },
-                left: '10%',
-                top: '90%'
+                left: '70%',
+                top: '0%'
             }
         ],
         tooltip: {
@@ -48,17 +56,19 @@ function boxplot(
         grid: {
             left: '10%',
             right: '10%',
-            bottom: '15%'
+            bottom: '30%'
         },
         xAxis: {
             type: 'category',
-            data: x_label,
+            data: new_x_label,
             boundaryGap: true,
             nameGap: 30,
             splitArea: {
                 show: false
             },
             axisLabel: {
+                interval: 0,
+                rotate: 25, 
                 formatter: '{value}'
             },
             splitLine: {
@@ -172,11 +182,15 @@ function display_gene (
 
 // isoform expression
 function close_tx_expression_module() {
-    $(".tx_expression").hide();
-    $(".mask").hide();
-    $(".tx_km_svg").remove();
+    if ( $(".tx_expression").css('display') != 'none' ){
+        $(".tx_expression").hide();
+        $(".mask").hide();
+        $(".mask").click()
+        $(".tx_km_svg").remove();
+    }
 };
 $(".tx_expression_close").click(close_tx_expression_module);
+$(".mask").click(close_tx_expression_module);
 
 function choose_boxplot() {
     $("#tx_km").hide();

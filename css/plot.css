@@ -1,3 +1,9 @@
+html, body {
+    margin:0;
+    padding:0;
+    height:100%;
+}
+
 h4 {
     font-size: 19px;
     font-weight: normal;
@@ -32,6 +38,8 @@ input {
 }
 
 select {
+    width: 350px;
+    text-overflow: ellipsis;
     text-rendering: auto;
     color: initial;
     letter-spacing: normal;
@@ -41,7 +49,7 @@ select {
     text-shadow: none;
     display: inline-block;
     text-align: start;
-    margin: 20px 0;
+    margin: 20px 25px;
     font: 1em Arial;
     border: 1px solid #ggg;
     border-radius: 4px;
@@ -108,6 +116,10 @@ img {
     fill: #c34d58;
 }
 
+.gene_expression_row {
+    cursor: pointer;
+}
+
 .expression_area path {
     stroke: #c37d4d;
     stroke-width: 1pt;
@@ -117,6 +129,14 @@ img {
 .frame line {
     stroke: #4d93c3;
     stroke-width: 1pt;
+}
+
+.download_link {
+    fill: #1e4159;
+    opacity: 0.7;
+    font-weight: bold;
+    cursor: pointer;
+    text-decoration: underline;
 }
 
 .tx_pattern rect {
@@ -145,10 +165,10 @@ img {
 }
 
 .tx_cd_choose {
-    width: 100px;
-    heigt: 100px;
-    margin-left: 211px;
-    margin-bottom: 20px;
+    width: 75px;
+    heigt: 75px;
+    margin-left: 188px;
+    margin-bottom: 10px;
     box-shadow: 0 5px 15px rgba(0, 0, 0, .5);
 }
 
@@ -181,6 +201,13 @@ rect.RNASeq_exon_hover_choosen {
     stroke-width: 2px;
 }
 
+.right_row_name {
+    fill: #1e4159;
+    opacity: 0.7;
+    font-weight: bold;
+    text-anchor: end;
+}
+
 .middle_line_click_choosen line {
     stroke: #c34d58;
     stroke-width: 2px;
@@ -198,6 +225,8 @@ rect.RNASeq_exon_click_choosen {
 
 .clinical_tip {
     position: absolute;
+    left: 0;
+    top: 0;
     line-height: 1;
     font-weight: bold;
     padding: 5px 12px 5px 12px;
@@ -212,9 +241,8 @@ line.guide_line {
 }
 
 .chart_frame {
-    min-height: 610px;
+    min-height: calc(100% - 230px);
     min-width: 800px;
-    ;
     margin: 0 auto;
     /*    border: 1px solid rgba(255,0,0,.9);*/
     text-align: center;
@@ -222,13 +250,13 @@ line.guide_line {
 
 .tx_expression {
     display: none;
-    position: absolute;
-    top: 75px;
-    margin: 0 auto;
+    position: fixed;
+    top: 30px;
+    margin: auto auto;
     right: 0;
     left: 0;
-    width: 900px;
-    height: inherit;
+    width: 750px;
+/*    height: inherit;*/
     border-radius: 6px;
     box-shadow: 0 5px 15px rgba(0, 0, 0, .5);
     background-color: #fff;
@@ -241,13 +269,13 @@ line.guide_line {
 }
 
 #tx_echart {
-    height: 450px;
+    height: 400px;
     width: 650px;
-    margin: 0 132px;
+    margin: 0 57px;
 }
 
 #tx_km {
-    margin: 0 132px;
+    margin: 0 53px;
     display: none;
 }
 
@@ -504,7 +532,7 @@ button.tx_expression_close {
 .footer {
     background-color: #f5f5f5;
     box-shadow: 0 -1px 2px #bdbdbd;
-    padding: 30px 100px 0px;
+    padding: 30px 100px 10px;
     margin: 0 auto;
     display: flex;
     flex-direction: column;

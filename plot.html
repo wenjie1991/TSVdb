@@ -4,8 +4,18 @@
         <link rel="SHORTCUT ICON" href="./logo.ico"/>
         <title>TSVdb</title>
         <meta charset="utf-8">
+        <!-- Global Site Tag (gtag.js) - Google Analytics -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=UA-106948170-1"></script>
+        <script>
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments)};
+              gtag('js', new Date());
+
+              gtag('config', 'UA-106948170-1');
+        </script>
+
         <script type="text/javascript" src="./js/sv/check_browser.js"></script>
-        <script src="./js/d3.v3.js"></script>
+        <script src="./js/d3.v3.min.js"></script>
         <script src="./js/jquery-3.2.1.min.js"></script>
         <script src="./js/echarts.min.js"></script>
         <script src="./js/dataTool.min.js"></script>
@@ -15,7 +25,7 @@
     </head>
     <body>
         <div class="myHeader">
-            <span>
+            <span style="z-index: 2">
                 <a href="./index.html"><i class="iconfont icon-gene"></i>TSVdb</a>
             </span>
         </div>
@@ -76,44 +86,43 @@
                             <label>Choose one tumor type: </label>
                         </div>
                         <select class="nav_module_tumor_option">
-                            <option value="ACC">ACC</option>
-                            <option value="BLCA">BLCA</option>
-                            <option value="BRCA">BRCA</option>
-                            <option value="CESC">CESC</option>
-                            <option value="CHOL">CHOL</option>
-                            <option value="COAD">COAD</option>
+                            <option value="ACC"><span>Adrenocortical carcinoma [ACC]</span></option>
+                            <option value="BLCA">Bladder Urothelial Carcinoma [BLCA]</option>
+                            <option value="BRCA">Breast invasive carcinoma [BRCA]</option>
+                            <option value="CESC">Cervical squamous cell carcinoma and </br>endocervical adenocarcinoma [CESC]</option>
+                            <option value="CHOL">Cholangiocarcinoma [CHOL]</option>
+                            <option value="COAD">Colon adenocarcinoma [COAD]</option>
                             <option value="COADREAD">COADREAD</option>
-                            <option value="DLBC">DLBC</option>
-                            <option value="ESCA">ESCA</option>
-                            <option value="GBM">GBM</option>
-                            <option value="GBMLGG">GBMLGG</option>
-                            <option value="HNSC">HNSC</option>
-                            <option value="KICH">KICH</option>
-                            <option value="KIPAN">KIPAN</option>
-                            <option value="KIRC">KIRC</option>
-                            <option value="KIRP">KIRP</option>
-                            <option value="LAML">LAML</option>
-                            <option value="LGG">LGG</option>
-                            <option value="LIHC">LIHC</option>
-                            <option value="LUAD">LUAD</option>
-                            <option value="LUSC">LUSC</option>
-                            <option value="MESO">MESO</option>
-                            <option value="OV">OV</option>
-                            <option value="PAAD">PAAD</option>
-                            <option value="PCPG">PCPG</option>
-                            <option value="PRAD">PRAD</option>
-                            <option value="READ">READ</option>
-                            <option value="SARC">SARC</option>
-                            <option value="SKCM">SKCM</option>
-                            <option value="STAD">STAD</option>
-                            <option value="STES">STES</option>
-                            <option value="TGCT">TGCT</option>
-                            <option value="THCA">THCA</option>
-                            <option value="THYM">THYM</option>
-                            <option value="UCEC">UCEC</option>
-                            <option value="UCS">UCS</option>
-                            <option value="UVM">UVM</option>
-<option value="">
+                            <option value="DLBC">Lymphoid Neoplasm Diffuse Large B-cell Lymphoma [DLBC]</option>
+                            <option value="ESCA">Esophageal carcinoma [ESCA]</option>
+                            <option value="GBM">Glioblastoma multiforme [GBM]</option>
+<!--                            <option value="GBMLGG">GBMLGG</option>-->
+                            <option value="HNSC">Head and Neck squamous cell carcinoma [HNSC]</option>
+                            <option value="KICH">Kidney Chromophobe [KICH]</option>
+<!--                            <option value="KIPAN">KIPAN</option>-->
+                            <option value="KIRC">Kidney renal clear cell carcinoma [KIRC]</option>
+                            <option value="KIRP">Kidney renal papillary cell carcinoma [KIRP]</option>
+                            <option value="LAML">Acute Myeloid Leukemia [LAML]</option>
+                            <option value="LGG">Brain Lower Grade Glioma [LGG]</option>
+                            <option value="LIHC">Liver hepatocellular carcinoma [LIHC]</option>
+                            <option value="LUAD">Lung adenocarcinoma [LUAD]</option>
+                            <option value="LUSC">Lung squamous cell carcinoma [LUSC]</option>
+                            <option value="MESO">Mesothelioma [MESO]</option>
+                            <option value="OV">Ovarian serous cystadenocarcinoma [OV]</option>
+                            <option value="PAAD">Pancreatic adenocarcinoma [PAAD]</option>
+                            <option value="PCPG">Pheochromocytoma and Paraganglioma [PCPG]</option>
+                            <option value="PRAD">Prostate adenocarcinoma [PRAD]</option>
+                            <option value="READ">Rectum adenocarcinoma [READ]</option>
+                            <option value="SARC">Sarcoma [SARC]</option>
+                            <option value="SKCM">Skin Cutaneous Melanoma [SKCM]</option>
+                            <option value="STAD">Stomach adenocarcinoma [STAD]</option>
+<!--                            <option value="STES">STES</option>-->
+                            <option value="TGCT">Testicular Germ Cell Tumors [TGCT]</option>
+                            <option value="THCA">Thyroid carcinoma [THCA]</option>
+                            <option value="THYM">Thymoma [THYM]</option>
+                            <option value="UCEC">Uterine Corpus Endometrial Carcinoma [UCEC]</option>
+                            <option value="UCS">Uterine Carcinosarcoma [UCS]</option>
+                            <option value="UVM">Uveal Melanoma [UVM]</option>
                         </select>
                     </div>
 
@@ -203,13 +212,18 @@
 
                     <div class="module_body">
                         <div style="float: left; width: auto; margin: 20px 20px;">
-                            <label>Choose one tumor type: </label>
+                            <label>Choose clinical data: </label>
                         </div>
                         <select class="nav_module_clinical_option">
-                            <option value="SampleType">SampleType</option>
-                            <option value="Gender">Gender</option>
-                            <option value="Stage">Stage</option>
+<!--                            <option value="SampleType">SampleType</option>-->
+<!--                            <option value="Gender">Gender</option>-->
+<!--                            <option value="Stage">Stage</option>-->
                         </select>
+                        <div style="float: left; width: auto; margin: 20px 20px;">
+                            <label>Input Official Symbol Or EntrezID for Sample Sorting: </label>
+                            <input type="text" id="gene_symbol_sort">
+                            <p class="invalide_gene" style="margin: 10px 20px; color: #c34d58">Please Input a valide gene Symbol Or gene EntrezID.</p>
+                        </div>
                     </div>
 
                     <div class="module_footer">
@@ -236,8 +250,8 @@
         <div class="chart_frame"></div>
         <div class="footer">
             <div class="links">
-                <a href="www.zju.edu.cn">Department of Pathology and Pathophysiology</a>
-                <a href="www.zju.edu.cn">Zhejiang University</a>
+                <a href="http://www.zju.edu.cn">Department of Pathology and Pathophysiology</a>
+                <a href="http://www.zju.edu.cn">Zhejiang University</a>
                 <a href="https://github.com/wenjie1991/TSVdb">GitHub</a>
             </div>
             <!-- <div class="License">
