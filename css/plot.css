@@ -241,7 +241,7 @@ line.guide_line {
 }
 
 .chart_frame {
-    min-height: calc(100% - 230px);
+    min-height: calc(100% - 282px);
     min-width: 800px;
     margin: 0 auto;
     /*    border: 1px solid rgba(255,0,0,.9);*/
