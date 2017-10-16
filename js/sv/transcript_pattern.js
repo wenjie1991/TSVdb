@@ -40,16 +40,13 @@ function generate_transcript_pattern(parents, parent_frame_par, parent_width, tx
             .attr("txid", i)
             .on("mouseover", function(e) {
 
-                console.log(window.event);
-                console.log(e);  
-
                 //check if we have "e" or "window.event" and use them as "evt"
                 var event = e || window.event    
 
                 var tooltip = $(".tx_tooltip");
                 tooltip.html($(this).attr("txid"));
-                tooltip.css("left", event.clientX + 20);
-                tooltip.css("top", event.clientY);
+                tooltip.css("left", (d3.event.clientX + 20) + "px");
+                tooltip.css("top", d3.event.clientY + "px");
                 tooltip.show();
             })
             .on("mouseout", function() {
