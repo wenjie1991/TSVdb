@@ -115,7 +115,7 @@ function nav_module_tumor_select() {
     d3.json(url, function(error, data) {
         var cd_list = data.cd_list;
         var options = "";
-        if ($.isArray(clinical_type, cd_list) < 0) {
+        if ($.inArray(clinical_type, cd_list) < 0) {
             clinical_type = "sampletype";
             $("#nav_module_display_clinical").text(clinical_type);
         };
