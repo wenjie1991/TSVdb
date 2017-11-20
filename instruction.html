@@ -51,7 +51,7 @@
         <div class="section active" id="section_intro">
             <h1 class="intr_h1">TSVdb</h1>
             <h2 class="intr_h2">TCGA Splicing Variants DB</h2>
-            <div class="intro"><p>TSVdb is an easy-to-use web tool for the integration and visualization of mRNA splicing variants, transcriptional isoform expression and clinical information from The Cancer Genome Atlas project (TCGA) RNASeq data.</p></div>
+            <div class="intro"><p>TSVdb is an easy-to-use web tool for the integration and visualization of mRNA alternative splicing, transcriptional isoform expression and clinical information from The Cancer Genome Atlas project (TCGA) RNA-Seq data.</div>
             <!-- <div class="selection" id="selection_start"><a href="./plot_demo.html">Start</a></div> -->
             <!-- <div class="selection" id="selection_tutorial">Tutorial</div> -->
             <!--            <img src = "./image/strategy.svg" alt="strategy" style="height: 250px;" class="myImg">-->
@@ -66,15 +66,10 @@
                     <img src="./image/select_data.png" alt="select_data" style="height: 300px">
                     <p style="height: 0px"></p>
                     <p>
-                    When open the data visualizing page, the user must sequentially select the tumor type, gene, data type and clinical information.
-                    Before completing the selection, no other operation can be performed.
-                    Do not afraid when making a mistake in this stage, the options can be edited afterward.
+                    When open the data visualizing page, the user have to sequentially select the tumor type, gene, data type and clinical information. Before completing the selection, no other operation can be performed. Do not afraid when making a mistake at this stage, the options can be edited afterward.
                     </p>
                     <p>
-                    The first popup menu (fig A) is on cancer type, please choose the cancer type you are interested in and click the selection button.
-                    In the second popup menu (fig B), please enter an Official Gene Symbol or Entrez ID. If the query term does not exist in the database, the alarm would appear to notify you. 
-                    Then choose the Exon/Junction quantification usage value to be displayed (fig C). More about the scaling method please refer to the next section
-                    At last, choose the phenotype you are interesting (fig D). The gene expression value can be set to another gene, so that the correlation between the splicing vairants and the gene can be investigated. 
+                    The first pop-up dialog (Fig. A) is cancer type, please choose the cancer type you are interested in and click the selection button. In the second pop-up dialog (fig B), please enter an Official Gene Symbol or Entrez ID. If the query does not exist, the alarm would appear to notify you. Then choose the Exon or Junction usage value to be displayed (Fig. C). More about the scaling method, please refer to the next section. At last, choose the phenotype you are interesting (Fig. D). The gene expression value can be set to another gene so that the correlation between the splicing variants and the gene can be investigated.             
                     </p>
                 </div>
             </div>
@@ -88,13 +83,13 @@
                     Options can be adjusted by clicking the corresponding buttons in the header.
                     </p>
                     <p>
-                    The samples were sorted by clinical type, then sorted by the gene expression. When the mouse hovers the clinical attribution row, the group name and a guide line will appear.
+                    The samples were sorted by clinical type, then sorted by the gene expression. When the mouse hovers the clinical attribution row, the group name and a red line will appear.
                     </p>
                     <p>
-                    The Exon or Junction pattern is the locations of exon/junction that TCGA used to count the mapping reads. They represent the information that can be drawn from the Level 3 data of the mRNA Seq datasets from TCGA.
+                    The “Exon or Junction”  is the annotation that TCGA used to count the mapping reads. They represent the information that can be drawn from the Level 3 data of the mRNA Seq datasets from TCGA.
                     </p>
                     <p>
-                    Each exon/junction usage value was display as area graph by row with samples by column. A transient highlight of exon or junction pattern generated when the mouse hovers an exon or junction area graph. A durable highlight can be achieved by a single click. What more, the double click of an exon or junction area graph will open the UCSC Genome Browsers in a new tab or windows with selecting exon or junction area highlighted.
+                    Each exon/junction usage value was displayed as area graph by row with samples by column. A transient highlight of exon or junction pattern generated when the mouse hovers an exon or junction area graph. A single click can achieve a durable highlight. What’s more, the double click of an exon or junction area graph would open the UCSC Genome Browsers in a new tab or windows with selecting exon or junction area highlighted.                     
                     </p>
                 </div>
             </div>
@@ -105,10 +100,10 @@
                 <div class="slide_content">
                     <img src="./image/about_isoform.png" alt="about_isoform" style="height: 300px">
                     <p>
-                    By clicking the transcriptional isoform, the box plot of isoform expression value (normalized RSEM) appears. At the top of the pop-up box, there are buttons used to switch the display of the box plot or the KM survival curve. At the top right side, you can see the UCSC isoform id, Click on the text will open a new tab or window display the UCSC Genome Browsers with the isoform highlighted.
+                    By clicking the transcriptional isoform graph, the box plot of isoform expression value (normalized RSEM) appears. At the top of the pop-up box, there are buttons used to switch the display of the box plot or the KM survival curve. At the top right side, you can see the UCSC isoform id, click on which will open a new tab or window display the UCSC Genome Browsers with the isoform highlighted.
                     </p>
                     <p>
-                    The KM survival curve includes four parts: the bottom right part is the part used to adjust the cut-point for grouping; the knob can be pulled to change the cutpoint. The default value is the middle of the range. The top right part displays the grouping information includes the cut-point value and sample size of each group. The top left part shows the survival line of each person that entered after filtering by the survival start time point.
+                    The KM survival curve included four parts: 1). In the bottom right is the part used to adjust the cut-point for grouping, in which the knob can be pulled to change the cutpoint. Moreover, the default value is the middle of the range. 2). The top right part displays information of groups included the cut-point value and sample size of each group. 3). The top left part shows the survival line of each person that entered after filtering by the survival start time point.  
                     </p>
                 </div>
             </div>
@@ -134,7 +129,7 @@
                             <tr>
                                 <td style="text-align: left">clinical_[clinical type]</td>
                                 <td>Primary Solid Tumor</td>
-                                <td>Estimate for the absolute depth of read coverage across the whole transcript</td>
+                                <td>The phenotype information about the sample.</td>
                             </tr>
                             <tr>
                                 <td style="text-align: left">os_time</td>
@@ -149,12 +144,12 @@
                             <tr>
                                 <td style="text-align: left">gene_[gene name]</td>
                                 <td>100</td>
-                                <td>Gene expression RSEM value.</td>
+                                <td>Gene expression normalized read count.</td>
                             </tr>
                             <tr>
                                 <td style="text-align: left">isoform_[isoform id]</td>
                                 <td>100</td>
-                                <td>Isoform expression RSEM value.</td>
+                                <td>Isoform expression normalized read count.</td>
                             </tr>
                             <tr>
                                 <td style="text-align: left">exon_[location]</td>
@@ -174,7 +169,7 @@
                 <img src="./image/flowchart.png" alt="toolchart" style="height: 450px; float: left; margin: 0 30px 0 0">
                 <div style="height: 50px"></div>
                 <p>
-                The TCGA level 3 gene and isoform RSEM expression, exon and junction quantification value (UNC illuminaHiSeq_RNASeqV2), clinical data (Merged_clinical_level_1) were downloaded from TCGA ftp site -- Firehouse.
+                The TCGA level 3 gene, isoform, exon and junction normalized read count data (UNC illuminaHiSeq_RNASeqV2), clinical data (Merged_clinical_level_1) were downloaded from TCGA ftp site -- Firehouse.
                 </p>
                 <p>
                 The R was used to generate transcriptional pattern and TCGA data cleanup. The formatted JSON data were import into MongoDB.

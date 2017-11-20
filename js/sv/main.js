@@ -140,6 +140,7 @@ function nav_module_gene_select() {
 
     var url = "http://116.62.201.120/sv_checkname?gene=" + input_value + "&tumor=" + tumor_type;
 //    url = "./example_data/" + input_value + "_" + tumor_type + ".json";
+    $(".gene_check_wait").css("display", "flex");
     d3.json(url, function(error, data) {
         if (data.gene) {
             $(".invalide_gene").hide();
@@ -169,9 +170,11 @@ function nav_module_gene_select() {
         } else {
             $(".invalide_gene").show();
         }
+        $(".gene_check_wait").css("display", "none");
     })
     return false;
 }
+
 $(".nav_module_gene_select").click(nav_module_gene_select);
 
 
@@ -202,6 +205,7 @@ function nav_module_clinical_select() {
 
     var url = "http://116.62.201.120/sv_checkname?gene=" + input_value_gene + "&tumor=" + tumor_type;
 //    url = "./example_data/" + input_value_gene + "_" + tumor_type + ".json";
+    $(".gene_check_wait").css("display", "flex");
     d3.json(url, function(error, data) {
         if (data.gene) {
             var nav_choosen = $("#nav_clinical.nav_choosen");
@@ -225,6 +229,7 @@ function nav_module_clinical_select() {
         } else {
             $(".invalide_gene").show();
         }
+        $(".gene_check_wait").css("display", "none");
     })
     return false;
 }

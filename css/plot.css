@@ -453,6 +453,25 @@ button.tx_expression_close {
     margin-left: -60px;
 }
 
+.gene_check_wait {
+    display: none;
+}
+
+.loader {
+    margin: 15px;
+    border: 4px solid #f3f3f3; /* Light grey */
+    border-top: 4px solid #3498db; /* Blue */
+    border-radius: 50%;
+    width: 15px;
+    height: 15px;
+    animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
 #nav_gene .tooltiptext::after {
     content: "";
     position: absolute;
@@ -785,3 +804,5 @@ button:hover {
     -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);  
     background-color: #29b6f6;  
 } 
+
+
