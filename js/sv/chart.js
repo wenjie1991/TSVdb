@@ -176,13 +176,17 @@ function plot(data, data_type, url_download) {
     }
 
     // add download link
+    $(".download_linker").after('<a href="' + url_download + '" download id="download" hidden></a>');
+
     left.append("text")
         .attr('transform', 'translate(' + '0,0' + ')')
         .attr("class", "download_link")
         .text("Download Data")
         .on("click", function() {
-            window.open(url_download);
+//            window.open(url_download);
+            document.getElementById('download').click();
         });
+
 
     // left transcript pattern
     generate_transcript_pattern(
@@ -243,6 +247,7 @@ function plot(data, data_type, url_download) {
 
                 left_col_exon_class = ".RNASeq_exon_" + obj_class_index;
                 $(left_col_exon_class).addClass('RNASeq_exon_hover_choosen');
+
 
             })
         // click fix the hightlight

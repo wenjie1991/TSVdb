@@ -11,15 +11,30 @@ var re = /^\d+$/;
 // API:
 // ?tumor=COAD&gene=GAPDH&cd=sampletype&area=exon
 
-function get_header(cd, gene_sort, tx_expression, areaData) {
+function get_header(clinical_data_array, gene_sort, tx_expression, exon_count, junction_count) {
     // sampleID, clinical, os_time, os_event, gene_expression, isoform_expression, exion/junction_expression
-    var header = ["sampleID", "clinical_" + cd, "os_time", "os_event", "gene_" + gene_sort];
+    var header = ["sampleID"]
+    for (var i = 0; i < clinical_data_array.length; i++) {
+        if (clinical_data_array[i].cd == "overall_survival") continue;
+        header.push(clinical_data_array[i].cd);
+    }
+    header = header.concat(["os_time", "os_event", "gene_" + gene_sort]);
+
+    // isoform header
     for (i in tx_expression.tx_expression) {
         header.push("isoform_" + i);
     }
-    for (i in areaData.exon) {
-        header.push("exon_" + areaData.exon[i].chr + ":" + areaData.exon[i].start + "-" + areaData.exon[i].end);
+
+    // exon header
+    for (i in exon_count.exon) {
+        header.push("exon_" + exon_count.exon[i].chr + ":" + exon_count.exon[i].start + "-" + exon_count.exon[i].end);
     }
+
+    // junction header
+    for (i in junction_count.exon) {
+        header.push("junction_" + junction_count.exon[i].chr + ":" + junction_count.exon[i].start + "-" + junction_count.exon[i].end);
+    }
+
     return header.join("\t");
 }
 
@@ -32,11 +47,15 @@ function push_valide(x, y) {
     return x;
 }
 
-function get_line(sampleID_i, clinical_json, os, gene_expression, tx_expression, areaData) {
+function get_line(sampleID_i, clinical_json, os, gene_expression, tx_expression, exon_count, junction_count) {
 
+    // sample id
     var line = [sampleID_i];
 
-    line.push(clinical_json[sampleID_i.substr(0, 15)]);
+    // clinical variable
+    line = line.concat(clinical_json[sampleID_i.substr(0, 15)]);
+
+    // overall survival
     var os_i = os.value[sampleID_i.substr(0, 15)];
     if (os_i == undefined) {
         line.push("");
@@ -46,33 +65,53 @@ function get_line(sampleID_i, clinical_json, os, gene_expression, tx_expression,
         line.push(os_i.event);
     }
 
-
+    // gene expression
     line = push_valide(line, gene_expression.gene_expression[sampleID_i]);
 
+    // isoform expression
     for (i in tx_expression.tx_expression) {
         line = push_valide(line, tx_expression.tx_expression[i][sampleID_i]);
     }
 
-    for (i in areaData.value) {
-        line = push_valide(line, areaData.value[i][sampleID_i] / areaData.value_mean[sampleID_i]);
+    // exon quantification or usage
+    for (i in exon_count.value) {
+        // usage
+//        line = push_valide(line, exon_count.value[i][sampleID_i] / exon_count.value_mean[sampleID_i]);
+        // quantification
+        line = push_valide(line, exon_count.value[i][sampleID_i]);
     }
 
+    // junction quantification or usage
+    for (i in junction_count.value) {
+        // usage
+//        line = push_valide(line, junction_count.value[i][sampleID_i] / junction_count.value_mean[sampleID_i]);
+        // quantification
+        line = push_valide(line, junction_count.value[i][sampleID_i] / junction_count.value_mean[sampleID_i]);
+    }
+    
     return line.join("\t");
 }
 
 function prepare_table(
-    cd,
     gene_sort, 
-    clinical,
+    clinical_data_array,
     os,
     tx_expression,
     gene_expression,
-    areaData
+    exon_count,
+    junction_count
 ) {
     var sampleID = [], clinical_json = {};
-    for (i in clinical.value) {
-        clinical_json[i.substr(0, 15)] = clinical.cdCode[clinical.value[i]];
+
+    for (var i=0; i<clinical_data_array.length; i++) {
+        if (clinical_data_array[i].cd == "overall_survival") continue;
+        for (sampleID_long in clinical_data_array[i].value) {
+            if (! (clinical_json[sampleID_long.substr(0, 15)] instanceof Array))
+                clinical_json[sampleID_long.substr(0, 15)] = new Array();
+            clinical_json[sampleID_long.substr(0, 15)].push(clinical_data_array[i].cdCode[clinical_data_array[i].value[sampleID_long]]);
+        }
     }
+
     for (var i in gene_expression.gene_expression) {
         if (clinical_json[i.substr(0, 15)]) {
             sampleID.push(i);
@@ -80,10 +119,10 @@ function prepare_table(
     }
 
     var csv = [];
-    csv.push(get_header(cd, gene_sort, tx_expression, areaData));
+    csv.push(get_header(clinical_data_array, gene_sort, tx_expression, exon_count, junction_count));
 
     for (i in sampleID) {
-        csv.push(get_line(sampleID[i], clinical_json, os, gene_expression, tx_expression, areaData));
+        csv.push(get_line(sampleID[i], clinical_json, os, gene_expression, tx_expression, exon_count, junction_count));
     }
 
     return csv.join("\n");
@@ -95,8 +134,6 @@ http.createServer(function(req, res) {
         var urlParsed = url.parse(req.url, true);
         var gene = urlParsed['query']["gene"];
         var tumor = urlParsed['query']["tumor"];
-        var cd = urlParsed['query']["cd"];
-        var area = urlParsed['query']["area"];
         var gene_sort = urlParsed['query']['gene_sort'];
 
         var db = yield MongoClient.connect('mongodb://localhost:27017/sv');
@@ -130,33 +167,29 @@ http.createServer(function(req, res) {
         }
         //        console.log(tx_pattern_result);
 
-        if (area == "exon") {
-            // exon_count: expression of each exon
-            try{
-                var collection = db.collection('exon_count_' + tumor);
-                if (gene_field == "symbol") {
-                    var areaData = yield collection.findOne({symbol: gene});
-                } else {
-                    var areaData = yield collection.findOne({entrezid: gene});
-                }
-                //                delete areaData["_id"];
-            } catch(err){
-                console.log(err)
+        try{
+            var collection = db.collection('exon_count_' + tumor);
+            if (gene_field == "symbol") {
+                var exon_count = yield collection.findOne({symbol: gene});
+            } else {
+                var exon_count = yield collection.findOne({entrezid: gene});
             }
-            //        console.log(areaData);
-        } else {
-            // juc_count: junction count
-            try {
-                var collection = db.collection('juc_count_' + tumor);
-                if (gene_field == "symbol") {
-                    var areaData = yield collection.findOne({symbol: gene});
-                } else {
-                    var areaData = yield collection.findOne({entrezid: gene});
-                }
-                //                delete areaData["_id"];
-            } catch(err){
-                console.log(err)
+        } catch(err){
+            console.log(err)
+        }
+        //        console.log(exon_count);
+
+        // juc_count: junction count
+        try {
+            var collection = db.collection('juc_count_' + tumor);
+            if (gene_field == "symbol") {
+                var junction_count = yield collection.findOne({symbol: gene});
+            } else {
+                var junction_count = yield collection.findOne({entrezid: gene});
             }
+            //                delete junction_count["_id"];
+        } catch(err){
+            console.log(err)
         }
 
         // gene_expression: expression information of genes
@@ -167,7 +200,6 @@ http.createServer(function(req, res) {
             } else {
                 var gene_expression_result = yield collection.findOne({entrezid: gene_sort});
             }
-            //            delete gene_expression_result["_id"];
         } catch(err){
             console.log(err)
         }
@@ -181,7 +213,6 @@ http.createServer(function(req, res) {
             } else {
                 var tx_expression_result = yield collection.findOne({entrezid: gene});
             }
-            //            delete tx_expression_result["_id"];
         } catch(err){
             console.log(err)
         }
@@ -191,9 +222,8 @@ http.createServer(function(req, res) {
         // clinical
         try {
             var collection = db.collection("clinical_" + tumor);
-            var clinical_result = yield collection.findOne({"cd": cd});
-            var overall_survival_result = yield collection.findOne({"cd": "overall_survival"});
-            //            delete clinical_result['_id'];
+            var clinical_data_array = yield collection.find({}).toArray();
+            var overall_survival = yield collection.findOne({"cd": "overall_survival"});
         } catch(err){
             console.log(err)
         }
@@ -201,13 +231,13 @@ http.createServer(function(req, res) {
 
         try {
             var csv = prepare_table(
-                cd              = cd,
                 gene_sort       = gene_sort,
-                clinical        = clinical_result,
-                os              = overall_survival_result,
+                clinical_data_array  = clinical_data_array,
+                os              = overall_survival,
                 tx_expression   = tx_expression_result,
                 gene_expression = gene_expression_result,
-                areaData        = areaData
+                exon_count      = exon_count,
+                junction_count  = junction_count
             ) 
         } catch(err) {
             console.log(err)
