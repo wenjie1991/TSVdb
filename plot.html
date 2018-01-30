@@ -17,10 +17,11 @@
         <script type="text/javascript" src="./js/sv/check_browser.js"></script>
         <script src="./js/d3.v3.min.js"></script>
         <script src="./js/jquery-3.2.1.min.js"></script>
-        <script src="./js/echarts.min.js"></script>
-        <script src="./js/dataTool.min.js"></script>
+        <script src="./js/distrochart.js"></script>
+<!--        <script src="./js/dataTool.min.js"></script>-->
         <script src="./js/km.js"></script>
         <link rel='stylesheet' type='text/css' href='./css/plot.css'/>
+        <link rel="stylesheet" type="text/css" href="./css/distrochart.css">
         <link rel="stylesheet" type="text/css" href="./fonts/iconfont.css">
     </head>
     <body>
@@ -52,7 +53,18 @@
             </div>
             <div class="ucsc_link_container"><a target="_blank" class="tx_ucsc_link" href="#"></a></div>
 
-            <div id="tx_echart"> </div>
+            <div class="chart-options">
+                <p>Show: </p>
+                <button onclick=show_box()>Box Plot</button>
+                <button onclick=show_notchbox()>Notched Box Plot</button>
+                <button onclick=show_violin()>Violin Plot</button>
+                <button onclick=show_bean()>Bean Plot</button>
+                <button onclick=show_beeswarm()>Beeswarm Plot</button>
+                <button onclick=show_scatter()>Scatter Plot</button>
+                <button onclick=show_line()>Trend Lines</button>
+            </div>
+
+            <div id="tx_echart" class="chart-wrapper"> </div>
             <div id="tx_km"> </div>
 
             <div class="module_footer">
@@ -273,13 +285,6 @@
                 <span><i class="iconfont icon-gene"></i>TCGA datasets version 20160128</span>
             </div>
         </div>
-<!--        <form action="javascript:draw()">-->
-<!--            <span>gene </span><input id='query_gene' type='text' value="TJP1"> </br>-->
-<!--            <span>data type </span><input id='query_data_type' type='text' value="exon"> </br>-->
-<!--            <span>tumor type </span><input id = 'query_tumor_type' type='text' value="COAD"> </br>-->
-<!--            <span>clinical type </span><input id='query_clinical_type' type='text' value="sampletype"> </br>-->
-<!--            <input type="submit" value="Submit">-->
-<!--        </form>-->
     </body>
 </html>
 

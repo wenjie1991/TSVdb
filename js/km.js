@@ -68,6 +68,7 @@ function plot_km (container_name, raw_data) {
         .range([height, height / 2])
         .domain([min_group, max_group]);
 
+
     /////////////// Draw axis //////////////////////////////////////// 
     svg.append("g")
         .attr("class", "axis axis--x")
@@ -94,7 +95,7 @@ function plot_km (container_name, raw_data) {
         .attr("opacity", 0.5);
 
     svg.append("g")
-        .attr("class", "axis axis--y")
+        .attr("class", "axis axis--y axis_y_left")
         .call(d3.svg.axis() .scale(y_surv) .orient("left"));
 
 
@@ -174,13 +175,8 @@ function plot_km (container_name, raw_data) {
 
     }
 
-//    svg.append("text")
-//        .text("K-M Survival Curve")
-//        .attrs(titleAttributes)
-//        .attr("transform", "translate(" + width + "," + (height/2 + margin.top*2) + ")");
 
     ////////////////////////////// Group choosing ////////////////////////////// 
-    //    var data_group_sort = data.sort((a, b) => -a.group.localeCompare(b.group));
     var data_sorted = data.sort((a, b) => a.group - b.group);
     var cutpoint = d3.max(data, (d) => d.group) / 2 + d3.min(data, (d) => d.group) / 2;
 
@@ -198,9 +194,9 @@ function plot_km (container_name, raw_data) {
         .delay(function(d, i) { return(data.length - i) * 5;})
 
     svg.append("g")
-        .attr("class", "axis axis--y")
+        .attr("class", "axis axis--y axis_y_right")
         .call(d3.svg.axis().scale(y_group).orient("right"))
-        .attr("transform", "translate(" + (width+90) + ", 0)")
+        .attr("transform", "translate(" + (width+90) + ", 0)");
 
     d3.selectAll(".axis path")
         .style({"fill":"none", "stroke":"black"})
@@ -374,9 +370,115 @@ function plot_km (container_name, raw_data) {
             update_survival(km_surv_high, ".line_high");
             update_survival(km_surv_low, ".line_low");
 
-            
         });
 
+    //////////// a prompt box to get the cutpoint for group ////////////////
+    input_group_cutpint = function() {
+        var input_cutpoint = prompt("Please enter your cutpoint value:");
+        if (isNaN(input_cutpoint) | input_cutpoint == null) {
+            console.log(input_cutpoint);
+            alert("Please input a number.");
+        } else {
+            // calculate grabber location
+            var y_loc = y_group(input_cutpoint);
+            y_loc = y_loc < height / 2 ? height / 2 : y_loc,
+                y_loc = y_loc > height ? height : y_loc;
+
+            // change the cutpoint
+            cutpoint = y_group.invert(y_loc);
+
+            // move bar
+            d3.select(".drag_group_line")
+                .attr("y", y_loc);
+            d3.select(".drag_group_grabber")
+                .attr("y", y_loc - 11);
+
+            // get time cutpoint
+            var x_loc = +d3.select(".drag_screen").attr("x");
+            x_loc += 15;
+            var time_loc = x.invert(x_loc);
+
+            // re-sort data
+            data_sorted = sortByTwoVar(data, cutpoint);
+
+            // update lifespan
+            update_lifespan(newData = data_sorted, cutpoint = cutpoint);
+
+            // update group
+            update_group(newData = data_sorted, cutpoint = cutpoint);
+
+            svg.selectAll(".lifespan")
+                .attr("opacity",  (d) => d.time < time_loc ? 0.1: 1)
+                .classed("ignored", (d) => d.time < time_loc);
+
+            //generate new KM curve data.
+            km_data = data_sorted.filter((d) => d.time >= time_loc);
+            km_data_high = km_data.filter((d) => d.group > cutpoint);
+            km_data_low = km_data.filter((d) => d.group < cutpoint);
+
+            km_surv_high = KM_Curve(km_data_high);
+            km_surv_low = KM_Curve(km_data_low);
+            km_surv_high.unshift({"t_i": time_loc, "d_i": 0, "Y_i": 0, "s_t": 0, "S_t": 1});
+            km_surv_low.unshift({"t_i": time_loc, "d_i": 0, "Y_i": 0, "s_t": 0, "S_t": 1});
+
+            update_survival(km_surv_high, ".line_high");
+            update_survival(km_surv_low, ".line_low");
+
+        }
+    }
+
+    d3.select(".axis_y_right").on("click", input_group_cutpint);
+
+
+    //////////// a prompt box to get the cutpoint for time ////////////////
+    input_time_cutpint = function() {
+        var input_cutpoint = prompt("Please enter your cutpoint value:");
+        if (isNaN(input_cutpoint) | input_cutpoint == null) {
+            console.log(input_cutpoint);
+            alert("Please input a number.");
+        } else {
+            console.log(input_cutpoint);
+            // calculate grabber location
+            var x_loc = x(input_cutpoint);
+            x_loc = x_loc < 0 ? 0 : x_loc,
+                x_loc = x_loc > width ? width : x_loc;
+
+
+            // change the cutpoint
+            var time_loc = x.invert(x_loc);
+
+            //move bar.
+            d3.select(".drag_bar")
+                .attr("transform", "translate(" + x_loc + ",0)")
+                .select("text")
+                .text("entry ≥ " + time_loc.roundTo(0) + " days");
+
+            d3.select(".drag_screen")
+                .attr("x",  x_loc - 15);
+
+            svg.selectAll(".lifespan")
+                .attr("opacity",  (d) => d.time < time_loc ? 0.1: 1)
+                .classed("ignored", (d) => d.time < time_loc);
+
+
+            //generate new KM curve data.
+            //only include current individuals.
+            km_data = data.filter((d) => d.time >= time_loc);
+            km_data_high = km_data.filter((d) => d.group > cutpoint);
+            km_data_low = km_data.filter((d) => d.group <= cutpoint);
+
+            updateLegend(cutpoint.roundTo(3), km_data_high.length, km_data_low.length);
+
+            km_surv_high = KM_Curve(km_data_high, reSort = true);
+            km_surv_low = KM_Curve(km_data_low, reSort = true);
+            km_surv_high.unshift({"t_i": time_loc, "d_i": 0, "Y_i": 0, "s_t": 0, "S_t": 1});
+            km_surv_low.unshift({"t_i": time_loc, "d_i": 0, "Y_i": 0, "s_t": 0, "S_t": 1});
+            update_survival(km_surv_high, ".line_high");
+            update_survival(km_surv_low, ".line_low");
+        }
+    }
+
+    d3.select(".axis--x").on("click", input_time_cutpint);
 
 
     // make grabber bar

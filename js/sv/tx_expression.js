@@ -2,112 +2,83 @@ function round(num, digits) {
     return +(Math.round(num + "e+" + digits) + "e-" + digits);
 }
 
+var box_chart;
+
 function boxplot(
     txid, 
     rearranged_clinical,
     expression
 ) {
-    var tx_echart = echarts.init(document.getElementById('tx_echart'));
-    var box_data = [];
-    var x_label = [];
-
-    for (i in rearranged_clinical.cdCode) {
-        box_data[i] = [];
-        x_label.push(rearranged_clinical.cdCode[i]);
-    }
+    var box_data = new Array();
 
     rearranged_clinical.value.map(function(d) {
-        box_data[d[1]].push(expression[d[0]]);
+        box_data.push({x:d[1], y: Math.log2(+expression[d[0]])});
+//        box_data.push({x:d[1], y: +expression[d[0]]});
     });
 
-    var new_box_data = [], 
-        new_x_label = [];
-    for (var i in box_data) {
-        if (box_data[i].length > 0) {
-            new_box_data.push(box_data[i]);
-            new_x_label.push(x_label[i]);
-        }
-    }
-    var data = echarts.dataTool.prepareBoxplotData(new_box_data);
 
-    var option = {
-        title: [
-            {
-                text: txid + ' expression',
-                left: 'center',
-            },
-            {
-                text: 'upper: Q3 + 1.5 * IRQ \nlower: Q1 - 1.5 * IRQ',
-                borderColor: '#999',
-                borderWidth: 1,
-                textStyle: {
-                    fontSize: 14
-                },
-                left: '70%',
-                top: '0%'
-            }
-        ],
-        tooltip: {
-            trigger: 'item',
-            axisPointer: {
-                type: 'shadow'
-            }
-        },
-        grid: {
-            left: '10%',
-            right: '10%',
-            bottom: '30%'
-        },
-        xAxis: {
-            type: 'category',
-            data: new_x_label,
-            boundaryGap: true,
-            nameGap: 30,
-            splitArea: {
-                show: false
-            },
-            axisLabel: {
-                interval: 0,
-                rotate: 25, 
-                formatter: '{value}'
-            },
-            splitLine: {
-                show: false
-            }
-        },
-        yAxis: {
-            type: 'value',
-            name: 'Expression',
-            splitArea: {
-                show: true
-            }
-        },
-        series: [
-            {
-                name: 'boxplot',
-                type: 'boxplot',
-                data: data.boxData,
-                tooltip: {
-                    formatter: function (param) {
-                        return [
-                            '' + param.name + ': ',
-                            'upper: '  + round(param.data[5], 2),
-                            'Q3: '     + round(param.data[4], 2),
-                            'median: ' + round(param.data[3], 2),
-                            'Q1: '     + round(param.data[2], 2),
-                            'lower: '  + round(param.data[1], 2)
-                        ].join('<br/>')
-                    }
-                }
-            },
-            {
-                name: 'outlier',
-                type: 'scatter',
-                data: data.outliers
-            }
-        ]
-    };
-    tx_echart.setOption(option);
+
+    $(".inner-wrapper").remove();
+
+
+    box_chart = makeDistroChart({
+        data: box_data,
+        xName: 'x',
+        yName: 'y',
+        xCode: rearranged_clinical.cdCode,
+        axisLabels: {xAxis: 'Years', yAxis: 'log2 RSEM value'},
+        selector:".chart-wrapper",
+        chartSize:{height:450, width:660},
+        constrainExtremes:true});
+    box_chart.renderBoxPlot();
+    box_chart.renderDataPlots();
+    box_chart.renderNotchBoxes({showNotchBox:false});
+    box_chart.renderViolinPlot({showViolinPlot:false});
+}
+
+// figure type switcher
+function show_box() {
+    box_chart.boxPlots.show({reset:true});
+    box_chart.violinPlots.hide();
+	box_chart.notchBoxes.hide();
+	box_chart.dataPlots.change({showPlot:false,showBeanLines:false})
+}
+function show_notchbox() {
+    box_chart.notchBoxes.show({reset:true});
+	box_chart.boxPlots.show({reset:true, showBox:false,showOutliers:true,boxWidth:20,scatterOutliers:true});
+	box_chart.violinPlots.hide();
+	box_chart.dataPlots.change({showPlot:false,showBeanLines:false})
+}
+function show_violin() {
+    box_chart.violinPlots.show({reset:true, resolution:12});
+	box_chart.boxPlots.show({reset:true, showWhiskers:false,showOutliers:false,boxWidth:10,lineWidth:15,colors:['#555']});
+	box_chart.notchBoxes.hide();
+	box_chart.dataPlots.change({showPlot:false,showBeanLines:false});
+}
+function show_bean() {
+    box_chart.violinPlots.show({reset:true, width:100, resolution:12});
+	box_chart.dataPlots.show({showBeanLines:true,beanWidth:15,showPlot:false,colors:['#555']});
+	box_chart.boxPlots.hide();
+	box_chart.notchBoxes.hide()
+}
+function show_beeswarm() {
+    box_chart.dataPlots.show({showPlot:true, plotType:'beeswarm',showBeanLines:false, colors:null});
+	box_chart.violinPlots.hide();
+	box_chart.notchBoxes.hide();
+	box_chart.boxPlots.hide();
+}
+function show_scatter() {
+    box_chart.dataPlots.show({showPlot:true, plotType:40, showBeanLines:false,colors:null});
+	box_chart.violinPlots.hide();
+	box_chart.notchBoxes.hide();
+	box_chart.boxPlots.hide();
+}
+function show_line() {
+    if(box_chart.dataPlots.options.showLines){
+        box_chart.dataPlots.change({showLines:false});
+	} else {
+        box_chart.dataPlots.change({showLines:['median','quartile1','quartile3']});
+	}
 }
 
 function km_plot(

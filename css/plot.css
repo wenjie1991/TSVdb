@@ -269,9 +269,13 @@ line.guide_line {
 }
 
 #tx_echart {
-    height: 400px;
+    height: 450px;
     width: 650px;
     margin: 0 57px;
+}
+
+.chart-options {
+    margin-left: 20px;
 }
 
 #tx_km {
