@@ -158,6 +158,12 @@ function close_tx_expression_module() {
         $(".mask").hide();
         $(".mask").click()
         $(".tx_km_svg").remove();
+
+        // prepare to display the tx expression next time
+        $(".km_save_buttons").hide();
+        $("#tx_echart").show();
+        $(".chart-options").show();
+        $(".tx_save_buttons").show();
     }
 };
 $(".tx_expression_close").click(close_tx_expression_module);
@@ -165,13 +171,19 @@ $(".mask").click(close_tx_expression_module);
 
 function choose_boxplot() {
     $("#tx_km").hide();
+    $(".km_save_buttons").hide();
     $("#tx_echart").show();
+    $(".chart-options").show();
+    $(".tx_save_buttons").show();
 }
-
 $("#tx_cd_boxplot").click(choose_boxplot);
+
 function choose_km() {
     $("#tx_echart").hide();
+    $(".tx_save_buttons").hide();
+    $(".chart-options").hide();
     $("#tx_km").show();
+    $(".km_save_buttons").show();
 }
 $("#tx_cd_km").click(choose_km);
 
