@@ -33,6 +33,7 @@ function draw() {
     d3.json(url, function(error, data) {
         plot(data, data_type, url_download);
         $("#myloading").css("display", 'none');
+        $(".main_save_buttons").show();
     });
 }
 

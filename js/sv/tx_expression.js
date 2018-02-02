@@ -12,7 +12,9 @@ function boxplot(
     var box_data = new Array();
 
     rearranged_clinical.value.map(function(d) {
-        box_data.push({x:d[1], y: Math.log2(+expression[d[0]])});
+        var person_expression = +expression[d[0]];
+        person_expression = person_expression < 0.5 ? 0.5 : person_expression;
+        box_data.push({x:d[1], y: Math.log2(person_expression)});
 //        box_data.push({x:d[1], y: +expression[d[0]]});
     });
 

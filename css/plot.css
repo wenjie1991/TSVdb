@@ -98,8 +98,12 @@ img {
 
 .frame {
     fill: none;
-    /*    stroke: red;*/
+/*    stroke: red;*/
     pointer-events: all;
+}
+
+.chart {
+/*    stroke: red;*/
 }
 
 .area {
