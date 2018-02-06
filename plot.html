@@ -14,13 +14,15 @@
               gtag('config', 'UA-106948170-1');
         </script>
 
-        <script type="text/javascript" src="./js/sv/check_browser.js"></script>
+        <script src="./js/sv/check_browser.js"></script>
         <script src="./js/d3.v3.min.js"></script>
         <script src="./js/jquery-3.2.1.min.js"></script>
         <script src="./js/distrochart.js"></script>
         <script src="./js/km.js"></script>
         <script src="./js/download_svg.js"></script>
-        <link rel='stylesheet' type='text/css' href='./css/plot.css'/>
+        <script src="./js/jquery-ui.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="./css/plot.css"/>
+        <link rel="stylesheet" type="text/css" href="./css/jquery-ui.min.css"/>
         <link rel="stylesheet" type="text/css" href="./css/distrochart.css">
         <link rel="stylesheet" type="text/css" href="./fonts/iconfont.css">
     </head>
@@ -191,7 +193,7 @@
                         <div style="float: left; width: auto; margin: 20px 20px;">
                             <label>Official Symbol Or EntrezID: </label>
                         </div>
-                        <input type="text" id="gene_symbol">
+                        <input type="text" id="gene_symbol"/>
                         <p style="margin: 0 20px; color: #9a9a9a">Example: GAPDH, 2597</p>
                         <div class="gene_check_wait">
                         <div class="loader"></div><p>Checking input ...</p>
@@ -302,6 +304,7 @@
         </div>
 
 
+        <script src="./js/sv/autocomplete.js"></script>
         <script src="./js/sv/tx_expression.js"></script>
         <script src="./js/sv/transcript_pattern.js"></script>
         <script src="./js/sv/right_chart.js"></script>
