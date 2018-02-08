@@ -428,7 +428,7 @@ function generate_area_graph(
             .y1(function(d, i) { return y_scales[NI_i](d[1]) });
 
         right_row_charts[NI_i].append('g').attr('class', 'area')
-          .append('path')
+            .append('path')
             .attr('d', area(rearranged_data_value[NI_i]));
     }
 

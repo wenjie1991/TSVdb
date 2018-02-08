@@ -239,6 +239,30 @@ function plot(data, data_type, url_download) {
         strand         = strand
     )
 
+    // function used to find the isoform related to the junctions
+    function mapping(start, end, exons) {
+        // TODO need improve the effifiency
+        for (var i=0; i<exons.length-1; i++) {
+            if (exons[i].start <= start & exons[i].end >= start) 
+                if (exons[i+1].start <= end & exons[i+1].end >= end)
+                    return true;
+        }
+    }
+
+    function map_tx(
+        tx_data, //tx_pattern_data.tx
+        start, 
+        end
+    ) {
+        var txids = [];
+        for (i in tx_data) {
+            if (mapping(start, end, tx_data[i].exon)) {
+                txids.push(i);
+            }
+        }
+        return txids;
+    }
+
     // right module
     right = generate_element(right_frame, 'frame right_frame', true);
     for (var i=0; i<n_right_row; i++) {
@@ -254,8 +278,19 @@ function plot(data, data_type, url_download) {
                 obj_class = $(this).attr('class');
                 $("." + obj_class + " g").addClass('right_row_hover_choosen');
 
-
                 obj_class_index = obj_class.substr(16);
+                var exon_location = areaValue_data.exon[obj_class_index];
+                if (data_type != "exon") {
+                    if (exon_location.strand == "+") {
+                        var txids = map_tx(tx_pattern_data.tx, exon_location.start, exon_location.end);
+                    } else {
+                        var txids = map_tx(tx_pattern_data.tx, exon_location.end, exon_location.start);
+                    }
+                    for (var i=0; i<txids.length; i++) {
+                        var dom = document.getElementById(txids[i]);
+                        $(dom).addClass("tx_hover_choosen");
+                    }
+                }
 
                 middle_line_class = ".middle_line_" + obj_class_index;
                 $(middle_line_class).addClass('middle_line_hover_choosen');
@@ -275,6 +310,20 @@ function plot(data, data_type, url_download) {
 
                 obj_class_index = obj_class.substr(16);
 
+                var exon_location = areaValue_data.exon[obj_class_index];
+
+                if (data_type != "exon") {
+                    if (exon_location.strand == "+") {
+                        var txids = map_tx(tx_pattern_data.tx, exon_location.start, exon_location.end);
+                    } else {
+                        var txids = map_tx(tx_pattern_data.tx, exon_location.end, exon_location.start);
+                    }
+                    for (var i=0; i<txids.length; i++) {
+                        var dom = document.getElementById(txids[i]);
+                        $(dom).toggleClass("tx_click_match");
+                    }
+                }
+
                 middle_line_class = ".middle_line_" + obj_class_index;
                 $(middle_line_class).toggleClass('middle_line_click_choosen');
 
@@ -290,6 +339,12 @@ function plot(data, data_type, url_download) {
                 $("." + obj_class + " g").removeClass('right_row_hover_choosen');
 
                 obj_class_index = obj_class.substr(16);
+
+                var exon_location = areaValue_data.exon[obj_class_index];
+
+                if (data_type != "exon") {
+                    $(".tx_hover_choosen").removeClass("tx_hover_choosen");
+                }
 
                 middle_line_class = ".middle_line_" + obj_class_index;
                 $(middle_line_class).removeClass('middle_line_hover_choosen');
