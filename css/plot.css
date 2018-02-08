@@ -120,6 +120,14 @@ img {
     fill: #c34d58;
 }
 
+.axis_y_right {
+    cursor: pointer;
+}
+
+.axis--x {
+    cursor: pointer;
+}
+
 .gene_expression_row {
     cursor: pointer;
 }
@@ -150,6 +158,13 @@ img {
 
 .tx_pattern_frame {
     cursor: pointer;
+}
+
+.tx_hover_choosen line {
+    stroke: #c34d58;
+}
+.tx_click_choosen line {
+    stroke: #c34d58;
 }
 
 

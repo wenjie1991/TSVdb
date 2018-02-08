@@ -38,6 +38,7 @@ function generate_transcript_pattern(parents, parent_frame_par, parent_width, tx
         parent_i
             .attr("class", "tx_pattern_frame")
             .attr("txid", i)
+            .attr("id", i)
             .on("mouseover", function(e) {
 
                 //check if we have "e" or "window.event" and use them as "evt"
