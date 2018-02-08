@@ -320,7 +320,7 @@ function plot(data, data_type, url_download) {
                     }
                     for (var i=0; i<txids.length; i++) {
                         var dom = document.getElementById(txids[i]);
-                        $(dom).toggleClass("tx_click_match");
+                        $(dom).toggleClass("tx_click_choosen");
                     }
                 }
 
