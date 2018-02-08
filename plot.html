@@ -14,13 +14,16 @@
               gtag('config', 'UA-106948170-1');
         </script>
 
-        <script type="text/javascript" src="./js/sv/check_browser.js"></script>
+        <script src="./js/sv/check_browser.js"></script>
         <script src="./js/d3.v3.min.js"></script>
         <script src="./js/jquery-3.2.1.min.js"></script>
-        <script src="./js/echarts.min.js"></script>
-        <script src="./js/dataTool.min.js"></script>
+        <script src="./js/distrochart.js"></script>
         <script src="./js/km.js"></script>
-        <link rel='stylesheet' type='text/css' href='./css/plot.css'/>
+        <script src="./js/download_svg.js"></script>
+        <script src="./js/jquery-ui.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="./css/plot.css"/>
+        <link rel="stylesheet" type="text/css" href="./css/jquery-ui.min.css"/>
+        <link rel="stylesheet" type="text/css" href="./css/distrochart.css">
         <link rel="stylesheet" type="text/css" href="./fonts/iconfont.css">
     </head>
     <body>
@@ -52,7 +55,45 @@
             </div>
             <div class="ucsc_link_container"><a target="_blank" class="tx_ucsc_link" href="#"></a></div>
 
-            <div id="tx_echart"> </div>
+            <!-- ########### The Export Section ####### -->
+            <div class="tx_save_buttons">
+                <div class="span12">
+                    <p>Export Drawing:</p>
+                    <button class="btn btn-success" id="tx_save_as_svg" value="">
+                        Save as SVG</button>
+                    <button class="btn btn-success" id="tx_save_as_pdf" value="">
+                        Save as PDF</button>
+                    <button class="btn btn-success" id="tx_save_as_png" value="">
+                        Save as High-Res PNG</button>
+                </div>
+            </div>
+
+            <!-- ########### Switch plot type ######## -->
+            <div class="chart-options">
+                <p>Show: </p>
+                <button onclick=show_box()>Box Plot</button>
+                <button onclick=show_notchbox()>Notched Box Plot</button>
+                <button onclick=show_violin()>Violin Plot</button>
+                <button onclick=show_bean()>Bean Plot</button>
+                <button onclick=show_beeswarm()>Beeswarm Plot</button>
+                <button onclick=show_scatter()>Scatter Plot</button>
+                <button onclick=show_line()>Trend Lines</button>
+            </div>
+
+            <div id="tx_echart" class="chart-wrapper"> </div>
+
+            <!-- ########### The Export Section ####### -->
+            <div class="km_save_buttons" style="display: none;">
+                <div class="span12">
+                    <p>Export Drawing:</p>
+                    <button class="btn btn-success" id="km_save_as_svg" value="">
+                        Save as SVG</button>
+                    <button class="btn btn-success" id="km_save_as_pdf" value="">
+                        Save as PDF</button>
+                    <button class="btn btn-success" id="km_save_as_png" value="">
+                        Save as High-Res PNG</button>
+                </div>
+            </div>
             <div id="tx_km"> </div>
 
             <div class="module_footer">
@@ -152,7 +193,7 @@
                         <div style="float: left; width: auto; margin: 20px 20px;">
                             <label>Official Symbol Or EntrezID: </label>
                         </div>
-                        <input type="text" id="gene_symbol">
+                        <input type="text" id="gene_symbol"/>
                         <p style="margin: 0 20px; color: #9a9a9a">Example: GAPDH, 2597</p>
                         <div class="gene_check_wait">
                         <div class="loader"></div><p>Checking input ...</p>
@@ -249,12 +290,39 @@
             </div>
         </div>
 
+        <!-- ########### The Export Section for main ####### -->
+        <div class="main_save_buttons" style="display: none;">
+            <div class="span12">
+                <p>Export Drawing:</p>
+                <button class="btn btn-success" id="main_save_as_svg" value="">
+                    Save as SVG</button>
+                <button class="btn btn-success" id="main_save_as_pdf" value="">
+                    Save as PDF</button>
+                <button class="btn btn-success" id="main_save_as_png" value="">
+                    Save as High-Res PNG</button>
+            </div>
+        </div>
+
+
+        <script src="./js/sv/autocomplete.js"></script>
         <script src="./js/sv/tx_expression.js"></script>
         <script src="./js/sv/transcript_pattern.js"></script>
         <script src="./js/sv/right_chart.js"></script>
         <script src="./js/sv/chart.js"></script>
         <script src="./js/sv/main.js"></script>
-        <div class="chart_frame"></div>
+
+        <div class="download_linker"></div>
+        <div class="chart_frame" id="main_chart"></div>
+        <div id="hidden_node" style="display: none"></div>
+
+        <!-- Hidden <FORM> to submit the SVG data to the server, which will convert it to SVG/PDF/PNG downloadable file.
+            The form is populated and submitted by the JavaScript below. -->
+        
+        <form id="svgform" method="post" action="cgi-bin/download.pl">
+            <input type="hidden" id="output_format" name="output_format" value="">
+            <input type="hidden" id="data" name="data" value="">
+        </form>
+
         <div class="footer">
             <div style="margin: 0, 50px; font-size: 0.8em">
                 <p>
@@ -263,26 +331,14 @@
             </div>
             <div class="links">
                 <a href="http://bms.zju.edu.cn/English/">Department of Pathology and Pathophysiology</a>
-<!--                <a href="http://bms.zju.edu.cn/English/">School of Basic Medical Sciences</a>-->
                 <a href="http://www.zju.edu.cn">Zhejiang University</a>
                 <a href="https://github.com/wenjie1991/TSVdb">GitHub</a>
             </div>
             
             <div class="footer-data">
                 <span><i class="iconfont icon-gene"></i>TCGA datasets version 20160128</span>
-<!--                <span>2017</span>-->
-<!--                <a style="margin: 3px 10px;" rel="license" href="http://creativecommons.org/licenses/by/3.0/deed.en_US">-->
-<!--                    <img alt="Creative Commons License" style="border-width:0; margin: -2px" src="http://i.creativecommons.org/l/by/3.0/80x15.png">-->
-<!--                </a>-->
             </div>
         </div>
-<!--        <form action="javascript:draw()">-->
-<!--            <span>gene </span><input id='query_gene' type='text' value="TJP1"> </br>-->
-<!--            <span>data type </span><input id='query_data_type' type='text' value="exon"> </br>-->
-<!--            <span>tumor type </span><input id = 'query_tumor_type' type='text' value="COAD"> </br>-->
-<!--            <span>clinical type </span><input id='query_clinical_type' type='text' value="sampletype"> </br>-->
-<!--            <input type="submit" value="Submit">-->
-<!--        </form>-->
     </body>
 </html>
 

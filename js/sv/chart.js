@@ -42,6 +42,15 @@ function plot(data, data_type, url_download) {
         tx_expression_data    = data.tx_expression;   // normalized RSEM
     var areaValue_data;  // the exon or junction count data used to draw the area graph
 
+    // calculate the number of clinical data category
+    var clinical_codes = {},
+        clinical_codes_n = 0;
+    for (var i in clinical_data.value) {
+        clinical_codes[clinical_data.value[i]] = clinical_data.cdCode[clinical_data.value[i]];
+    }
+    for (var i in clinical_codes) {
+        clinical_codes_n++;
+    }
 
     // The smallest value of start and biggest value of end.
     var tx_start = Infinity, tx_end = 0, strand;
@@ -70,7 +79,7 @@ function plot(data, data_type, url_download) {
 
     // Canvas size
     var height = (d3.max([n_right_row, 15]) + 3) *  right_row_height,
-        margin = {'top':50, 'bottom':50, 'left':50, 'right':50};
+        margin = {'top': d3.max([clinical_codes_n + 1, 3]) * 20 + 30, 'bottom':50, 'left':50, 'right':50};
 
 
     // Left, middle and right size
@@ -90,6 +99,12 @@ function plot(data, data_type, url_download) {
             'width': d3.min([d3.max([obj_length(gene_expression_data.gene_expression) * 2, 700]), 1400]),
             'height':height,
             'left':middle_frame.left + middle_frame.width
+        },
+        top_frame = {
+            'width': 600,
+            'height': margin.top - 30,
+            'left': right_frame.left,
+            'top': -(margin.top - 30)
         };
 
     // Canvas size 
@@ -176,13 +191,17 @@ function plot(data, data_type, url_download) {
     }
 
     // add download link
+    $(".download_linker").after('<a href="' + url_download + '" download id="download" hidden></a>');
+
     left.append("text")
         .attr('transform', 'translate(' + '0,0' + ')')
         .attr("class", "download_link")
         .text("Download Data")
         .on("click", function() {
-            window.open(url_download);
+//            window.open(url_download);
+            document.getElementById('download').click();
         });
+
 
     // left transcript pattern
     generate_transcript_pattern(
@@ -243,6 +262,7 @@ function plot(data, data_type, url_download) {
 
                 left_col_exon_class = ".RNASeq_exon_" + obj_class_index;
                 $(left_col_exon_class).addClass('RNASeq_exon_hover_choosen');
+
 
             })
         // click fix the hightlight
@@ -345,12 +365,86 @@ function plot(data, data_type, url_download) {
     );
 
     // middle module
-    middle = generate_element(middle_frame, 'frame', true);
+    middle = generate_element(middle_frame, 'frame middle_frame', true);
     for (var i=0; i<n_right_row; i++) {
         middle_row_charts[i] = middle.append('g').attr('class', 'middle_line_' + i);
         middle_row_charts[i].append('line')
             .attr('x1', 0).attr('x2', middle_line.width)
             .attr('y1', left_row_line_y[i]).attr('y2', right_row_y[i] + right_row_frame.height / 2);
     }
+
+    // top module (legend module) 
+    function draw_legend(clinical_codes, data_type) {
+        var top = generate_element(top_frame, 'frame top_frame', true);
+        top.attr("transform", "translate(" + top_frame.left + "," + top_frame.top + ")");
+
+        // clinical legends
+        var top_clinical = top.append("g").attr("class", "legend_clinical")
+            .attr("transform", "translate(350, 0)");
+        top_clinical.append("rect").attr("width", 300).attr("height", top_frame.height);
+        top_clinical.append("text")
+            .attr("class", "legend_title")
+            .attr("fill", "#1e4159")
+            .attr("font-weight", "bold")
+            .text(clinical_data.cd + ":");
+
+        color_scale = d3.scale.category10();
+        var y_shift = 10;
+        for (var i in clinical_codes) {
+            var g_i = top_clinical.append("g")
+                .attr("transform", "translate(10, " + y_shift + ")")
+                .attr("class", "legend");
+            g_i.append("rect")
+                .attr("width", 5)
+                .attr("height", 15)
+                .attr("fill", color_scale(i));
+            g_i.append("text")
+                .attr("transform", "translate(8, 12)")
+                .text(clinical_codes[i])
+                .attr("fill", "#1e4159");
+
+            y_shift += 20;
+        }
+
+
+        // other legends
+        var top_others = top.append("g").attr("class", "legend_others")
+            .attr("transform", "translate(0, 0)");
+        top_others.append("rect").attr("width", 280).attr("height", top_frame.height);
+        top_others.append("text")
+            .attr("class", "legend_title")
+            .attr("fill", "#1e4159")
+            .attr("font-weight", "bold")
+            .text("Data & Annotation:");
+
+
+        var other_legend_par = {
+            "Transcription pattern": { x: 150, y: 10, fill: "#1e4159", opacity: 1 },
+            "Gene expression": { x: 150, y: 30, fill: "#93c34d", opacity: 1 },
+        };
+        if (data_type == "exon") {
+            other_legend_par.Exon = { x: 10, y: 10, fill: "#1e4159", opacity: 0.2 };
+            other_legend_par["Exon usage"] = { x: 10, y: 30, fill: "#99c1dd", opacity: 1 }
+        } else {
+            other_legend_par.Junction = { x: 10, y: 10, fill: "#1e4159", opacity: 0.2 };
+            other_legend_par["Junction usage"] = { x: 10, y: 30, fill: "#99c1dd", opacity: 1 }
+        }
+
+        for (var i in other_legend_par) {
+            var g_i = top_others.append("g")
+                .attr("transform", "translate(" + other_legend_par[i].x + "," +  other_legend_par[i].y + ")")
+                .attr("class", "legend");
+            g_i.append("rect")
+                .attr("width", 5)
+                .attr("height", 15)
+                .attr("opacity", other_legend_par[i].opacity)
+                .attr("fill", other_legend_par[i].fill);
+            g_i.append("text")
+                .attr("transform", "translate(8, 12)")
+                .text(i)
+                .attr("fill", "#1e4159");
+        }
+    }
+    draw_legend(clinical_codes, data_type);
 }
 
