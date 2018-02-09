@@ -112,6 +112,14 @@ function plot(data, data_type, url_download) {
         svg_height = height + margin.top + margin.bottom,
         svg_width = width + margin.left + margin.right;
 
+    // change the left location of save main plot buttons
+    function locate_save_main_buttons() {
+        var screen_width = document.body.scrollWidth;
+        $("#main_save_as_pdf").css("left", screen_width / 2 - svg_width / 2 + 55 + "px");
+        $("#main_save_as_svg").css("left", screen_width / 2 - svg_width / 2 + 185 + "px");
+    }
+    locate_save_main_buttons();
+    $(window).on('resize', function() { locate_save_main_buttons() });
 
     // Element size
     var right_row_frame = 

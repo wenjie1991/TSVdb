@@ -154,13 +154,13 @@ img {
 #main_save_as_pdf {
     position: absolute;
     top: 145px;
-    left: 65px;
+/*    left: 65px;*/
 }
 
 #main_save_as_svg {
     position: absolute;
     top: 145px;
-    left: 195px;
+/*    left: 195px;*/
 }
 
 
@@ -299,11 +299,16 @@ line.guide_line {
     margin: 0 20px;
 }
 
+.km_save_buttons {
+    margin: 0 20px;
+}
+
+
 .flex-between {
     display: flex;
     justify-content: space-between;
     align-content: center;
-    margin-bottom: 30px;
+    margin-bottom: 10px;
 }
 
 .ucsc_link_container {
