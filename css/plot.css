@@ -295,6 +295,16 @@ line.guide_line {
     border: 1px solid rgba(0, 0, 0, .5);
     vertical-align: top;
 }
+.tx_expression .tx_save_buttons {
+    margin: 0 20px;
+}
+
+.flex-between {
+    display: flex;
+    justify-content: space-between;
+    align-content: center;
+    margin-bottom: 30px;
+}
 
 .ucsc_link_container {
     margin: 0 20px;
@@ -817,6 +827,15 @@ button:hover {
         -webkit-transform: scaleY(1.0);
         -moz-transform: scaleY(1.0);
         -o-transform: scaleY(1.0);
+    }
+}
+
+@media screen and (max-width:1200px){
+    .tx_expression {
+        width: 600px;
+    }
+    .tx_expression .tx_cd_choose {
+        margin-left: 138px;
     }
 }
 
