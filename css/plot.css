@@ -151,6 +151,19 @@ img {
     text-decoration: underline;
 }
 
+#main_save_as_pdf {
+    position: absolute;
+    top: 145px;
+    left: 65px;
+}
+
+#main_save_as_svg {
+    position: absolute;
+    top: 145px;
+    left: 195px;
+}
+
+
 .tx_pattern rect {
     stroke: #1e4159;
     fill: #1e4159;
