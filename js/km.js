@@ -29,10 +29,10 @@ function plot_km (container_name, raw_data) {
 
 
     //charting code goes here.
-    var chartWidth  = 650, // default width
+    var chartWidth  = 690, // default width
         chartHeight = 450;
 
-    var margin = {top: 20, right: 180, bottom: 50, left: 50},
+    var margin = {top: 20, right: 180, bottom: 50, left: 60},
         width  = chartWidth - margin.left - margin.right,
         height = chartHeight - margin.top - margin.bottom;
 
@@ -70,6 +70,7 @@ function plot_km (container_name, raw_data) {
 
 
     /////////////// Draw axis //////////////////////////////////////// 
+    // x axis
     svg.append("g")
         .attr("class", "axis axis--x")
         .attr("transform", "translate(0," + height + ")")
@@ -79,10 +80,11 @@ function plot_km (container_name, raw_data) {
         .attr("y", 20)
         .attr("x", width/2)
         .attr("dy", "1.3em")
-        .style("text-anchor", "center")
+        .style("text-anchor", "middle")
         .style("fill", "black")
         .style("font-size", "1.0em")
         .text("Time in Days");
+
 
     //draw bar above to seperate the two plots from eachother
     svg.append("line")
@@ -94,9 +96,20 @@ function plot_km (container_name, raw_data) {
         .attr("stroke-width", 1)
         .attr("opacity", 0.5);
 
+    // draw left y axis
     svg.append("g")
         .attr("class", "axis axis--y axis_y_left")
-        .call(d3.svg.axis() .scale(y_surv) .orient("left"));
+        .call(d3.svg.axis() .scale(y_surv) .orient("left"))
+        .append("text")
+        .attr("class", "axis-title")
+        .style("text-anchor", "middle")
+        .attr("transform", "rotate(270)")
+        .attr("x", - (height / 4 * 3))
+        .attr("y", - 60)
+        .attr("dy", "1.3em")
+        .style("fill", "black")
+        .style("font-size", "1.0em")
+        .text("Overall Survival (%)");
 
 
     ////////////////////////////////  Make legend ////////////////////////////////////////////////
@@ -196,7 +209,18 @@ function plot_km (container_name, raw_data) {
     svg.append("g")
         .attr("class", "axis axis--y axis_y_right")
         .call(d3.svg.axis().scale(y_group).orient("right"))
-        .attr("transform", "translate(" + (width+90) + ", 0)");
+        .attr("transform", "translate(" + (width+90) + ", 0)")
+        .append("text")
+        .attr("class", "axis-title")
+        .attr("y", height/2)
+        .attr("x", 0)
+        .attr("dy", "-1em")
+        .style("text-anchor", "middle")
+        .style("fill", "black")
+        .style("font-size", "1.0em")
+        .text("Expression (RSEM):");
+
+
 
     d3.selectAll(".axis path")
         .style({"fill":"none", "stroke":"black"})
