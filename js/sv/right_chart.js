@@ -220,6 +220,7 @@ function clinical_graph(
     right_row_frame,
     right_row_charts_top
 ) {
+//    rearranged_clinical.value.unshift("null");
     var x_scale, y_scale,
         tip, 
         right_frame_elem, guide_line, guide_line_y0, guide_line_y1;
@@ -239,11 +240,11 @@ function clinical_graph(
         .attr("x1", 0).attr("x2", 0)
         .attr("y1", right_row_frame.top).attr("y2", right_frame.height);
     
-    right_row_charts_top.selectAll('rect')
+    right_row_charts_top.append("g").selectAll("rect")
         .data(rearranged_clinical.value)
         .enter().append('rect')
         .attr('class', function(d, i) { return rearranged_clinical.cdCode[d[1]]})
-        .attr('x', function(d, i) { return x_scale(i - 1);  })
+        .attr('x', function(d, i) { return x_scale(i);  })
         .attr('y', 0)
         .attr('height', right_row_frame.height)
         .attr('width', x_scale.rangeBand() + 1)

@@ -312,17 +312,18 @@ function plot(data, data_type, url_download) {
 
                 var exon_location = areaValue_data.exon[obj_class_index];
 
-                if (data_type != "exon") {
-                    if (exon_location.strand == "+") {
-                        var txids = map_tx(tx_pattern_data.tx, exon_location.start, exon_location.end);
-                    } else {
-                        var txids = map_tx(tx_pattern_data.tx, exon_location.end, exon_location.start);
-                    }
-                    for (var i=0; i<txids.length; i++) {
-                        var dom = document.getElementById(txids[i]);
-                        $(dom).toggleClass("tx_click_choosen");
-                    }
-                }
+                // TODO bugs when choosen two junction, the merged part will be removed
+//                if (data_type != "exon") {
+//                    if (exon_location.strand == "+") {
+//                        var txids = map_tx(tx_pattern_data.tx, exon_location.start, exon_location.end);
+//                    } else {
+//                        var txids = map_tx(tx_pattern_data.tx, exon_location.end, exon_location.start);
+//                    }
+//                    for (var i=0; i<txids.length; i++) {
+//                        var dom = document.getElementById(txids[i]);
+//                        $(dom).toggleClass("tx_click_choosen");
+//                    }
+//                }
 
                 middle_line_class = ".middle_line_" + obj_class_index;
                 $(middle_line_class).toggleClass('middle_line_click_choosen');
@@ -381,12 +382,6 @@ function plot(data, data_type, url_download) {
         .attr('transform', 'translate(' + '-10,' +  (right_row_frame.height / 2 + 7) + ')')
         .text(clinical_data.cd)
         .attr('class', 'right_row_name' + " ");
-
-    right_row_charts_top1.append('rect')
-        .attr('x', 0)
-        .attr('y', 0)
-        .attr('width', right_row_frame.width)
-        .attr('height', right_row_frame.height);
 
     right_row_charts_top2 = right.append('g').attr('class', 'gene_expression_row')
         .attr('transform', 'translate(' + right_row_frame.left + ',' + (right_row_frame.height * 1) + ')');
