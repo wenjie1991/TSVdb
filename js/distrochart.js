@@ -36,8 +36,8 @@ function makeDistroChart(settings) {
         selector: null,
         axisLables: null,
         scale:'linear',
-        chartSize:{width:800,height:500},
-        margin:{top: 15, right: 60, bottom: 100, left: 80},
+        chartSize:{width:800,height:400},
+        margin:{top: 15, right: 10, bottom: 100, left: 150},
         constrainExtremes:false,
         color:d3.scale.category10()};
     for (var setting in settings) {chart.settings[setting] = settings[setting]}
@@ -312,7 +312,7 @@ function makeDistroChart(settings) {
             .selectAll("text")
             .attr("y", 5)
             .attr("x", -5)
-            .attr("transform", "rotate(-25)")
+            .attr("transform", "rotate(-20)")
             .style("text-anchor", "end");
         chart.objs.g.select('.x.axis .label').attr("x", chart.width / 2);
         chart.objs.g.select('.y.axis').call(chart.objs.yAxis.innerTickSize(-chart.width));

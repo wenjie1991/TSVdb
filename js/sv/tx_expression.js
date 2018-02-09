@@ -30,7 +30,7 @@ function boxplot(
         xCode: rearranged_clinical.cdCode,
         axisLabels: {xAxis: 'Years', yAxis: 'log2 RSEM value'},
         selector:".chart-wrapper",
-        chartSize:{height:450, width:660},
+        chartSize:{height:350, width:610},
         constrainExtremes:true});
     box_chart.renderBoxPlot();
     box_chart.renderDataPlots();

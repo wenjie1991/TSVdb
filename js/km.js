@@ -109,7 +109,7 @@ function plot_km (container_name, raw_data) {
         .attr("dy", "1.3em")
         .style("fill", "black")
         .style("font-size", "1.0em")
-        .text("Overall Survival (%)");
+        .text("Overall Survival");
 
 
     ////////////////////////////////  Make legend ////////////////////////////////////////////////
