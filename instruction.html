@@ -66,10 +66,10 @@
                     <img src="./image/select_data.png" alt="select_data" style="height: 300px">
                     <p style="height: 0px"></p>
                     <p>
-                    When open the data visualizing page, the user have to sequentially select the tumor type, gene, data type and clinical information. Before completing the selection, no other operation can be performed. Do not afraid when making a mistake at this stage, the options can be edited afterward.
+                    When open the data visualizing page, the user need to sequentially choose the tumor type, gene, data type and clinical information. Before completing the option choosing, no other operation can be performed. Do not afraid when making a mistake at this stage, the options can be edited afterward.
                     </p>
                     <p>
-                    The first pop-up dialog (Fig. A) is cancer type, please choose the cancer type you are interested in and click the selection button. In the second pop-up dialog (fig B), please enter an Official Gene Symbol or Entrez ID. If the query does not exist, the alarm would appear to notify you. Then choose the Exon or Junction usage value to be displayed (Fig. C). More about the scaling method, please refer to the next section. At last, choose the phenotype you are interesting (Fig. D). The gene expression value can be set to another gene so that the correlation between the splicing variants and the gene can be investigated.             
+                    The first pop-up dialog (Fig. A) is cancer type, please select the cancer type you are interested in and click the selection button. In the second pop-up dialog (fig B), please enter an Official Gene Symbol or Entrez ID. If the query does not exist, the alarm would appear to notify you. Then choose the exon/junction usage value to be displayed (Fig. C). The exon/junction usage is the scaled expression, more about the scaling method, please refer to the next section. At last, choose the phenotype you are interesting and the gene expression data used to sort sample inside each phenotype subgorup (Fig. D). The gene expression value can be set to another gene so that the correlation between alternative splicing of one gene and the expression of another gene can be investigated.             
                     </p>
                 </div>
             </div>
@@ -80,16 +80,16 @@
                 <div class="slide_content">
                     <img src="./image/about_graph.png" alt="about_graph" style="height: 400px">
                     <p>
-                    Options can be adjusted by clicking the corresponding buttons in the header.
+                    In the header displays the options, they can be edited by clicking the corresponding buttons in the header.
                     </p>
                     <p>
-                    The samples were sorted by clinical type, then sorted by the gene expression. When the mouse hovers the clinical attribution row, the group name and a red line will appear.
+                    The samples are firstly sorted by clinical type, then are sorted by the gene expression. When the mouse hovered the clinical attribution row, the group name and a red line will appear.
                     </p>
                     <p>
-                    The “Exon or Junction”  is the annotation that TCGA used to count the mapping reads. They represent the information that can be drawn from the Level 3 data of the mRNA Seq datasets from TCGA.
+                    The “Exon or Junction” grey boxes are the exon/junction that TCGA used to count the mapping reads, in the TCGA Level 3 mRNA Seq datasets.
                     </p>
                     <p>
-                    Each exon/junction usage value was displayed as area graph by row with samples by column. A transient highlight of exon or junction pattern generated when the mouse hovers an exon or junction area graph. A single click can achieve a durable highlight. What’s more, the double click of an exon or junction area graph would open the UCSC Genome Browsers in a new tab or windows with selecting exon or junction area highlighted.                     
+                    Each exon/junction usage value displays as shadowed line graph by row with samples by column. Exon/junction pattern will be transiently or permanently highlighted when the mouse hovered or clicked an exon/junction shadowed line graph. What’s more, when you double clicked on the exon/junction shawdowed line the UCSC Genome Browser will open in a new tab/window with selected exon/junction area highlighted and let you enjoy the annotation in UCSC Genome Browser.                     
                     </p>
                 </div>
             </div>
@@ -100,10 +100,10 @@
                 <div class="slide_content">
                     <img src="./image/about_isoform.png" alt="about_isoform" style="height: 300px">
                     <p>
-                    By clicking the transcriptional isoform graph, the box plot of isoform expression value (normalized RSEM) appears. At the top of the pop-up box, there are buttons used to switch the display of the box plot or the KM survival curve. At the top right side, you can see the UCSC isoform id, click on which will open a new tab or window display the UCSC Genome Browsers with the isoform highlighted.
+                    The box plot of isoform expression (normalized RSEM) will appear after clicked the transcriptional isoform graph. At the top right side, you can see the UCSC isoform id, click on which will open a new tab or window display the UCSC Genome Browsers with the isoform highlighted. At the top of the pop-up box, the buttons are used to choose box plot or KM survival plot to be displayed. 
                     </p>
                     <p>
-                    The KM survival curve included four parts: 1). In the bottom right is the part used to adjust the cut-point for grouping, in which the knob can be pulled to change the cutpoint. Moreover, the default value is the middle of the range. 2). The top right part displays information of groups included the cut-point value and sample size of each group. 3). The top left part shows the survival line of each person that entered after filtering by the survival start time point.  
+                    The KM survival curve included four parts: 1). In the bottom right is the part which is used to adjust the cut-point for grouping, in which the knob can be pulled to change the cutpoint. Moreover, the default value is the middle of the range. 2). The top right part displays information of groups include the cut-point value and sample size of each group. 3). The top left part shows the survival line of each person that enters after filtering by the survival start time point.  
                     </p>
                 </div>
             </div>
@@ -139,7 +139,7 @@
                             <tr>
                                 <td style="text-align: left">os_event</td>
                                 <td>0</td>
-                                <td>Overall survival event (0=live, 1=death).</td>
+                                <td>Overall survival event (0=live/censored, 1=death).</td>
                             </tr>
                             <tr>
                                 <td style="text-align: left">gene_[gene name]</td>
@@ -169,7 +169,7 @@
                 <img src="./image/flowchart.png" alt="toolchart" style="height: 450px; float: left; margin: 0 30px 0 0">
                 <div style="height: 50px"></div>
                 <p>
-                The TCGA level 3 gene, isoform, exon and junction normalized read count data (UNC illuminaHiSeq_RNASeqV2), clinical data (Merged_clinical_level_1) were downloaded from TCGA ftp site -- Firehouse.
+                The TCGA level 3 gene, isoform, exon and junction normalized read count data (UNC illuminaHiSeq_RNASeqV2), clinical data (Merged_clinical_level_1) were downloaded from TCGA ftp site -- Firehose.
                 </p>
                 <p>
                 The R was used to generate transcriptional pattern and TCGA data cleanup. The formatted JSON data were import into MongoDB.
