@@ -16,7 +16,7 @@ function get_header(clinical_data_array, gene_sort, tx_expression, exon_count, j
     var header = ["sampleID"]
     for (var i = 0; i < clinical_data_array.length; i++) {
         if (clinical_data_array[i].cd == "overall_survival") continue;
-        header.push(clinical_data_array[i].cd);
+        header.push("clinical_" + clinical_data_array[i].cd);
     }
     header = header.concat(["os_time", "os_event", "gene_" + gene_sort]);
 
