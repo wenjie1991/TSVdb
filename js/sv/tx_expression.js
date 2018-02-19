@@ -5,7 +5,7 @@ function round(num, digits) {
 var box_chart;
 
 function boxplot(
-    txid, 
+    txid,
     rearranged_clinical,
     expression
 ) {
@@ -103,13 +103,13 @@ function km_plot(
             );
         }
     }
-    km_data = km_data.filter((d) => d.sampleID.match(/01$/));
+    km_data = km_data.filter(function(d) { return d.sampleID.match(/01$/)});
     plot_km(container_name, km_data);
 }
 
 function display_tx(
-    tx_expression_data, 
-    txid, 
+    tx_expression_data,
+    txid,
     rearranged_clinical,
     overall_survival
 ) {
@@ -131,7 +131,7 @@ function display_tx(
 }
 
 function display_gene (
-    gene_expression_data, 
+    gene_expression_data,
     txid,
     rearranged_clinical,
     overall_survival

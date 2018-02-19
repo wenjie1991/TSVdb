@@ -1,6 +1,6 @@
 function sort_json_by_value(json){
     // ref. https://stackoverflow.com/questions/19032954/why-is-jsonobject-length-undefined
-    var sorted_array = [], 
+    var sorted_array = [],
         sorted_json = [];
 
     // Push each JSON Object entry in array by [key, value]
@@ -31,17 +31,17 @@ function generate_exon_pattern(
     var left_exon_y = [], left_exon_height = [], left_row_line_y = [];
     var output = {"left_row_line_y": []};
 
-    
-    tx_pattern_par = 
+
+    tx_pattern_par =
         {
-            // height: (n_right_row + 2) *  right_row_height(30) 
+            // height: (n_right_row + 2) *  right_row_height(30)
             "height": parent_frame_par.height,  // remove top and bottom
             // width: 25
             "width":parent_width - 5, // remove the left and right pad
             "top": 0,
             "left": 5 / 2,
         };
-    exon_par = 
+    exon_par =
         {
             "min_height": 2,
             "width": tx_pattern_par.parent_frame_par,
@@ -75,7 +75,7 @@ function generate_exon_pattern(
             return height;
         });
 
-   
+
 
     for (var i in left_exon_y) {
         left_row_line_y.push(left_exon_y[i] + left_exon_height[i] / 2);
@@ -91,7 +91,7 @@ function add_scale_line(
 ) {
     var scale_line_left_margin = 17;
     var scale_line_start_y = left_col_frame.top;
-    var scale_line_end_y = scale_line_start_y + 50; 
+    var scale_line_end_y = scale_line_start_y + 50;
     var scale_line;
 
     scale_line = left.append('g')
@@ -213,6 +213,7 @@ function quantile_areaValue(rearranged_areaValue_array, p) {
     }
 }
 
+
 function clinical_graph(
     rearranged_clinical,
     right_frame,
@@ -222,7 +223,7 @@ function clinical_graph(
 ) {
 //    rearranged_clinical.value.unshift("null");
     var x_scale, y_scale,
-        tip, 
+        tip,
         right_frame_elem, guide_line, guide_line_y0, guide_line_y1;
 
     x_scale = d3.scale.ordinal()
@@ -239,7 +240,7 @@ function clinical_graph(
         .style("opacity", 0)
         .attr("x1", 0).attr("x2", 0)
         .attr("y1", right_row_frame.top).attr("y2", right_frame.height);
-    
+
     right_row_charts_top.append("g").selectAll("rect")
         .data(rearranged_clinical.value)
         .enter().append('rect')
@@ -254,9 +255,9 @@ function clinical_graph(
             var tip_content = $(this).attr('class');
             tip_content = "<text>" + tip_content + "</text>";
             tip.style("opacity", .9);
-            tip.html(tip_content) 
-                .style("left", (d3.event.pageX - 12) + "px")     
-                .style("top", (d3.event.pageY - 40) + "px");    
+            tip.html(tip_content)
+                .style("left", (d3.event.pageX - 12) + "px")
+                .style("top", (d3.event.pageY - 40) + "px");
 
             var guide_line_x = $(this).attr('x');
             guide_line.attr('x1', guide_line_x);
@@ -275,12 +276,12 @@ function gene_expression_graph (
     right_row_charts,
     right_row_frame,
     right_row_charts_top,
-    gene_expression_data, 
+    gene_expression_data,
     rearranged_clinical,
     overall_survival,
     tx_pattern_data
 ) {
-    var x_scale, y_scale, 
+    var x_scale, y_scale,
         gene_expression_max = 0,
         right_frame_elem, guide_line, guide_line_y0, guide_line_y1;
 
@@ -332,10 +333,10 @@ function gene_expression_graph (
 
 function generate_area_graph(
     right_frame,
-    right_row_charts, 
-    right_row_frame, 
-    right_row_charts_top1, 
-    right_row_charts_top2, 
+    right_row_charts,
+    right_row_frame,
+    right_row_charts_top1,
+    right_row_charts_top2,
     data,
     tx_pattern_data,
     gene_expression_data,
@@ -346,22 +347,22 @@ function generate_area_graph(
     data_type
 ) {
 
-    var n, 
-        sample_array = [], 
+    var n,
+        sample_array = [],
         rearranged_clinical,
-        rearranged_sampleID, 
+        rearranged_sampleID,
         rearranged_data_value, data_value_ceiling, data_value_max;
 
     var y_scales = [], x_scale;
 
     if (data_type == 'exon') {
         var NI, exon_count_data = data;
-        NI = exon_count_data.value.map(function(d) { 
-            return calculate_NI(d, exon_count_data) 
+        NI = exon_count_data.value.map(function(d) {
+            return calculate_NI(d, exon_count_data)
         });
 
         // TODO remove inconsistant sample in server?
-        sample_array = get_sample_array_from_areaValue(NI);  
+        sample_array = get_sample_array_from_areaValue(NI);
         clinical = filter_clinical_by_sample(clinical, sample_array);
         rearranged_clinical = rearrange_clinical(clinical, gene_expression_data);
 
@@ -371,15 +372,15 @@ function generate_area_graph(
         })
         n = rearranged_data_value[0].length;
         data_value_ceiling = rearranged_data_value.map(function(d) {
-            return quantile_areaValue(d, 0.95); 
+            return quantile_areaValue(d, 0.95);
         });
         data_value_max = rearranged_data_value.map(function(d) {
-            return quantile_areaValue(d, 1); 
+            return quantile_areaValue(d, 1);
         });
 
         for (var i in rearranged_data_value) {
             y_scales[i] = d3.scale.linear()
-            // Set the ceiling of display. 
+            // Set the ceiling of display.
             // If the celing NI less than 5% of mean exon expression, than use 0.05 as ceiling value.
                 .domain([0, d3.max([data_value_ceiling[i], 0.05]), data_value_max[i]])
                 .range([right_row_frame.height, 5, 5]);
@@ -388,8 +389,8 @@ function generate_area_graph(
     } else if (data_type == 'junction') {
         var juc, juc_count_data = data;
         juc = juc_count_data.value;
-        juc = juc_count_data.value.map(function(d) { 
-            return calculate_NI(d, juc_count_data) 
+        juc = juc_count_data.value.map(function(d) {
+            return calculate_NI(d, juc_count_data)
         });
 
         sample_array = get_sample_array_from_areaValue(juc);
@@ -402,22 +403,22 @@ function generate_area_graph(
         })
         n = rearranged_data_value[0].length;
         data_value_ceiling = rearranged_data_value.map(function(d) {
-            return quantile_areaValue(d, 0.95); 
+            return quantile_areaValue(d, 0.95);
         });
         data_value_max = rearranged_data_value.map(function(d) {
-            return quantile_areaValue(d, 1); 
+            return quantile_areaValue(d, 1);
         });
 
         for (var i in rearranged_data_value) {
             y_scales[i] = d3.scale.linear()
-            // Set the ceiling of display. 
+            // Set the ceiling of display.
             // If the celing NI less than 5% of mean exon expression, than use 0.05 as ceiling value.
                 .domain([0, d3.max([data_value_ceiling[i], 0.05]), data_value_max[i]])
                 .range([right_row_frame.height, 5, 5]);
         }
     }
 
-    
+
     x_scale = d3.scale.linear()
         .domain([0, rearranged_data_value[0].length])
         .range([0, right_row_frame.width]);
@@ -474,5 +475,3 @@ function generate_area_graph(
         })
     })
 }
-
-

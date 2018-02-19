@@ -9,7 +9,7 @@ function plot_km (container_name, raw_data) {
     //   [{os_time:Num, os_event:Num(0=false, 1=true), group:Num, sampleID:Str}..]
 
 
-    /////////////// Function roundTo /////////////// 
+    /////////////// Function roundTo ///////////////
     //Function javascript should really already have.
     Number.prototype.roundTo = function(digits){
         return +(Math.round(this + "e+" + digits)  + "e-" + digits);
@@ -69,7 +69,7 @@ function plot_km (container_name, raw_data) {
         .domain([min_group, max_group]);
 
 
-    /////////////// Draw axis //////////////////////////////////////// 
+    /////////////// Draw axis ////////////////////////////////////////
     // x axis
     svg.append("g")
         .attr("class", "axis axis--x")
@@ -189,9 +189,9 @@ function plot_km (container_name, raw_data) {
     }
 
 
-    ////////////////////////////// Group choosing ////////////////////////////// 
-    var data_sorted = data.sort((a, b) => a.group - b.group);
-    var cutpoint = d3.max(data, (d) => d.group) / 2 + d3.min(data, (d) => d.group) / 2;
+    ////////////////////////////// Group choosing //////////////////////////////
+    var data_sorted = data.sort(function(a, b) { return a.group - b.group});
+    var cutpoint = d3.max(data, function(d)  { return d.group}) / 2 + d3.min(data, function(d) { return d.group}) / 2;
 
     var line_group = svg.selectAll(".group")
         .data(data_sorted)
@@ -235,10 +235,10 @@ function plot_km (container_name, raw_data) {
         .attr("transform", "translate(" + width + ", 0)")
 
     function sortByTwoVar(data, cutpoint) {
-        var km_data_high = data.filter((d) => d.group > cutpoint);
-        var km_data_low = data.filter((d) => d.group <= cutpoint);
-        km_data_high = km_data_high.sort((a, b) => a.time - b.time);
-        km_data_low = km_data_low.sort((a, b) => a.time - b.time);
+        var km_data_high = data.filter(function(d) { return d.group > cutpoint});
+        var km_data_low = data.filter(function(d) {return d.group <= cutpoint});
+        km_data_high = km_data_high.sort(function(a, b) { return  a.time - b.time });
+        km_data_low = km_data_low.sort(function(a, b) { return a.time - b.time});
         updateLegend(cutpoint.roundTo(3), km_data_high.length, km_data_low.length);
         return km_data_low.concat(km_data_high);
     }
@@ -250,15 +250,15 @@ function plot_km (container_name, raw_data) {
         svg.selectAll(".group")
             .data(newData)
             .attr({
-                "y1": (d) => y_group(d.group),
-                "y2": (d) => y_group(d.group),
-                "stroke": (d) => d.group > cutpoint ? "orangered" : "steelblue",
+                "y1": function(d) { return  y_group(d.group)},
+                "y2": function(d) { return  y_group(d.group)},
+                "stroke": function(d) { return d.group > cutpoint ? "orangered" : "steelblue"},
             })
             .transition().duration(500)
 
     }
 
-    ////////////////////////////// Draw lifespan Lines ////////////////////////////// 
+    ////////////////////////////// Draw lifespan Lines //////////////////////////////
 
     var lines = svg.selectAll(".lifespan")
         .data(data_sorted)
@@ -266,10 +266,10 @@ function plot_km (container_name, raw_data) {
         .attr("class", "lifespan")
         .attr({
             "x1": 0,
-            "x2": (d) => x(d.time),
-            "y1": (d,i) => y(i),
-            "y2": (d,i) => y(i),
-            "stroke": (d) => d.group > cutpoint ? "orangered" : "steelblue",
+            "x2": function(d) { return  x(d.time) },
+            "y1": function(d,i) { return y(i) },
+            "y2": function(d,i) { return y(i)},
+            "stroke": function(d) { return d.group > cutpoint ? "orangered" : "steelblue" },
             "stroke-width": 0.5,
         })
         .transition().duration(500)
@@ -282,31 +282,31 @@ function plot_km (container_name, raw_data) {
             .data(newData)
             .transition()
             .attr({
-                "x2": (d) => x(d.time),
-                "y1": (d,i) => y(i),
-                "y2": (d,i) => y(i),
-                "stroke": (d) => d.group > cutpoint ? "orangered" : "steelblue",
+                "x2": function(d) {return x(d.time)},
+                "y1": function(d,i) {return y(i)},
+                "y2": function(d,i) {return y(i)},
+                "stroke": function(d) { return d.group > cutpoint ? "orangered" : "steelblue"},
             })
     }
 
-    
+
     //////////////// Drawing the Survival Function //////////////
 
 
-    var km_surv_high = KM_Curve(data_sorted.filter((d) => d.group > cutpoint)),
-        km_surv_low = KM_Curve(data_sorted.filter((d) => d.group <= cutpoint));
+    var km_surv_high = KM_Curve(data_sorted.filter(function(d) {return d.group > cutpoint})),
+        km_surv_low = KM_Curve(data_sorted.filter(function(d) {return d.group <= cutpoint}));
 
     km_surv_low.unshift({"t_i": min_date, "d_i": 0, "Y_i": 0, "s_t": 0, "S_t": 1});
     km_surv_high.unshift({"t_i": min_date, "d_i": 0, "Y_i": 0, "s_t": 0, "S_t": 1});
 
     var surv_func = svg.append("g")
         .attr("class", "survival_function");
-        
+
 
     var line = d3.svg.line()
         .interpolate("step-after")
-        .x(d => x(d.t_i) )
-        .y(d => y_surv(d.S_t));
+        .x(function(d) { return x(d.t_i) })
+        .y(function(d) { return y_surv(d.S_t)});
 
     function new_survival(km_surv, class_name){
 
@@ -341,8 +341,8 @@ function plot_km (container_name, raw_data) {
 
     }
 
-    
-    /////////////// A bar to drag to define the cutpoint. /////////////// 
+
+    /////////////// A bar to drag to define the cutpoint. ///////////////
     drag_group_behavior = d3.behavior.drag()
         .on("drag", function(){
             var y_loc = d3.event.y;
@@ -366,7 +366,7 @@ function plot_km (container_name, raw_data) {
             var x_loc = +d3.select(".drag_screen").attr("x");
             x_loc += 15;
             var time_loc = x.invert(x_loc);
-            
+
             // re-sort data
             data_sorted = sortByTwoVar(data, cutpoint);
 
@@ -377,14 +377,14 @@ function plot_km (container_name, raw_data) {
             update_group(newData = data_sorted, cutpoint = cutpoint);
 
             svg.selectAll(".lifespan")
-                .attr("opacity",  (d) => d.time < time_loc ? 0.1: 1)
-                .classed("ignored", (d) => d.time < time_loc)
+                .attr("opacity",  function(d) { return d.time < time_loc ? 0.1: 1})
+                .classed("ignored", function(d) {return  d.time < time_loc})
                 .classed("dragging", true)
 
             //generate new KM curve data.
-            km_data = data_sorted.filter((d) => d.time >= time_loc);
-            km_data_high = km_data.filter((d) => d.group > cutpoint);
-            km_data_low = km_data.filter((d) => d.group < cutpoint);
+            km_data = data_sorted.filter(function(d) { return d.time >= time_loc});
+            km_data_high = km_data.filter(function(d) { return d.group > cutpoint});
+            km_data_low = km_data.filter(function(d) { return d.group < cutpoint});
 
             km_surv_high = KM_Curve(km_data_high);
             km_surv_low = KM_Curve(km_data_low);
@@ -432,13 +432,13 @@ function plot_km (container_name, raw_data) {
             update_group(newData = data_sorted, cutpoint = cutpoint);
 
             svg.selectAll(".lifespan")
-                .attr("opacity",  (d) => d.time < time_loc ? 0.1: 1)
-                .classed("ignored", (d) => d.time < time_loc);
+                .attr("opacity",  function(d) { return d.time < time_loc ? 0.1: 1})
+                .classed("ignored", function(d) {return d.time < time_loc});
 
             //generate new KM curve data.
-            km_data = data_sorted.filter((d) => d.time >= time_loc);
-            km_data_high = km_data.filter((d) => d.group > cutpoint);
-            km_data_low = km_data.filter((d) => d.group < cutpoint);
+            km_data = data_sorted.filter(function(d) { return d.time >= time_loc});
+            km_data_high = km_data.filter(function(d) { return d.group > cutpoint});
+            km_data_low = km_data.filter(function(d) { return d.group < cutpoint});
 
             km_surv_high = KM_Curve(km_data_high);
             km_surv_low = KM_Curve(km_data_low);
@@ -481,15 +481,15 @@ function plot_km (container_name, raw_data) {
                 .attr("x",  x_loc - 15);
 
             svg.selectAll(".lifespan")
-                .attr("opacity",  (d) => d.time < time_loc ? 0.1: 1)
-                .classed("ignored", (d) => d.time < time_loc);
+                .attr("opacity",  function(d) { return d.time < time_loc ? 0.1: 1})
+                .classed("ignored", function(d) { return d.time < time_loc});
 
 
             //generate new KM curve data.
             //only include current individuals.
-            km_data = data.filter((d) => d.time >= time_loc);
-            km_data_high = km_data.filter((d) => d.group > cutpoint);
-            km_data_low = km_data.filter((d) => d.group <= cutpoint);
+            km_data = data.filter(function(d) { return d.time >= time_loc});
+            km_data_high = km_data.filter(function(d) { return d.group > cutpoint});
+            km_data_low = km_data.filter(function(d) { return d.group <= cutpoint});
 
             updateLegend(cutpoint.roundTo(3), km_data_high.length, km_data_low.length);
 
@@ -534,7 +534,7 @@ function plot_km (container_name, raw_data) {
             class: "drag_group_line"
         })
 
-    
+
     //////////////  A bar to drag to filter the conditional entry time. //////////////
     drag_behavior = d3.behavior.drag()
         .on("drag", function(){
@@ -553,8 +553,8 @@ function plot_km (container_name, raw_data) {
                 .attr("x",  x_loc - 15);
 
             svg.selectAll(".lifespan")
-                .attr("opacity",  (d) => d.time < time_loc ? 0.1: 1)
-                .classed("ignored", (d) => d.time < time_loc)
+                .attr("opacity",  function(d) { return d.time < time_loc ? 0.1: 1})
+                .classed("ignored", function(d) { return  d.time < time_loc})
                 .classed("dragging", true)
         })
         .on("dragend", function(){
@@ -563,9 +563,9 @@ function plot_km (container_name, raw_data) {
 
             //generate new KM curve data.
             //only include current individuals.
-            km_data = data.filter((d) => d.time >= time_loc);
-            km_data_high = km_data.filter((d) => d.group > cutpoint);
-            km_data_low = km_data.filter((d) => d.group <= cutpoint);
+            km_data = data.filter(function(d) { return d.time >= time_loc});
+            km_data_high = km_data.filter(function(d) { return d.group > cutpoint});
+            km_data_low = km_data.filter(function(d) { return d.group <= cutpoint});
 
             updateLegend(cutpoint.roundTo(3), km_data_high.length, km_data_low.length);
 
@@ -620,10 +620,13 @@ function plot_km (container_name, raw_data) {
 
     ///////////////////////////// Generate a K-M non-parametric survival curve for data.
 
-    function KM_Curve(data, reSort = false){
+    function KM_Curve(data, reSort) {
         //Source http://stackoverflow.com/questions/11246758/how-to-get-unique-values-in-an-array
+	if(reSort === undefined){
+	    reSort = false;
+	}
         if (reSort) {
-            data = data.sort((a, b) => a.time - b.time);
+            data = data.sort(function(a, b) { return a.time - b.time});
         }
 
         function contains(array, v) {
@@ -643,15 +646,15 @@ function plot_km (container_name, raw_data) {
         }
 
         //get unique times of event.
-        event_times = unique(data.filter(d => d.event).map(d => d.time));
+        event_times = unique(data.filter(function(d) {return d.event}).map(function(d) {return d.time}));
 
 
-        km_table = event_times.map(t_i => {
+        km_table = event_times.map(function(t_i) {
             //Number of events at t_i
-            var d_i = data.filter(d => d.time == t_i && d.event).length
+            var d_i = data.filter(function(d) { return d.time == t_i && d.event}).length
 
             //number at risk in study, but havent had event yet.
-            var Y_i = data.filter(d => d.time>= t_i).length
+            var Y_i = data.filter(function(d) { return d.time>= t_i}).length
 
             var s_t = 1 - (d_i/Y_i);
 
@@ -662,7 +665,7 @@ function plot_km (container_name, raw_data) {
             return {"t_i": t_i, "d_i": d_i, "Y_i": Y_i, "s_t": s_t}
         })
 
-        for (let [i, row] of km_table.entries()) {
+        for (var [i, row] of km_table.entries()) {
             var t = row.t_i,
                 s_t = row.s_t,
                 last_S_t = i != 0 ? km_table[i-1].S_t : 1;
@@ -674,4 +677,3 @@ function plot_km (container_name, raw_data) {
     }
 }
                 // add prefixed versions too.
-
