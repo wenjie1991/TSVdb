@@ -45,9 +45,9 @@ function plot_km (container_name, raw_data) {
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
     var min_date = 0,
-        max_date = d3.max(data, (d) => d.time),
-        min_group = d3.min(data, (d) => d.group),
-        max_group = d3.max(data, (d) => d.group);
+        max_date = d3.max(data, function(d) {return d.time}),
+        min_group = d3.min(data, function(d) {return d.group}),
+        max_group = d3.max(data, function(d) {return d.group});
 
     var x = d3.scale.linear()
         .range([0, width])

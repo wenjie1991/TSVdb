@@ -1,6 +1,6 @@
 
 // global variation, used to query database.
-let gene, data_type, tumor_type, clinical_type, gene_sort;
+var gene, data_type, tumor_type, clinical_type, gene_sort;
 var start = true;  // If start a new plot, set it true.
 
 // initiate a new graph
