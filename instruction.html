@@ -51,48 +51,51 @@
         <div class="section active" id="section_intro">
             <h1 class="intr_h1">TSVdb</h1>
             <h2 class="intr_h2">TCGA Splicing Variants DB</h2>
-            <div class="intro"><p>TSVdb is an easy-to-use web tool for the integration and visualization of mRNA alternative splicing, transcriptional isoform expression and clinical information from The Cancer Genome Atlas project (TCGA) RNA-Seq data.</div>
+            <div class="intro"><p>TSVdb is an easy-to-use web tool for integrating and visualizing mRNA alternative splicing, transcriptional isoform expression and clinical information from The Cancer Genome Atlas project (TCGA) RNA-Seq data.</p></div>
             <!-- <div class="selection" id="selection_start"><a href="./plot_demo.html">Start</a></div> -->
             <!-- <div class="selection" id="selection_tutorial">Tutorial</div> -->
             <!--            <img src = "./image/strategy.svg" alt="strategy" style="height: 250px;" class="myImg">-->
             <img src = "./image/amination.gif" alt="strategy" style="height: 300px;" class="gif">
         </div>
 
+
         <div class="section" id="section_tutorial">
             <div class="slide" id="selecting_data">
                 <h1 class="spe_h1">Tutorial</h1>
-                <h2 class="sep_h2">1. Selecting Data</h2>
+                <h2 class="sep_h2">1. Selecting the data</h2>
                 <div class="slide_content">
                     <img src="./image/select_data.png" alt="select_data" style="height: 300px">
                     <p style="height: 0px"></p>
                     <p>
-                    When open the data visualizing page, the user need to sequentially choose the tumor type, gene, data type and clinical information. Before completing the option choosing, no other operation can be performed. Do not afraid when making a mistake at this stage, the options can be edited afterward.
+                    Upon opening the data visualization page, the user needs to sequentially choose the tumor type, gene, data type and clinical information. No other operations can be performed before choosing these options. Do not worry when making selections at this stage, as the options can be edited afterwards.
                     </p>
                     <p>
-                    The first pop-up dialog (Fig. A) is cancer type, please select the cancer type you are interested in and click the selection button. In the second pop-up dialog (fig B), please enter an Official Gene Symbol or Entrez ID. If the query does not exist, the alarm would appear to notify you. Then choose the exon/junction usage value (Fig. C). The exon/junction usage is the scaled expression, more about the scaling method, please refer to the next section. At last, choose the phenotype you are interesting and the gene expression data used to sort sample inside each phenotype subgorup (Fig. D). The gene expression value can be set to another gene so that the correlation between alternative splicing of one gene and the expression of another gene can be investigated.             
+                    The first pop-up dialog (Fig. A) is the cancer type; please select the cancer type you are interested in and click the selection button. In the second pop-up dialog (Fig. B), please enter an Official Gene Symbol or Entrez ID. If the query does not exist, the alarm will appear and notify you. Then, choose the exon/junction usage value (Fig. C). The exon/junction usage is the scaled expression; for more information about the scaling method, please refer to the next section. Finally, choose the phenotype you are interested in and the gene expression data to sort the samples in each phenotype subgroup (Fig. D). The gene expression value can be set to another gene so that the correlation between alternative splicing for one gene and the expression of another gene can be investigated.
                     </p>
                 </div>
             </div>
 
             <div class="slide" id="exon_junc">
                 <h1 class="spe_h1">Tutorial</h1>
-                <h2 class="sep_h2">2. About graph</h2>
+                <h2 class="sep_h2">2. About the graph</h2>
                 <div class="slide_content">
                     <img src="./image/about_graph.png" alt="about_graph" style="height: 400px">
                     <p>
-                    In the header displays the options, they can be edited by clicking the corresponding buttons in the header.
+                    The options are in the header display; they can be edited by clicking the corresponding buttons in the header.
                     </p>
                     <p>
-                    The samples are firstly sorted by clinical type, then are sorted by the gene expression. When the mouse hovered the clinical attribution row, the group name and a red line will appear.
+                    The samples are sorted by clinical type and then sorted by gene expression. When the mouse hovers over the clinical attribute row, the group name and a red line will appear.
                     </p>
                     <p>
-                    The “Exon or Junction” grey boxes are the exon/junction that TCGA used to count the mapping reads, in the TCGA Level 3 mRNA Seq datasets.
+                    The “Exon or Junction” gray boxes are the exons/junctions that TCGA uses to count the mapping reads in the TCGA Level 3 mRNA Seq datasets.
                     </p>
                     <p>
-                    Each exon/junction usage value displays as shadowed line graph by row with samples by column. Exon/junction pattern will be transiently or permanently highlighted when the mouse hovered or clicked an exon/junction shadowed line graph. What’s more, when you double clicked on the exon/junction shawdowed line the UCSC Genome Browser will open in a new tab/window with selected exon/junction area highlighted and let you enjoy the annotation in UCSC Genome Browser.                     
+                    Each exon/junction usage value is shown as a shadowed line graph with the usage in the row and the samples in the columns. The exon/junction pattern will be transiently or permanently highlighted when the mouse hovers or clicks an exon/junction-shadowed line graph. Moreover, when you double click on an exon/junction-shadowed line, the UCSC Genome Browser will open in a new tab/window with the selected exon/junction area highlighted and let you examine the annotation in the UCSC Genome Browser.
                     </p>
                 </div>
             </div>
+
+
 
             <div class="slide" id="isoform">
                 <h1 class="spe_h1">Tutorial</h1>
@@ -100,10 +103,10 @@
                 <div class="slide_content">
                     <img src="./image/about_isoform.png" alt="about_isoform" style="height: 300px">
                     <p>
-                    The box plot of isoform expression (normalized RSEM) will appear after clicked the transcriptional isoform graph. At the top right side, you can see the UCSC isoform id, click on which will open a new tab or window display the UCSC Genome Browsers with the isoform highlighted. At the top of the pop-up box, the buttons are used to choose box plot or KM survival plot to be displayed. 
+                    A box plot for isoform expression (normalized RSEM) will appear after clicking the transcriptional isoform graph. On the top right side, you can see the UCSC isoform ID. Clicking on this ID will open a new tab or window display for the highlighted isoform in the UCSC Genome Browser. The buttons at the top of the pop-up box are used to choose the box plot or KM survival plot to be displayed.
                     </p>
                     <p>
-                    The KM survival curve included four parts: 1). In the bottom right is the part which is used to adjust the cut-point for grouping, in which the knob can be pulled to change the cutpoint. Moreover, the default value is the middle of the range. 2). The top right part displays information of groups include the cut-point value and sample size of each group. 3). The top left part shows the survival line of each person that enters after filtering by the survival start time point.  
+                    The KM survival curve has four parts. (1) In the bottom right, there is a way to adjust the cut-off for grouping; the knob can be adjusted to change the cut-off. The default value is the middle of the range. (2) The top right displays the information on the groups, including the cut-off value and sample size of each group. (3). The top left shows the survival line for each individual included after filtering from the survival start time point. 
                     </p>
                 </div>
             </div>
@@ -169,14 +172,15 @@
                 <img src="./image/flowchart.png" alt="toolchart" style="height: 450px; float: left; margin: 0 30px 0 0">
                 <div style="height: 50px"></div>
                 <p>
-                The TCGA level 3 gene, isoform, exon and junction normalized read count data (UNC illuminaHiSeq_RNASeqV2), clinical data (Merged_clinical_level_1) were downloaded from TCGA ftp site -- Firehose.
+                The TCGA level 3 gene, isoform, exon and junction normalized read count data (UNC illuminaHiSeq_RNASeqV2) and clinical data (Merged_clinical_level_1) were downloaded from the TCGA ftp site Firehose.
                 </p>
                 <p>
-                The R was used to generate transcriptional pattern and TCGA data cleanup. The formatted JSON data were import into MongoDB.
+                R was used to generate the transcriptional patterns and to perform the TCGA data cleanup. The formatted JSON data were import into MongoDB.
                 </p>
                 <p>
-                The exon/junction usage value was derived from exon/jucntion quantification. Firstly, each sample's exon/junction quantification value is divided by the expression quantity of the gene  to which exon belongs. So the gene expression effect was removed, and the AS event was highlighted. Next, the d3.js linear scale was used to map the normalized exon/junction value into the graph coordination. The interval of the exon/junction usage value (domain argument in scale function) is set to 0 - Q95 (95\% quantile) to diminish the outlier's impact. Furthermore, if the value of Q95 is smaller than 0.05, the upper bound of the interval would be set to 0.05.
+                The exon/junction usage values were derived from exon/junction quantification. First, each sample's exon/junction quantification value was divided by the expression of the gene to which it belongs. Thus, the gene expression effect was removed and the AS event was highlighted. Next, the d3.js linear scale was used to map the normalized exon/junction value to the graph coordination. The exon/junction usage value interval (domain argument in the scale function) was set to 0 - Q95 (95\% quantile) to diminish the impact of outliers. If the value of Q95 was less than 0.05, the upper bound of the interval would be set to 0.05.
             </div>
         </div>
     </div>
 </body>
+
