@@ -199,7 +199,7 @@ function plot(data, data_type, url_download) {
     }
 
     // add download link
-    $(".download_linker").after('<a href="' + url_download + '" download id="download" hidden></a>');
+    $(".download_linker").after('<a href="' + url_download + '" id="download" hidden></a>');
 
     left.append("text")
         .attr('transform', 'translate(' + '0,0' + ')')

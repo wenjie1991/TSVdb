@@ -49,17 +49,21 @@ function push_valide(x, y) {
 
 function get_line(sampleID_i, clinical_json, os, gene_expression, tx_expression, exon_count, junction_count) {
 
+    // if the sample is not tumor then transform it into the primary tumor type (01)
+    //    var clinical_variable_sampleID = sampleID_i.substr(0, 13) + "01";
+
     // sample id
     var line = [sampleID_i];
 
     // clinical variable
+//    line = line.concat(clinical_json[clinical_variable_sampleID]);
     line = line.concat(clinical_json[sampleID_i.substr(0, 15)]);
 
     // overall survival
     var os_i = os.value[sampleID_i.substr(0, 15)];
     if (os_i == undefined) {
-        line.push("");
-        line.push("");
+        line.push("UNDEFINED");
+        line.push("UNDEFINED");
     } else {
         line.push(os_i.time);
         line.push(os_i.event);
@@ -102,14 +106,42 @@ function prepare_table(
     junction_count
 ) {
     var sampleID = [], clinical_json = {};
-
+    
+    var item;
     for (var i=0; i<clinical_data_array.length; i++) {
-        if (clinical_data_array[i].cd == "overall_survival") continue;
-        for (sampleID_long in clinical_data_array[i].value) {
-            if (! (clinical_json[sampleID_long.substr(0, 15)] instanceof Array))
+        if (clinical_data_array[i].cd == "overall_survival") {
+            continue;
+        } else if (clinical_data_array[i].cd == "sampletype") {
+            for (var sampleID_long in gene_expression.gene_expression) {
+                //                console.log(sampleID_long);
+                //                if (! (clinical_json[sampleID_long.substr(0, 15)] instanceof Array))
                 clinical_json[sampleID_long.substr(0, 15)] = new Array();
-            clinical_json[sampleID_long.substr(0, 15)].push(clinical_data_array[i].cdCode[clinical_data_array[i].value[sampleID_long]]);
+
+                item = clinical_data_array[i].cdCode[clinical_data_array[i].value[sampleID_long]];
+
+                if (item == undefined) {
+                    clinical_json[sampleID_long.substr(0, 15)].push("UNDEFINED");
+                } else {
+                    clinical_json[sampleID_long.substr(0, 15)].push(item);
+                }
+            }
+        } else {
+            for (var sampleID_long in gene_expression.gene_expression) {
+
+//                clinical_json[sampleID_long.substr(0, 15)] = new Array();
+                var clinical_sampleID = sampleID_long.substr(0, 13) + "01";
+
+                item = clinical_data_array[i].cdCode[clinical_data_array[i].value[clinical_sampleID]];
+
+                if (item == undefined) {
+                    clinical_json[sampleID_long.substr(0, 15)].push("UNDEFINED");
+                } else if (item) {
+                    clinical_json[sampleID_long.substr(0, 15)].push(item);
+                }
+            }
+
         }
+        
     }
 
     for (var i in gene_expression.gene_expression) {
@@ -118,6 +150,7 @@ function prepare_table(
         }
     }
 
+    
     var csv = [];
     csv.push(get_header(clinical_data_array, gene_sort, tx_expression, exon_count, junction_count));
 
@@ -246,8 +279,9 @@ http.createServer(function(req, res) {
         // Ref. https://stackoverflow.com/questions/14778239/nodejs-send-data-in-gzip-using-zlib
         var buf = new Buffer(csv, "utf-8");
         zlib.gzip(buf, function (_, result) {  // The callback will give you the 
+            res.setHeader('Content-disposition', 'attachment; filename=TSVdb_original_data.tsv.xls');
             res.writeHead(200, {
-                'Content-Type': 'text/plain', 
+                'Content-Type': 'text/tsv', 
                 'Access-Control-Allow-Origin':'*',
                 'Content-Encoding': 'gzip'
             });
