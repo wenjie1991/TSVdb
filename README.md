@@ -1,4 +1,4 @@
-# Bug Report & Suggestion
+# Bug Reporting & Suggestion
 Please feel free to open an issue or sent an email to sunwenjie(at)zju.edu.cn.
 
 # TSVdb
