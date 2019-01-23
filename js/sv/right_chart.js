@@ -319,7 +319,7 @@ function gene_expression_graph (
             $(".tx_ucsc_link").attr("href", url);
             $(".tx_ucsc_link").text(gene_expression_data.symbol + " UCSC Link");
             $(".mask").show();
-            $(".tx_expression").css("z-index", 2);
+            $(".tx_expression").css("z-index", 11);
             $(".tx_expression").show();
             display_gene(
                 gene_expression_data  = gene_expression_data,
@@ -464,7 +464,7 @@ function generate_area_graph(
             $(".tx_ucsc_link").attr("href", url);
             $(".tx_ucsc_link").text(txid + " UCSC Link");
             $(".mask").show();
-            $(".tx_expression").css("z-index", 2);
+            $(".tx_expression").css("z-index", 11);
             $(".tx_expression").show();
             display_tx(
                 tx_expression_data  = tx_expression_data,
