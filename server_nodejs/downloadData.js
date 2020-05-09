@@ -108,12 +108,13 @@ function prepare_table(
     var sampleID = [], clinical_json = {};
     
     var item;
+//    console.log(clinical_data_array);
     for (var i=0; i<clinical_data_array.length; i++) {
         if (clinical_data_array[i].cd == "overall_survival") {
             continue;
         } else if (clinical_data_array[i].cd == "sampletype") {
             for (var sampleID_long in gene_expression.gene_expression) {
-                //                console.log(sampleID_long);
+//                console.log(sampleID_long);
                 //                if (! (clinical_json[sampleID_long.substr(0, 15)] instanceof Array))
                 clinical_json[sampleID_long.substr(0, 15)] = new Array();
 
@@ -127,6 +128,7 @@ function prepare_table(
             }
         } else {
             for (var sampleID_long in gene_expression.gene_expression) {
+//                console.log(sampleID_long);
 
 //                clinical_json[sampleID_long.substr(0, 15)] = new Array();
                 var clinical_sampleID = sampleID_long.substr(0, 13) + "01";
@@ -194,6 +196,9 @@ http.createServer(function(req, res) {
                 var tx_pattern_result = yield collection.findOne({symbol: gene});
             } else {
                 var tx_pattern_result = yield collection.findOne({entrezid: gene});
+            }
+            for (var key in tx_pattern_result['tx']) {
+                if (tx_pattern_result['tx'][key].chr.match('_') != null) { delete tx_pattern_result['tx'][key] }
             }
         } catch(err){
             console.log(err)

@@ -44,6 +44,9 @@ http.createServer(function(req, res) {
             } else {
                 var tx_pattern_result = yield collection.findOne({entrezid: gene});
             }
+            for (var key in tx_pattern_result['tx']) {
+                if (tx_pattern_result['tx'][key].chr.match('_') != null) { delete tx_pattern_result['tx'][key] }
+            }
         } catch(err){
             console.log(err)
         }
