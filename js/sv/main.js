@@ -23,11 +23,11 @@ function draw() {
 //    tumor_type    = $("#query_tumor_type").val();
 //    clinical_type = $("#query_clinical_type").val();
 
-    var url = "http://api.smallysun.com/sv_db?gene=" + gene + "&tumor=" + tumor_type + "&cd=" + clinical_type + "&area=" + data_type + "&gene_sort=" + gene_sort;
+    var url = "http://www.tsvdb.com/sv_db?gene=" + gene + "&tumor=" + tumor_type + "&cd=" + clinical_type + "&area=" + data_type + "&gene_sort=" + gene_sort;
 //    var url = "/example_data/" + tumor_type + "_" + gene + "_" + clinical_type + "_" + data_type + ".json";
 
     // donwload data table link
-    var url_download = "http://api.smallysun.com/sv_datatable?gene=" + gene + "&tumor=" + tumor_type + "&cd=" + clinical_type + "&area=" + data_type + "&gene_sort=" + gene_sort;
+    var url_download = "http://www.tsvdb.com/sv_datatable?gene=" + gene + "&tumor=" + tumor_type + "&cd=" + clinical_type + "&area=" + data_type + "&gene_sort=" + gene_sort;
 
     $("#myloading").css("display", 'flex');
     d3.json(url, function(error, data) {
@@ -112,7 +112,7 @@ function nav_module_tumor_select() {
     tumor_type = input_value;  // change the global variable
 
     $("#nav_gene.nav_choosen").show()  // make next dialog box apearing
-    var url = "http://api.smallysun.com/get_cd_list?tumor=" + tumor_type;
+    var url = "http://www.tsvdb.com/get_cd_list?tumor=" + tumor_type;
     d3.json(url, function(error, data) {
         var cd_list = data.cd_list;
         var options = "";
@@ -139,7 +139,7 @@ function nav_module_gene_select() {
     var input_value = $("#gene_symbol").val();
     var nav_choosen = $("#nav_gene.nav_choosen");
 
-    var url = "http://api.smallysun.com/sv_checkname?gene=" + input_value + "&tumor=" + tumor_type;
+    var url = "http://www.tsvdb.com/sv_checkname?gene=" + input_value + "&tumor=" + tumor_type;
 //    url = "./example_data/" + input_value + "_" + tumor_type + ".json";
     $(".gene_check_wait").css("display", "flex");
     d3.json(url, function(error, data) {
@@ -204,7 +204,7 @@ function nav_module_clinical_select() {
     var input_value_gene = $("#gene_symbol_sort").val();
     var input_value_clinical = $(".nav_module_clinical_option").val();
 
-    var url = "http://api.smallysun.com/sv_checkname?gene=" + input_value_gene + "&tumor=" + tumor_type;
+    var url = "http://www.tsvdb.com/sv_checkname?gene=" + input_value_gene + "&tumor=" + tumor_type;
 //    url = "./example_data/" + input_value_gene + "_" + tumor_type + ".json";
     $(".gene_check_wait").css("display", "flex");
     d3.json(url, function(error, data) {

@@ -1,5 +1,5 @@
 $("#gene_symbol").autocomplete({
-    source: "http://api.smallysun.com/autocomplete",
+    source: "http://www.tsvdb.com/autocomplete",
     select: function(event, ui) {
         $(this).value = ui.item.value;
     },
@@ -7,7 +7,7 @@ $("#gene_symbol").autocomplete({
 });
 
 $("#gene_symbol_sort").autocomplete({
-    source: "http://api.smallysun.com/autocomplete",
+    source: "http://www.tsvdb.com/autocomplete",
     select: function(event, ui) {
         $(this).value = ui.item.value;
     },
