@@ -20,10 +20,12 @@ function CookieConsent(props) {
             en: {
                 title: "Cookie settings",
                 body: "We use Google Analytics to analyze the traffic of our website. " +
-                    "You can choose whether to accept the cookies applied by Google Analytics or not.",
+                    "The data are only been used for counting the visitors. ",
+                    // "You can choose whether to accept the cookies applied by Google Analytics or not.",
                 privacyPolicy: "privacy policy",
-                buttonAcceptAll: "Accept cookies",
-                buttonAcceptTechnical: "Deny cookies"
+                buttonAcceptAll: "Accept cookies"
+                // Uncomment follow to make deny available
+                // buttonAcceptTechnical: "Deny cookies"
             }
         },
         cookieName: "cookie-consent-tracking-allowed",  // the name of the cookie, the cookie is `true` if tracking was accepted
@@ -59,7 +61,8 @@ function CookieConsent(props) {
     )
     this.modalContent = this.modalContent.replace(/--footer--/,
         "<div class='buttons'>" +
-        "<button class='btn-accept-necessary " + this.props.buttonSecondaryClass + "'>" + _t.buttonAcceptTechnical + "</button>" +
+        // Uncomment follow to make deny available
+        // "<button class='btn-accept-necessary " + this.props.buttonSecondaryClass + "'>" + _t.buttonAcceptTechnical + "</button>" +
         "<button class='btn-accept-all " + this.props.buttonPrimaryClass + "'>" + _t.buttonAcceptAll + "</button>" +
         "</div>"
     )
@@ -113,13 +116,14 @@ function CookieConsent(props) {
                 this.modal.id = self.props.modalId
                 this.modal.innerHTML = self.modalContent
                 document.body.append(this.modal)
-                this.modal.querySelector(".btn-accept-necessary").addEventListener("click", function () {
-                    setCookie(self.props.cookieName, "false", 365)
-                    hideDialog()
-                    if(self.props.postSelectionCallback) {
-                        self.props.postSelectionCallback()
-                    }
-                })
+                // Uncomment follow to make deny available
+                // this.modal.querySelector(".btn-accept-necessary").addEventListener("click", function () {
+                    // setCookie(self.props.cookieName, "false", 365)
+                    // hideDialog()
+                    // if(self.props.postSelectionCallback) {
+                        // self.props.postSelectionCallback()
+                    // }
+                // })
                 this.modal.querySelector(".btn-accept-all").addEventListener("click", function () {
                     setCookie(self.props.cookieName, "true", 365)
                     hideDialog()
