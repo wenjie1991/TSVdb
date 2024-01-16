@@ -1,8 +1,14 @@
 # Bug Reporting & Suggestion
 Please feel free to open an issue or sent an email to sunwjie@gmail.com.
 
-# TSVdb
-TCGA Splicing Variation Database
+# TSVdb (TCGA Splicing Variation Database)
+
+TSVdb is a website tool used to help cancer research to study alternative splicing in TCGA database.
+
+Features:
+- Less is more: No complicated menu options. Just one input box at a time to guide you towards the desired result.
+- Touch and feel it: Use your mouse to explore the details by clicking on the part you are interested in.
+- Own raw data and explore without limitations: The raw data is available for downloading, allowing you to conduct further analysis.
 
 ![](https://raw.githubusercontent.com/wenjie1991/TSVdb/master/amination.gif)
 
