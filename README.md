@@ -1,13 +1,10 @@
-# Bug Reporting & Suggestion
-Please feel free to open an issue or sent an email to sunwjie@gmail.com.
-
 # TSVdb (TCGA Splicing Variation Database)
 
 TSVdb is a user-friendly web tool that integrates and visualizes mRNA splicing variation (alternative splicing), transcriptional isoform expression, and clinical information from The Cancer Genome Atlas project (TCGA) RNASeq data. Please check out the publication: https://doi.org/10.1186/s12864-018-4775-x
 
 ![](https://raw.githubusercontent.com/wenjie1991/TSVdb/master/amination.gif)
 
-# Features
+## Features
 
 **Less is more**
 
@@ -21,7 +18,7 @@ Use your mouse to explore the details by clicking on the part you are interested
 
 The raw data is available for downloading, allowing you to conduct further analysis.
 
-# Frequently asked question
+## Frequently asked question
 
 > I have a specific isoform in mind. How can I locate it in the results?</summary>
     
@@ -44,5 +41,8 @@ You can find the NCBI id in UCSC Genome Browser corresponding to UCSC id:
 The units of downloaded **exon** data are **RPKM** values (Reads Per Kilobase of exon model per Million mapped reads).
 For **isoforms**, it is **RSEM**. 
 
-# Citation
+## Bug Reporting & Contribution
+Please feel free to open an issue/pull request or sent an email to sunwjie@gmail.com.
+
+## Citation
 Sun, W., Duan, T., Ye, P. et al. TSVdb: a web-tool for TCGA splicing variants analysis. BMC Genomics 19, 405 (2018). https://doi.org/10.1186/s12864-018-4775-x
