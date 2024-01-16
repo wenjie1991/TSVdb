@@ -3,17 +3,23 @@ Please feel free to open an issue or sent an email to sunwjie@gmail.com.
 
 # TSVdb (TCGA Splicing Variation Database)
 
-TSVdb is a website tool used to help cancer research to study alternative splicing in TCGA database.
-
-Features:
-- Less is more: No complicated menu options. Just one input box at a time to guide you towards the desired result.
-- Touch and feel it: Use your mouse to explore the details by clicking on the part you are interested in.
-- Own raw data and explore without limitations: The raw data is available for downloading, allowing you to conduct further analysis.
+TSVdb is a user-friendly web tool that integrates and visualizes mRNA splicing variation (alternative splicing), transcriptional isoform expression, and clinical information from The Cancer Genome Atlas project (TCGA) RNASeq data. Please check out the publication: https://doi.org/10.1186/s12864-018-4775-x
 
 ![](https://raw.githubusercontent.com/wenjie1991/TSVdb/master/amination.gif)
 
-# Usage
-TSVdb is an easy-to-use web tool for the integration and visualization of mRNA splicing variation, transcriptional isoform expression and clinical information from The Cancer Genome Atlas project (TCGA) RNASeq data.
+# Features
+
+**Less is more**
+
+No complicated menu options. Just one input box at a time to guide you towards the desired result.
+
+**Touch and feel it**
+
+Use your mouse to explore the details by clicking on the part you are interested in.
+
+**Own raw data and explore without limitations**
+
+The raw data is available for downloading, allowing you to conduct further analysis.
 
 # Frequently asked question
 
@@ -37,3 +43,6 @@ You can find the NCBI id in UCSC Genome Browser corresponding to UCSC id:
 
 The units of downloaded **exon** data are **RPKM** values (Reads Per Kilobase of exon model per Million mapped reads).
 For **isoforms**, it is **RSEM**. 
+
+# Citation
+Sun, W., Duan, T., Ye, P. et al. TSVdb: a web-tool for TCGA splicing variants analysis. BMC Genomics 19, 405 (2018). https://doi.org/10.1186/s12864-018-4775-x
