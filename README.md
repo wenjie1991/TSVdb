@@ -8,32 +8,23 @@ TCGA Splicing Variation Database
 # Usage
 TSVdb is an easy-to-use web tool for the integration and visualization of mRNA splicing variation, transcriptional isoform expression and clinical information from The Cancer Genome Atlas project (TCGA) RNASeq data.
 
-# API
-## Check gene input
-```
-http://localhost:8082?gene=[gene name or entrezid]&tumor=[tumor type]
-```
+# Frequently asked question
+> I have a specific isoform in mind. How can I locate it in the results?</summary>
+    
+In the databse, we use UCSC transcriptome isoform id system. 
+When you use your mouse hover the isoforms listed on the left of the output, you can see the id.
+If you want to know more about it, you can search it in UCSC genome browser by clicking the isoform, then and isoform id in a pop up window.
+Now, you will be brought to the UCSC genome browser and has the selected isoform highlighted.
+In the UCSC genome browser, you can load the ENSEMBL/NCBI transcriptome annotation, and identify the corresponding isoform in other database. 
+    
+![Jan-16-2024 17-04-32](https://github.com/wenjie1991/TSVdb/assets/6602710/944f799e-47cc-4cdb-859f-71d72d22768d)
 
-## Query Json for plot
-```
-http://localhost:8081?gene=[gene name or entrezid]&tumor=[tumor type]&cd=[clinical information type]&area=[exon or junction]
-```
+> How to convert UCSC id used in the database to ENSEMBL id
 
-## Download data table
-```
-http://localhost:8083?gene=[gene name or entrezid]&tumor=[tumor type]&cd=[clinical information type]&area=[exon or junction]
-```
+You can find the NCBI id in UCSC Genome Browser corresponding to UCSC id:
+![2020-01-16 17-38-15 2020-01-16 17_39_09](https://user-images.githubusercontent.com/6602710/72544195-2de5d980-3887-11ea-986b-46066f47af76.gif)
 
-# Demo
-## Setup
-```
-git clone git@github.com:wenjie1991/TSVdb.git
-cd TSVdb
-http-server -p 8080
-chrome http://localhost:8080/index.html
-chrome http://localhost:8080/instruction.html
-chrome http://localhost:8080/plot.html
-```
+> When downloading the data from TSVdb, what are the units of the exon usage and isoform value?
 
-## Test (for plot_demo.html)
-    In plot_demo.html: COAD -> 1 -> Exon -> SampleType
+The units of downloaded **exon** data are **RPKM** values (Reads Per Kilobase of exon model per Million mapped reads).
+For **isoforms**, it is **RSEM**. 
