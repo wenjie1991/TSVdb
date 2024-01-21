@@ -1,6 +1,6 @@
 # TSVdb (TCGA Splicing Variation Database)
 
-TSVdb is a user-friendly web tool that integrates and visualizes mRNA splicing variation (alternative splicing), transcriptional isoform expression, and clinical information from The Cancer Genome Atlas project (TCGA) RNASeq data. Please check out the publication: https://doi.org/10.1186/s12864-018-4775-x
+TSVdb is a user-friendly web tool that integrates and visualizes mRNA splicing variation (alternative splicing), transcriptional isoform expression, and clinical information from The Cancer Genome Atlas project (TCGA) RNASeq data. For more info, please check out the publication: https://doi.org/10.1186/s12864-018-4775-x
 
 ![](https://raw.githubusercontent.com/wenjie1991/TSVdb/master/amination.gif)
 
