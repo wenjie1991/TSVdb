@@ -38,8 +38,17 @@ You can find the NCBI or ENSEMBL id in UCSC Genome Browser corresponding to UCSC
 
 > When downloading the data from TSVdb, what are the units of the exon usage and isoform value?
 
-The units of downloaded **exon** data are **RPKM** values (Reads Per Kilobase of exon model per Million mapped reads).
-For **isoforms**, it is **RSEM_isoforms_normalized**. 
+The units of downloaded **exon** and **junction** data are **RPKM** values (Reads Per Kilobase of exon model per Million mapped reads).
+For **isoforms**, it is **TCGA Level 3 RSEM isoforms normalized data** , and the gene expression data is **TCGA Level 3 RSEM genes normalized data**.
+
+The data for various tumor types, denoted by {$tumor_type}, were downloaded using the following links:
+```
+http://gdac.broadinstitute.org/runs/stddata__2016_01_28/data/{$tumor_type}/20160128/gdac.broadinstitute.org_{$tumor_type}.Merge_rnaseqv2__illuminahiseq_rnaseqv2__unc_edu__Level_3__RSEM_genes_normalized__data.Level_3.2016012800.0.0.tar.gz
+http://gdac.broadinstitute.org/runs/stddata__2016_01_28/data/{$tumor_type}/20160128/gdac.broadinstitute.org_{$tumor_type}.Merge_rnaseqv2__illuminahiseq_rnaseqv2__unc_edu__Level_3__RSEM_isoforms_normalized__data.Level_3.2016012800.0.0.tar.gz
+http://gdac.broadinstitute.org/runs/stddata__2016_01_28/data/{$tumor_type}/20160128/gdac.broadinstitute.org_{$tumor_type}.Merge_rnaseqv2__illuminahiseq_rnaseqv2__unc_edu__Level_3__exon_quantification__data.Level_3.2016012800.0.0.tar.gz
+http://gdac.broadinstitute.org/runs/stddata__2016_01_28/data/{$tumor_type}/20160128/gdac.broadinstitute.org_{$tumor_type}.Merge_rnaseqv2__illuminahiseq_rnaseqv2__unc_edu__Level_3__junction_quantification__data.Level_3.2016012800.0.0.tar.gz
+http://gdac.broadinstitute.org/runs/stddata__2016_01_28/data/{$tumor_type}/20160128/gdac.broadinstitute.org_{$tumor_type}.Merge_Clinical.Level_1.2016012800.0.0.tar.gz"
+```
 
 ## Bug Reporting & Contribution
 Please feel free to open an issue/pull request or sent an email to sunwjie@gmail.com.
