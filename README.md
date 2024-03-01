@@ -30,9 +30,9 @@ In the UCSC genome browser, you can load the ENSEMBL/NCBI transcriptome annotati
     
 ![Jan-16-2024 17-04-32](https://github.com/wenjie1991/TSVdb/assets/6602710/944f799e-47cc-4cdb-859f-71d72d22768d)
 
-> How to convert UCSC id used in the database to ENSEMBL id
+> How to convert UCSC id used in the database to NCBI (or ENSEMBL) id
 
-You can find the NCBI id in UCSC Genome Browser corresponding to UCSC id:
+You can find the NCBI or ENSEMBL id in UCSC Genome Browser corresponding to UCSC id:
 
 ![2020-01-16 17-38-15 2020-01-16 17_39_09](https://user-images.githubusercontent.com/6602710/72544195-2de5d980-3887-11ea-986b-46066f47af76.gif)
 
