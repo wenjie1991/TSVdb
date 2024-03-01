@@ -39,7 +39,7 @@ You can find the NCBI or ENSEMBL id in UCSC Genome Browser corresponding to UCSC
 > When downloading the data from TSVdb, what are the units of the exon usage and isoform value?
 
 The units of downloaded **exon** data are **RPKM** values (Reads Per Kilobase of exon model per Million mapped reads).
-For **isoforms**, it is **RSEM**. 
+For **isoforms**, it is **RSEM_isoforms_normalized**. 
 
 ## Bug Reporting & Contribution
 Please feel free to open an issue/pull request or sent an email to sunwjie@gmail.com.
