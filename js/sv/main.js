@@ -99,6 +99,22 @@ $("#tutorial").click(function() {
 // nave_module: Renew 
 $("#nav_new").click(new_plot);
 
+// nave_module: Choose normalization by eacn Exon/Junction or not
+var normalize_expression_by_each = true;  // global
+$("#radio_norm_by_each").click(function() {
+    normalize_expression_by_each = true;
+    // set class to "selected_option"
+    $("#radio_norm_by_each").addClass("selected_option");
+    // remove class from "selected_option"
+    $("#radio_norm_by_all").removeClass("selected_option");
+});
+$("#radio_norm_by_all").click(function() {
+    normalize_expression_by_each = false;
+    // set class to "selected_option"
+    $("#radio_norm_by_all").addClass("selected_option");
+    // remove class from "selected_option"
+    $("#radio_norm_by_each").removeClass("selected_option");
+});
 
 function nav_module_tumor_select() {
     var input_value = $(".nav_module_tumor_option").val();

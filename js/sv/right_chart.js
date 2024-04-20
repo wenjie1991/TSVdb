@@ -214,6 +214,21 @@ function quantile_areaValue(rearranged_areaValue_array, p) {
 }
 
 
+function quantile_areaValue_flattern(data, percentile) {
+    // Flatten the array of arrays
+    const flatArray = data.flat().map(d => d[1])
+
+    // Sort the flattened array
+    flatArray.sort((a, b) => a - b);
+
+    // Calculate the index of the percentile value
+    const index = Math.ceil(percentile / 100.0 * flatArray.length) - 1;
+
+    // Return the value at this index
+    return flatArray[index];
+}
+
+
 function clinical_graph(
     rearranged_clinical,
     right_frame,
@@ -346,6 +361,7 @@ function generate_area_graph(
     strand,
     data_type
 ) {
+    // var normalize_expression_by_each = false;
 
     var n,
         sample_array = [],
@@ -371,19 +387,37 @@ function generate_area_graph(
             return rearrange_areaValue(d, rearranged_sampleID);
         })
         n = rearranged_data_value[0].length;
-        data_value_ceiling = rearranged_data_value.map(function(d) {
-            return quantile_areaValue(d, 0.95);
-        });
-        data_value_max = rearranged_data_value.map(function(d) {
-            return quantile_areaValue(d, 1);
-        });
+        if (normalize_expression_by_each) {
+            data_value_ceiling = rearranged_data_value.map(function(d) {
+                return quantile_areaValue(d, 0.95);
+            });
+            data_value_max = rearranged_data_value.map(function(d) {
+                return quantile_areaValue(d, 1);
+            });
 
-        for (var i in rearranged_data_value) {
-            y_scales[i] = d3.scale.linear()
-            // Set the ceiling of display.
-            // If the celing NI less than 5% of mean exon expression, than use 0.05 as ceiling value.
-                .domain([0, d3.max([data_value_ceiling[i], 0.05]), data_value_max[i]])
-                .range([right_row_frame.height, 5, 5]);
+            for (var i in rearranged_data_value) {
+                y_scales[i] = d3.scale.linear()
+                    // Set the ceiling of display.
+                    // If the celing NI less than 5% of mean exon expression, than use 0.05 as ceiling value.
+                    .domain([0, d3.max([data_value_ceiling[i], 0.05]), data_value_max[i]])
+                    .range([right_row_frame.height, 5, 5]);
+            }
+        } else {
+            // get 95% quantile value over all data
+            data_value_ceiling = quantile_areaValue_flattern(rearranged_data_value, 95);
+
+            data_value_max = rearranged_data_value.map(function(d) {
+                return quantile_areaValue(d, 1);
+            });
+
+            for (var i in rearranged_data_value) {
+                y_scales[i] = d3.scale.linear()
+                    // Set the ceiling of display.
+                    // If the celing NI less than 5% of mean exon expression, than use 0.05 as ceiling value.
+                    .domain([0, d3.max([data_value_ceiling, 0.05]), data_value_max[i]])
+                    .range([right_row_frame.height, 5, 5]);
+            }
+
         }
 
     } else if (data_type == 'junction') {
@@ -402,19 +436,34 @@ function generate_area_graph(
             return rearrange_areaValue(d, rearranged_sampleID);
         })
         n = rearranged_data_value[0].length;
-        data_value_ceiling = rearranged_data_value.map(function(d) {
-            return quantile_areaValue(d, 0.95);
-        });
-        data_value_max = rearranged_data_value.map(function(d) {
-            return quantile_areaValue(d, 1);
-        });
+        if (normalize_expression_by_each) {
+            data_value_ceiling = rearranged_data_value.map(function(d) {
+                return quantile_areaValue(d, 0.95);
+            });
+            data_value_max = rearranged_data_value.map(function(d) {
+                return quantile_areaValue(d, 1);
+            });
 
-        for (var i in rearranged_data_value) {
-            y_scales[i] = d3.scale.linear()
-            // Set the ceiling of display.
-            // If the celing NI less than 5% of mean exon expression, than use 0.05 as ceiling value.
-                .domain([0, d3.max([data_value_ceiling[i], 0.05]), data_value_max[i]])
-                .range([right_row_frame.height, 5, 5]);
+            for (var i in rearranged_data_value) {
+                y_scales[i] = d3.scale.linear()
+                // Set the ceiling of display.
+                // If the celing NI less than 5% of mean exon expression, than use 0.05 as ceiling value.
+                    .domain([0, d3.max([data_value_ceiling[i], 0.05]), data_value_max[i]])
+                    .range([right_row_frame.height, 5, 5]);
+            }
+        } else {
+            data_value_ceiling = quantile_areaValue_flattern(rearranged_data_value, 95);
+            data_value_max = rearranged_data_value.map(function(d) {
+                return quantile_areaValue(d, 1);
+            });
+
+            for (var i in rearranged_data_value) {
+                y_scales[i] = d3.scale.linear()
+                // Set the ceiling of display.
+                // If the celing NI less than 5% of mean exon expression, than use 0.05 as ceiling value.
+                    .domain([0, d3.max([data_value_ceiling, 0.05]), data_value_max[i]])
+                    .range([right_row_frame.height, 5, 5]);
+            }
         }
     }
 
