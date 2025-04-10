@@ -10,7 +10,8 @@ function CookieConsent(props) {
     this.props = {
         buttonPrimaryClass: "btn btn-primary", // the "accept all" buttons class, only used for styling
         buttonSecondaryClass: "btn btn-secondary", // the "accept necessary" buttons class, only used for styling
-        privacyPolicyUrl: "privacy-policy.html",
+        // privacyPolicyUrl: "privacy-policy.html",
+        privacyPolicyUrl: "", 
         autoShowModal: true, // disable autoShowModal on the privacy policy page, to make that page readable
         lang: navigator.language, // the language, in which the modal is shown
         blockAccess: false, // set "true" to block the access to the website before choosing a cookie configuration
@@ -19,10 +20,8 @@ function CookieConsent(props) {
         content: { // the content in all needed languages
             en: {
                 title: "Cookie settings",
-                body: "We use Google Analytics to analyze the traffic of our website. " +
-                    "The data are only been used for counting the visitors. ",
-                    // "You can choose whether to accept the cookies applied by Google Analytics or not.",
-                privacyPolicy: "privacy policy",
+                body: "We use Google Analytics to help us understand how many people visit our website. This data is used only for basic traffic analysis and is never shared or used to track individuals.",
+                // privacyPolicy: "privacy policy",
                 buttonAcceptAll: "Accept cookies"
                 // Uncomment follow to make deny available
                 // buttonAcceptTechnical: "Deny cookies"
@@ -43,7 +42,8 @@ function CookieConsent(props) {
         this.lang = "en" // fallback
     }
     var _t = this.props.content[this.lang]
-    var linkPrivacyPolicy = '<a href="' + this.props.privacyPolicyUrl + '">' + _t.privacyPolicy + '</a>'
+    // var linkPrivacyPolicy = '<a href="' + this.props.privacyPolicyUrl + '">' + _t.privacyPolicy + '</a>'
+    var linkPrivacyPolicy = "" // privacy policy link is not needed
     var modalClass = "cookie-consent-modal"
     if (this.props.blockAccess) {
          modalClass += " block-access"
@@ -56,9 +56,9 @@ function CookieConsent(props) {
         '<div class="modal-footer">--footer--</div>' +
         '</div></div>'
     this.modalContent = this.modalContent.replace(/--header--/, "<h3 class=\"modal-title\">" + _t.title + "</h3>")
-    this.modalContent = this.modalContent.replace(/--body--/,
-        _t.body.replace(/--privacy-policy--/, linkPrivacyPolicy)
-    )
+    // this.modalContent = this.modalContent.replace(/--body--/,
+        // _t.body.replace(/--privacy-policy--/, linkPrivacyPolicy)
+    // )
     this.modalContent = this.modalContent.replace(/--footer--/,
         "<div class='buttons'>" +
         // Uncomment follow to make deny available
