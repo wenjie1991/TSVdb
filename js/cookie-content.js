@@ -56,9 +56,9 @@ function CookieConsent(props) {
         '<div class="modal-footer">--footer--</div>' +
         '</div></div>'
     this.modalContent = this.modalContent.replace(/--header--/, "<h3 class=\"modal-title\">" + _t.title + "</h3>")
-    // this.modalContent = this.modalContent.replace(/--body--/,
-        // _t.body.replace(/--privacy-policy--/, linkPrivacyPolicy)
-    // )
+    this.modalContent = this.modalContent.replace(/--body--/,
+        _t.body.replace(/--privacy-policy--/, linkPrivacyPolicy)
+    )
     this.modalContent = this.modalContent.replace(/--footer--/,
         "<div class='buttons'>" +
         // Uncomment follow to make deny available
