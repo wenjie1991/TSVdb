@@ -1,4 +1,191 @@
+//
+//  Kaplan–Meier estimator and two‑sample Log‑Rank (Mantel–Cox) test in vanilla JavaScript
+//  -------------------------------------------------------------------------------
+//  ‑ Requires **no external dependencies**.
+//  ‑ Works in Node ≥14 and modern browsers (ES2020).
+//
+//  ## Data format
+//  Each observation is an object of the form:
+//    {
+//      time:   Number,   // follow‑up time (positive)
+//      event:  Boolean   // true  → event occurred at `time`
+//                        // false → right‑censored at `time`
+//    }
+//
+//  Optionally add a `group` property if you store multiple groups in one array.
+//
+//  ## API
+//  kmCurve(data : Observation[]) → CurvePoint[]
+//  logRankTest(group1 : Observation[], group2 : Observation[]) → {chi2, df, p}
+//
+//  ## Example
+//  ```js
+//  import { kmCurve, logRankTest } from "./km_survival.js";
+//
+//  const grpA = [ {time:  6, event: true}, {time: 10, event: false}, /* … */ ];
+//  const grpB = [ {time:  4, event: true}, {time: 14, event: true }, /* … */ ];
+//
+//  console.log(kmCurve(grpA));            // Kaplan–Meier points for A
+//  console.log(logRankTest(grpA, grpB));  // { chi2: 3.84, df: 1, p: 0.050 }
+//  ```
+//
+//  ## Notes
+//  1. Variance in the log‑rank test uses the usual Greenwood approximation.
+//  2. `chi2PValue` is implemented analytically for df = 1 (common case). For df > 1,
+//     pull in a stats library such as jStat to obtain the tail probability.
+//  3. No handling of left‑truncation or time‑varying covariates.
+//  4. MIT License – do what you like, but no warranty is provided.
+// // /
 
+// ───────────────────────────────────────────────────────────────────────────────
+// Kaplan–Meier estimator
+// ───────────────────────────────────────────────────────────────────────────────
+
+
+// Return Kaplan–Meier survival curve points.
+// @param {Array<{time:number,event:boolean}>} data
+// @returns {Array<{time:number,survival:number,atRisk:number,events:number,censored:number}>}
+
+function kmCurve(data) {
+  if (!Array.isArray(data) || data.length === 0) return [];
+
+  // Clone & sort ascending by time
+  const records = [...data].sort((a, b) => a.time - b.time);
+
+  // Unique event times (ignore pure censor times)
+  const eventTimes = [...new Set(records.filter(r => r.event).map(r => r.time))];
+
+  let surv = 1;
+  const curve = [];
+
+  for (const t of eventTimes) {
+    const atRisk   = records.filter(r => r.time >= t).length;
+    const events   = records.filter(r => r.time === t && r.event).length;
+    const censored = records.filter(r => r.time === t && !r.event).length;
+
+    if (atRisk === 0) break; // Safety
+
+    surv *= (1 - events / atRisk);
+
+    curve.push({ time: t, survival: surv, atRisk, events, censored });
+  }
+
+  return curve;
+}
+
+// ───────────────────────────────────────────────────────────────────────────────
+// Log‑Rank (Mantel–Cox) two‑sample test
+// ───────────────────────────────────────────────────────────────────────────────
+
+
+// Two‑sample log‑rank test comparing survival distributions.
+// @param {Array<{time:number,event:boolean}>} g1
+// @param {Array<{time:number,event:boolean}>} g2
+// @returns {{chi2:number, df:1, p:number}}
+
+function logRankTest(g1, g2) {
+  if (!g1?.length || !g2?.length) throw new Error("Both groups must contain data");
+
+  // All unique event times across both groups
+  const times = [...new Set([...g1, ...g2].filter(r => r.event).map(r => r.time))].sort((a, b) => a - b);
+
+  let OminusE = 0; // Σ(O₁ − E₁)
+  let varSum  = 0; // ΣVar(O₁ − E₁)
+
+  for (const t of times) {
+    const n1 = countAtRisk(g1, t);
+    const n2 = countAtRisk(g2, t);
+    const n  = n1 + n2;
+
+    const d1 = g1.filter(r => r.time === t && r.event).length;
+    const d2 = g2.filter(r => r.time === t && r.event).length;
+    const d  = d1 + d2;
+
+    if (n <= 1 || d === 0) continue; // Skip if no subjects or no events
+
+    const expected1 = d * (n1 / n);
+    const variance1 = (n1 / n) * (1 - n1 / n) * (n - d) / (n - 1) * d; // Greenwood‑like
+
+    OminusE += (d1 - expected1);
+    varSum  += variance1;
+  }
+
+  const chi2 = (OminusE ** 2) / varSum;
+  const p    = chi2PValue(chi2); // df = 1
+
+  return { chi2, df: 1, p };
+}
+
+// ───────────────────────────────────────────────────────────────────────────────
+// Helpers
+// ───────────────────────────────────────────────────────────────────────────────
+
+function countAtRisk(group, t) {
+  return group.filter(r => r.time >= t).length;
+}
+
+// --- p‑value for χ²₍₁₎ (uses error‑function relation) -------------------------
+
+/** Approximate the upper‑tail p‑value P(χ² > stat) for df = 1 */
+function chi2PValue(stat) {
+  if (stat < 0 || !isFinite(stat)) return NaN;
+  const z     = Math.sqrt(stat);
+  const erfV  = erf(z / Math.SQRT2);
+  return 1 - erfV; // upper tail
+}
+
+/** Error function (Abramowitz & Stegun 7.1.26) */
+function erf(x) {
+  const sign = (x >= 0) ? 1 : -1;
+  x = Math.abs(x);
+
+  // Coefficients
+  const a1 =  0.254829592;
+  const a2 = -0.284496736;
+  const a3 =  1.421413741;
+  const a4 = -1.453152027;
+  const a5 =  1.061405429;
+  const p  =  0.3275911;
+
+  const t = 1 / (1 + p * x);
+  const y = 1 - ((((a5 * t + a4) * t + a3) * t + a2) * t + a1) * t * Math.exp(-x * x);
+  return sign * y;
+}
+
+/* -------- 20-record example dataset -------- */
+
+/** Group A (n = 10) */
+// const grpA = [
+//   { time:  2, event: true  },
+//   { time:  3, event: false },
+//   { time:  5, event: true  },
+//   { time:  6, event: true  },
+//   { time:  8, event: false },
+//   { time:  9, event: true  },
+//   { time: 11, event: false },
+//   { time: 13, event: true  },
+//   { time: 15, event: false },
+//   { time: 18, event: true  }
+// ];
+//
+// /** Group B (n = 10) */
+// const grpB = [
+//   { time:  1, event: true  },
+//   { time:  4, event: true  },
+//   { time:  5, event: false },
+//   { time:  7, event: true  },
+//   { time:  9, event: false },
+//   { time: 10, event: true  },
+//   { time: 12, event: false },
+//   { time: 14, event: true  },
+//   { time: 16, event: false },
+//   { time: 20, event: true  }
+// ];
+//
+// /* --- usage -------------------------------------------------- */
+// console.log(kmCurve(grpA));
+// console.log(kmCurve(grpB));
+// console.log(logRankTest(grpA, grpB));
 
 function plot_km (container_name, raw_data) {
 
@@ -27,14 +214,13 @@ function plot_km (container_name, raw_data) {
         new_d.group = d.group; //>= 0.55 ? "high NI" : "low NI";
         return new_d;
     })
-    //        .sort((a, b) => a.time - b.time)
 
 
     //charting code goes here.
     var chartWidth  = 690, // default width
         chartHeight = 450;
 
-    var margin = {top: 20, right: 180, bottom: 50, left: 60},
+    var margin = {top: 0, right: 250, bottom: 50, left: 60},
         width  = chartWidth - margin.left - margin.right,
         height = chartHeight - margin.top - margin.bottom;
 
@@ -114,7 +300,10 @@ function plot_km (container_name, raw_data) {
         .text("Overall Survival");
 
 
-    ////////////////////////////////  Make legend ////////////////////////////////////////////////
+    /////////////////////
+    //  Create legend  //
+    /////////////////////
+    
     var legend = svg.append("g")
         .attr("class", "legend")
         .attr("transform", "translate(" + (width + 20) + "," + margin.top  + ")");
@@ -129,10 +318,6 @@ function plot_km (container_name, raw_data) {
         "x": -5,
         "text-anchor": "start",
     }
-
-    //    legend.append("text")
-    //        .text("Data/Individuals")
-    //        .attrs(titleAttributes)
 
     legend.append("text")
         .text("High group")
@@ -155,7 +340,6 @@ function plot_km (container_name, raw_data) {
             "y": "3.5em",
             "dx": "0.25em"
         })
-
 
     legend.append("text")
         .text("Low group")
@@ -180,18 +364,30 @@ function plot_km (container_name, raw_data) {
             "dx": "0.25em"
         })
 
-    function updateLegend(cutpoint, highGroupNum, lowGroupNum) {
+    legend.append("text")
+        .text("test")
+        .attr("class", "kmTestPValue")
+        .attr({
+            "x": -5,
+            "y": "10em"
+        })
 
-        d3.select(".highNIDefination").text("Value > " + cutpoint);
-        d3.select(".lowNIDefination").text("Value ≤ " + cutpoint);
+
+    function updateLegend(cutpoint, highGroupNum, lowGroupNum, km_pvalue) {
+
+        d3.select(".highNIDefination").text("Expression > " + cutpoint);
+        d3.select(".lowNIDefination").text("Expression ≤ " + cutpoint);
 
         d3.select(".highNINumber").text("n: " + highGroupNum);
         d3.select(".lowNINumber").text("n: " + lowGroupNum);
 
+        d3.select(".kmTestPValue").text("Log-rank p: " + km_pvalue);
     }
 
 
-    ////////////////////////////// Group choosing //////////////////////////////
+    //////////////////////
+    //  Group choosing  //
+    //////////////////////
     var data_sorted = data.sort(function(a, b) { return a.group - b.group});
     var cutpoint = d3.max(data, function(d)  { return d.group}) / 2 + d3.min(data, function(d) { return d.group}) / 2;
 
@@ -211,7 +407,7 @@ function plot_km (container_name, raw_data) {
     svg.append("g")
         .attr("class", "axis axis--y axis_y_right")
         .call(d3.svg.axis().scale(y_group).orient("right"))
-        .attr("transform", "translate(" + (width+90) + ", 0)")
+        .attr("transform", "translate(" + (width+70) + ", 10)")
         .append("text")
         .attr("class", "axis-title")
         .attr("y", height/2)
@@ -241,11 +437,18 @@ function plot_km (container_name, raw_data) {
         var km_data_low = data.filter(function(d) {return d.group <= cutpoint});
         km_data_high = km_data_high.sort(function(a, b) { return  a.time - b.time });
         km_data_low = km_data_low.sort(function(a, b) { return a.time - b.time});
-        updateLegend(cutpoint.roundTo(3), km_data_high.length, km_data_low.length);
+
+        var km_test_res = logRankTest(km_data_high, km_data_low);
+        console.log(km_test_res);
+
+        updateLegend(
+            cutpoint.roundTo(3), 
+            km_data_high.length, km_data_low.length,
+            km_test_res['p'].roundTo(3)
+        );
         return km_data_low.concat(km_data_high);
     }
     data_sorted = sortByTwoVar(data, cutpoint);
- //   console.table(data_sorted);
 
     function update_group(newData, cutpoint) {
 
@@ -493,7 +696,14 @@ function plot_km (container_name, raw_data) {
             km_data_high = km_data.filter(function(d) { return d.group > cutpoint});
             km_data_low = km_data.filter(function(d) { return d.group <= cutpoint});
 
-            updateLegend(cutpoint.roundTo(3), km_data_high.length, km_data_low.length);
+            var km_test_res = logRankTest(km_data_high, km_data_low);
+
+            updateLegend(
+                cutpoint.roundTo(3), 
+                km_data_high.length, 
+                km_data_low.length,
+                km_test_res['p'].roundTo(3)
+            );
 
             km_surv_high = KM_Curve(km_data_high, reSort = true);
             km_surv_low = KM_Curve(km_data_low, reSort = true);
@@ -569,7 +779,14 @@ function plot_km (container_name, raw_data) {
             km_data_high = km_data.filter(function(d) { return d.group > cutpoint});
             km_data_low = km_data.filter(function(d) { return d.group <= cutpoint});
 
-            updateLegend(cutpoint.roundTo(3), km_data_high.length, km_data_low.length);
+            var km_test_res = logRankTest(km_data_high, km_data_low);
+
+            updateLegend(
+                cutpoint.roundTo(3), 
+                km_data_high.length, 
+                km_data_low.length,
+                km_test_res['p'].roundTo(3)
+            );
 
             km_surv_high = KM_Curve(km_data_high, reSort = true);
             km_surv_low = KM_Curve(km_data_low, reSort = true);
